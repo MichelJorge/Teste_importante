@@ -1,263 +1,270 @@
 <!doctype html>
 <html lang="pt-BR">
- <head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260814-05-a1b2e7b","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Canva Sans":"YAFLd8sKbwc,2","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YAFdJksXcAk,0","Libre Baskerville":"YACgEUFdPdA,0","Manrope":"YAHO2b2feC4,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YADLjI9qxTA,0","Nunito":"YACgEX8C5Gg,0","Oleo Script":"YACgEQQ14jI,0","Phantom Sans":"YAHO2E8Pb88,0","Playfair Display":"YACgEYmuCJE,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YADWjpfPmdk,0","Raleway":"YACgEVg3xZg,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Spectral":"YAHO2rVUHIM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Ubuntu":"YACgERDU--Q,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YADlN8CFZ8Q,0","ui-sans-serif":"YACkoN-xg4g,0"}}');</script><script src="/_sdk/7949ff62d67710d5.telemetry_sdk.js" integrity="sha512-KIvXA82Di44YY/RH9/63A9MuTuavYgDFG8PfErJn7Wli4K0LAOk+coo/aPXk3+ZNL96nHh9VYD4PE+fLes+laQ=="></script>
+<head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Revelação Romântica</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Revelação Romântica - Tela Cheia</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      --ink: #100616;
+      --ink: #08020d;
       --violet: #a855f7;
       --pink: #f472b6;
       --lavender: #e9d5ff;
     }
 
-    * { box-sizing: border-box; }
-
-    body {
+    * { 
+      box-sizing: border-box; 
       margin: 0;
-      min-height: calc(100 * min(var(--vh, 1vh), 1vh));
-      font-family: "Alegreya", serif;
-      overflow-x: hidden;
+      padding: 0;
     }
 
-    .app-shell {
-      width: 100%;
-      min-height: calc(100 * min(var(--vh, 1vh), 1vh));
-      position: relative;
-      isolation: isolate;
+    html, body {
+      width: 100vw;
+      height: 100vh;
       overflow: hidden;
+      background-color: var(--ink);
+      font-family: "Alegreya", serif;
     }
 
+    /* Container Principal - Occupy Fullscreen */
+    .app-shell {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    /* Fundo dinâmico com brilhos */
     .ambient {
       position: absolute;
       border-radius: 999px;
-      filter: blur(35px);
-      opacity: .6;
+      filter: blur(60px);
+      opacity: 0.6;
       pointer-events: none;
-      animation: breathe 6s ease-in-out infinite alternate;
+      z-index: 1;
+      animation: breathe 7s ease-in-out infinite alternate;
     }
 
     .ambient-one {
-      width: 14rem;
-      height: 14rem;
-      top: -5rem;
-      left: -6rem;
+      width: 40vw;
+      height: 40vw;
+      top: -10vw;
+      left: -10vw;
       background: #7e22ce;
     }
 
     .ambient-two {
-      width: 17rem;
-      height: 17rem;
-      bottom: 0;
-      right: -8rem;
+      width: 45vw;
+      height: 45vw;
+      bottom: -10vw;
+      right: -10vw;
       background: #be185d;
-      animation-delay: -3s;
+      animation-delay: -3.5s;
     }
 
-    .star-field {
-      position: absolute;
-      inset: 0;
-      opacity: .65;
-      background-image: radial-gradient(circle, rgba(255,255,255,.85) 1px, transparent 1.4px);
-      background-size: 34px 34px;
-      mask-image: linear-gradient(to bottom, black, transparent 90%);
-      pointer-events: none;
-    }
-
+    /* Estágio de Revelação em Tela Toda */
     .reveal-stage {
-      position: relative;
-      width: min(88vw, 400px);
-      aspect-ratio: 4 / 5;
-      border-radius: 2.35rem;
-      overflow: hidden;
-      box-shadow: 0 22px 65px rgba(0, 0, 0, .62), 0 0 0 1px rgba(233, 213, 255, .34), 0 0 40px rgba(192, 132, 252, .24);
-      transform: translateY(10px);
-      animation: settle .9s ease-out both;
-    }
-
-    .reveal-stage::before {
-      content: "";
       position: absolute;
       inset: 0;
-      z-index: 4;
-      pointer-events: none;
-      border: 1px solid rgba(255,255,255,.35);
-      border-radius: inherit;
+      width: 100vw;
+      height: 100vh;
+      z-index: 2;
+      overflow: hidden;
     }
 
+    /* Gradiente de proteção para texto */
     .reveal-stage::after {
       content: "";
       position: absolute;
       inset: 0;
       z-index: 3;
       pointer-events: none;
-      background: linear-gradient(to top, rgba(11, 3, 16, .88) 0%, rgba(11, 3, 16, .14) 46%, rgba(255,255,255,.05) 100%);
+      background: linear-gradient(
+        to top, 
+        rgba(8, 2, 13, 0.92) 0%, 
+        rgba(8, 2, 13, 0.3) 40%, 
+        rgba(8, 2, 13, 0.4) 100%
+      );
     }
 
+    /* Camada da Foto com Animação de Revelação */
     .photo-layer {
       position: absolute;
       inset: 0;
+      width: 100%;
+      height: 100%;
       overflow: hidden;
       background: #1a0925;
-      clip-path: circle(0% at 50% 56%);
-      animation: bloom 5.8s cubic-bezier(.16,.85,.25,1) .3s forwards;
+      clip-path: circle(0% at 50% 50%);
+      animation: bloom 5.5s cubic-bezier(.16,.85,.25,1) 0.3s forwards;
     }
 
     .photo-layer img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transform: scale(1.25);
-      filter: saturate(.8) blur(9px) brightness(.6);
-      animation: focus 5.8s cubic-bezier(.16,.85,.25,1) .3s forwards;
+      object-position: center;
+      transform: scale(1.3);
+      filter: saturate(.7) blur(12px) brightness(.5);
+      animation: focus 5.5s cubic-bezier(.16,.85,.25,1) 0.3s forwards;
     }
 
+    /* Varrida de Luz Magnífica */
     .light-sweep {
       position: absolute;
-      z-index: 2;
-      width: 34%;
-      height: 150%;
-      top: -25%;
-      left: -42%;
-      transform: rotate(18deg);
-      background: linear-gradient(to right, transparent, rgba(255,255,255,.66), rgba(241, 190, 255, .28), transparent);
-      filter: blur(6px);
+      z-index: 4;
+      width: 50vw;
+      height: 200vh;
+      top: -50vh;
+      left: -60vw;
+      transform: rotate(25deg);
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.7), rgba(241, 190, 255, 0.4), transparent);
+      filter: blur(10px);
       opacity: 0;
-      animation: sweep 3.2s ease-in-out 1.7s forwards;
+      animation: sweep 3.5s ease-in-out 1.5s forwards;
       pointer-events: none;
     }
 
+    /* Névoa Mística */
     .mist {
       position: absolute;
-      inset: auto -20% -18% -20%;
-      z-index: 2;
-      height: 55%;
+      inset: auto -10% -10% -10%;
+      z-index: 4;
+      height: 60%;
       border-radius: 50%;
-      background: radial-gradient(ellipse, rgba(217, 70, 239, .39), rgba(168, 85, 247, .12) 42%, transparent 70%);
-      filter: blur(14px);
+      background: radial-gradient(ellipse, rgba(217, 70, 239, .35), rgba(168, 85, 247, .15) 50%, transparent 75%);
+      filter: blur(25px);
       opacity: 0;
-      animation: mistRise 4.5s ease-out 1.3s forwards;
+      animation: mistRise 5s ease-out 1s forwards;
       pointer-events: none;
     }
 
-    .message {
+    /* Estrelas Brilhantes (Sparks) espalhadas pela tela */
+    .spark {
       position: absolute;
-      z-index: 5;
-      left: 1.75rem;
-      right: 1.75rem;
-      bottom: 1.65rem;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(16px);
-      animation: messageIn 1.3s ease-out 4.4s forwards;
+      z-index: 6;
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: #fff;
+      box-shadow: 0 0 12px 4px rgba(245, 208, 254, .9);
+      pointer-events: none;
+      animation: twinkle var(--time) ease-in-out var(--wait) infinite;
     }
 
+    /* Pétalas Caindo em Tela Toda */
     .petal {
       position: absolute;
       z-index: 6;
-      width: 10px;
-      height: 15px;
+      width: 14px;
+      height: 20px;
       border-radius: 90% 20% 90% 20%;
       background: linear-gradient(145deg, #fbcfe8, #c084fc);
-      box-shadow: 0 0 12px rgba(244,114,182,.8);
+      box-shadow: 0 0 14px rgba(244,114,182,.8);
       opacity: 0;
       pointer-events: none;
       animation: floatPetal var(--duration) ease-in var(--delay) infinite;
     }
 
-    .p1 { left: 10%; top: 20%; --duration: 6s; --delay: 1s; }
-    .p2 { left: 77%; top: 18%; --duration: 7.5s; --delay: 2.4s; transform: rotate(40deg); }
-    .p3 { left: 88%; top: 52%; --duration: 6.8s; --delay: .5s; transform: rotate(85deg); }
-    .p4 { left: 17%; top: 61%; --duration: 8s; --delay: 3.4s; transform: rotate(-25deg); }
-    .p5 { left: 55%; top: 5%; --duration: 7s; --delay: 2s; transform: rotate(20deg); }
-    .p6 { left: 42%; top: 39%; --duration: 8.2s; --delay: 4s; transform: rotate(115deg); }
+    /* Posições das Pétalas */
+    .p1 { left: 8%;  top: -5%; --duration: 7s;   --delay: 0.5s; }
+    .p2 { left: 25%; top: -5%; --duration: 8.5s; --delay: 2s;   }
+    .p3 { left: 45%; top: -5%; --duration: 6.5s; --delay: 1.2s; }
+    .p4 { left: 65%; top: -5%; --duration: 9s;   --delay: 3s;   }
+    .p5 { left: 82%; top: -5%; --duration: 7.5s; --delay: 0.2s; }
+    .p6 { left: 93%; top: -5%; --duration: 8s;   --delay: 2.5s; }
 
-    .spark {
+    /* Posições das Estrelas */
+    .s1 { top: 15%; left: 15%; --time: 2.5s; --wait: 0.2s; }
+    .s2 { top: 25%; left: 80%; --time: 3.2s; --wait: 1.0s; }
+    .s3 { top: 65%; left: 10%; --time: 2.2s; --wait: 1.8s; }
+    .s4 { top: 75%; left: 85%; --time: 3.0s; --wait: 0.5s; }
+    .s5 { top: 40%; left: 20%; --time: 2.8s; --wait: 1.5s; }
+    .s6 { top: 10%; left: 60%; --time: 3.5s; --wait: 2.2s; }
+    .s7 { top: 50%; left: 75%; --time: 2.4s; --wait: 0.8s; }
+    .s8 { top: 85%; left: 40%; --time: 3.1s; --wait: 2.8s; }
+
+    /* Mensagem Final */
+    .message {
       position: absolute;
-      z-index: 6;
-      width: 4px;
-      height: 4px;
-      border-radius: 999px;
-      background: #fff;
-      box-shadow: 0 0 10px 3px rgba(245, 208, 254, .85);
+      z-index: 10;
+      left: 1rem;
+      right: 1rem;
+      bottom: 6rem;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: messageIn 1.5s ease-out 4.2s forwards;
       pointer-events: none;
-      animation: twinkle var(--time) ease-in-out var(--wait) infinite;
     }
 
-    .s1 { top: 13%; left: 23%; --time: 2.7s; --wait: .5s; }
-    .s2 { top: 28%; left: 84%; --time: 3.4s; --wait: 1.2s; }
-    .s3 { top: 67%; left: 8%; --time: 2.1s; --wait: 2s; }
-    .s4 { top: 75%; left: 79%; --time: 3s; --wait: .2s; }
-    .s5 { top: 42%; left: 13%; --time: 2.8s; --wait: 1.8s; }
-    .s6 { top: 8%; left: 64%; --time: 3.7s; --wait: 2.7s; }
-    .s7 { top: 48%; left: 71%; --time: 2.5s; --wait: .7s; }
-    .s8 { top: 87%; left: 36%; --time: 3.1s; --wait: 3s; }
+    /* Botão de Replay Reestilizado */
+    .replay-button-container {
+      position: absolute;
+      bottom: 2rem;
+      z-index: 20;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .replay-button {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      transition: all 0.4s ease;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+
+    .replay-button:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 12px 40px 0 rgba(168, 85, 247, 0.4);
+    }
 
     .replay-icon {
-      transition: transform .45s ease;
+      transition: transform 0.6s ease;
     }
 
-    .replay-button:hover .replay-icon,
-    .replay-button:focus-visible .replay-icon {
+    .replay-button:hover .replay-icon {
       transform: rotate(180deg);
     }
 
-    .is-replaying .photo-layer,
-    .is-replaying .photo-layer img,
-    .is-replaying .light-sweep,
-    .is-replaying .mist,
-    .is-replaying .message {
-      animation: none;
-    }
-
-    .is-replaying .photo-layer {
-      clip-path: circle(0% at 50% 56%);
-    }
-
-    .is-replaying .photo-layer img {
-      transform: scale(1.25);
-      filter: saturate(.8) blur(9px) brightness(.6);
-    }
-
-    .is-replaying .light-sweep,
-    .is-replaying .mist,
-    .is-replaying .message {
-      opacity: 0;
-    }
-
-    .is-replaying.run .photo-layer { animation: bloom 5.8s cubic-bezier(.16,.85,.25,1) .3s forwards; }
-    .is-replaying.run .photo-layer img { animation: focus 5.8s cubic-bezier(.16,.85,.25,1) .3s forwards; }
-    .is-replaying.run .light-sweep { animation: sweep 3.2s ease-in-out 1.7s forwards; }
-    .is-replaying.run .mist { animation: mistRise 4.5s ease-out 1.3s forwards; }
-    .is-replaying.run .message { animation: messageIn 1.3s ease-out 4.4s forwards; }
-
+    /* Keyframes de Animação */
     @keyframes bloom {
-      0% { clip-path: circle(0% at 50% 56%); }
-      48% { clip-path: circle(36% at 50% 56%); }
-      100% { clip-path: circle(104% at 50% 56%); }
+      0% { clip-path: circle(0% at 50% 50%); }
+      100% { clip-path: circle(120% at 50% 50%); }
     }
 
     @keyframes focus {
-      0% { transform: scale(1.25); filter: saturate(.8) blur(9px) brightness(.6); }
-      55% { filter: saturate(1.15) blur(2px) brightness(.95); }
-      100% { transform: scale(1); filter: saturate(1.14) blur(0) brightness(1); }
+      0% { transform: scale(1.3); filter: saturate(.7) blur(12px) brightness(.5); }
+      50% { filter: saturate(1.2) blur(3px) brightness(.95); }
+      100% { transform: scale(1); filter: saturate(1.15) blur(0) brightness(1); }
     }
 
     @keyframes sweep {
-      0% { left: -42%; opacity: 0; }
-      17% { opacity: .65; }
-      76% { opacity: .4; }
-      100% { left: 115%; opacity: 0; }
+      0% { left: -60vw; opacity: 0; }
+      20% { opacity: 0.7; }
+      80% { opacity: 0.5; }
+      100% { left: 120vw; opacity: 0; }
     }
 
     @keyframes mistRise {
-      0% { transform: translateY(75px) scale(.8); opacity: 0; }
-      55% { opacity: .8; }
-      100% { transform: translateY(-24px) scale(1.1); opacity: .32; }
+      0% { transform: translateY(80px) scale(0.8); opacity: 0; }
+      50% { opacity: 0.8; }
+      100% { transform: translateY(-30px) scale(1.1); opacity: 0.35; }
     }
 
     @keyframes messageIn {
@@ -265,64 +272,125 @@
     }
 
     @keyframes floatPetal {
-      0% { opacity: 0; translate: 0 -12px; rotate: 0deg; }
-      12% { opacity: .95; }
-      86% { opacity: .72; }
-      100% { opacity: 0; translate: 34px 215px; rotate: 220deg; }
+      0% { opacity: 0; transform: translateY(0) rotate(0deg) translateX(0); }
+      10% { opacity: 0.9; }
+      90% { opacity: 0.8; }
+      100% { opacity: 0; transform: translateY(105vh) rotate(360deg) translateX(50px); }
     }
 
     @keyframes twinkle {
-      0%, 100% { opacity: .15; transform: scale(.55); }
-      48% { opacity: 1; transform: scale(1.8); }
+      0%, 100% { opacity: 0.2; transform: scale(0.6); }
+      50% { opacity: 1; transform: scale(2); box-shadow: 0 0 18px 6px rgba(245, 208, 254, 1); }
     }
 
     @keyframes breathe {
-      to { transform: scale(1.14) translate(10px, 4px); opacity: .8; }
+      to { transform: scale(1.2) translate(20px, -10px); opacity: 0.8; }
     }
 
-    @keyframes settle {
-      to { transform: translateY(0); }
+    /* Estado de Reinício do Replay */
+    .is-replaying .photo-layer,
+    .is-replaying .photo-layer img,
+    .is-replaying .light-sweep,
+    .is-replaying .mist,
+    .is-replaying .message {
+      animation: none !important;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
-      .photo-layer { clip-path: circle(104% at 50% 56%); }
-      .photo-layer img { transform: scale(1); filter: saturate(1.14) blur(0) brightness(1); }
-      .message { opacity: 1; transform: none; }
-    }
+    .is-replaying .photo-layer { clip-path: circle(0% at 50% 50%); }
+    .is-replaying .photo-layer img { transform: scale(1.3); filter: saturate(.7) blur(12px) brightness(.5); }
+    .is-replaying .light-sweep,
+    .is-replaying .mist,
+    .is-replaying .message { opacity: 0; }
+
+    .is-replaying.run .photo-layer { animation: bloom 5.5s cubic-bezier(.16,.85,.25,1) 0.3s forwards !important; }
+    .is-replaying.run .photo-layer img { animation: focus 5.5s cubic-bezier(.16,.85,.25,1) 0.3s forwards !important; }
+    .is-replaying.run .light-sweep { animation: sweep 3.5s ease-in-out 1.5s forwards !important; }
+    .is-replaying.run .mist { animation: mistRise 5s ease-out 1s forwards !important; }
+    .is-replaying.run .message { animation: messageIn 1.5s ease-out 4.2s forwards !important; }
   </style>
-  <script src="/_sdk/0e8d3a91e1c6f495.data_sdk.js" type="text/javascript" integrity="sha512-c00oDoGjsMgluCLLEyVl3suwEkgjOGGplVFbsilUoBg4aMKNmsL3mwsc9r0dPn95qiSZyjBousQXgROkAW7p/w=="></script>
-  <script src="/_sdk/eba18683f23e5798.resizing_sdk.js" type="text/javascript" integrity="sha512-E0UWUllhwPXaNJtjyTKXWKrIE+FruPfFpO4mRmMDP2LI+U9bOizy5npCq6xx/JyWcvSK7D3TFf2wFR2Mha9kbA=="></script>
- </head>
- <body data-template-id="__page-root">
-  <div class="app-shell flex min-h-screen w-full flex-col items-center justify-between px-5 py-7 sm:px-8">
-   <div class="ambient ambient-one"></div>
-   <div class="ambient ambient-two"></div>
-   <div class="star-field"></div>
-   <header class="relative z-10 flex w-full max-w-md items-center justify-center">
-    <p data-template-id="eyebrow-text" class="canva-text font-['Space_Mono'] text-xs uppercase tracking-[0.27em]"></p>
-   </header>
-   <main class="relative z-10 flex w-full flex-1 flex-col items-center justify-center py-6" aria-label="Revelação de uma imagem romântica">
-    <section class="reveal-stage" id="reveal-stage" aria-label="Imagem romântica sendo revelada">
-     <div class="photo-layer"><img data-template-id="romantic-image" class="canva-image" loading="lazy">
-     </div>
-     <div class="mist"></div>
-     <div class="light-sweep"></div><span class="petal p1" aria-hidden="true"></span> <span class="petal p2" aria-hidden="true"></span> <span class="petal p3" aria-hidden="true"></span> <span class="petal p4" aria-hidden="true"></span> <span class="petal p5" aria-hidden="true"></span> <span class="petal p6" aria-hidden="true"></span> <span class="spark s1" aria-hidden="true"></span> <span class="spark s2" aria-hidden="true"></span> <span class="spark s3" aria-hidden="true"></span> <span class="spark s4" aria-hidden="true"></span> <span class="spark s5" aria-hidden="true"></span> <span class="spark s6" aria-hidden="true"></span> <span class="spark s7" aria-hidden="true"></span> <span class="spark s8" aria-hidden="true"></span>
-     <div class="message">
-      <p data-template-id="message-line-one" class="canva-text mb-1 font-medium leading-tight"></p>
-      <p data-template-id="message-line-two" class="canva-text leading-tight"></p>
-     </div>
-    </section><button data-template-id="replay-button" id="replay-button" type="button" class="replay-button canva-button mt-7 inline-flex items-center gap-2 rounded-full px-5 py-3 font-['Space_Mono'] text-xs uppercase tracking-[0.13em] shadow-lg transition duration-300 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"> <i class="replay-icon h-4 w-4" data-lucide="rotate-ccw" aria-hidden="true"></i> <span data-template-id="replay-label" class="canva-text"></span> </button>
-   </main>
-   <footer class="relative z-10 text-center">
-    <p data-template-id="footer-text" class="canva-text text-base italic"></p>
-   </footer>
+</head>
+
+<body>
+  <div class="app-shell">
+    
+    <!-- Luzes de Fundo -->
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <!-- Canvas de Partículas Dinâmicas do Fundo -->
+    <canvas id="starsCanvas" class="absolute inset-0 z-1 pointer-events-none"></canvas>
+
+    <!-- Cabeçalho Flutuante -->
+    <header class="relative z-10 pt-6 text-center w-full">
+      <p data-template-id="eyebrow-text" class="canva-text font-['Space_Mono'] text-xs uppercase tracking-[0.3em] text-purple-200 drop-shadow-md">
+        Uma surpresa para você
+      </p>
+    </header>
+
+    <!-- Palco Principal (TELA TODA) -->
+    <main class="reveal-stage" id="reveal-stage" aria-label="Revelação Romântica">
+      
+      <!-- Camada da Imagem -->
+      <div class="photo-layer">
+        <img data-template-id="romantic-image" class="canva-image" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=1200&auto=format&fit=crop" alt="Foto Romântica">
+      </div>
+
+      <!-- Efeitos Visuais -->
+      <div class="mist"></div>
+      <div class="light-sweep"></div>
+
+      <!-- Pétalas Caindo -->
+      <span class="petal p1" aria-hidden="true"></span>
+      <span class="petal p2" aria-hidden="true"></span>
+      <span class="petal p3" aria-hidden="true"></span>
+      <span class="petal p4" aria-hidden="true"></span>
+      <span class="petal p5" aria-hidden="true"></span>
+      <span class="petal p6" aria-hidden="true"></span>
+
+      <!-- Estrelas Brilhantes -->
+      <span class="spark s1" aria-hidden="true"></span>
+      <span class="spark s2" aria-hidden="true"></span>
+      <span class="spark s3" aria-hidden="true"></span>
+      <span class="spark s4" aria-hidden="true"></span>
+      <span class="spark s5" aria-hidden="true"></span>
+      <span class="spark s6" aria-hidden="true"></span>
+      <span class="spark s7" aria-hidden="true"></span>
+      <span class="spark s8" aria-hidden="true"></span>
+
+      <!-- Mensagem Romântica -->
+      <div class="message">
+        <p data-template-id="message-line-one" class="canva-text text-2xl sm:text-4xl font-medium leading-tight text-white drop-shadow-lg">
+          Você é o meu momento favorito
+        </p>
+        <p data-template-id="message-line-two" class="canva-text text-lg sm:text-xl text-purple-200 italic mt-2 drop-shadow-md">
+          Para todo o sempre... ❤️
+        </p>
+      </div>
+    </main>
+
+    <!-- Botão de Replay Flutuante -->
+    <div class="replay-button-container">
+      <button data-template-id="replay-button" id="replay-button" type="button" class="replay-button canva-button inline-flex items-center gap-3 rounded-full px-6 py-3.5 font-['Space_Mono'] text-xs uppercase tracking-[0.15em] cursor-pointer">
+        <i class="replay-icon h-4 w-4" data-lucide="rotate-ccw" aria-hidden="true"></i>
+        <span data-template-id="replay-label" class="canva-text">Reviver Momento</span>
+      </button>
+    </div>
+
+    <!-- Rodapé Discreto -->
+    <footer class="relative z-10 pb-2 text-center">
+      <p data-template-id="footer-text" class="canva-text text-xs text-purple-300/60 italic"></p>
+    </footer>
+
   </div>
-  <script src="/_sdk/a051f9537983733d.editing_sdk.js" integrity="sha512-IWn3eBHnVt7zQ0Rp79J72qSgJoLbskCA9lcfY4retf+5km4LjuhSHpvx+182KCHmEZ6EbJtWqVsybpV8Sd8PQQ=="></script>
+
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      lucide.createIcons();
+      // Inicializar Ícones Lucide
+      if (window.lucide) {
+        lucide.createIcons();
+      }
 
+      // Lógica de Replay
       const stage = document.getElementById("reveal-stage");
       const replayButton = document.getElementById("replay-button");
 
@@ -338,9 +406,58 @@
 
         window.setTimeout(() => {
           stage.classList.remove("is-replaying", "run");
-        }, 6500);
+        }, 6000);
       });
+
+      // Canvas de Fundo de Estrelas / Vaga-lumes Dinâmicos
+      const canvas = document.getElementById('starsCanvas');
+      const ctx = canvas.getContext('2d');
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      class Star {
+        constructor() {
+          this.reset();
+        }
+        reset() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.size = Math.random() * 2 + 0.5;
+          this.alpha = Math.random();
+          this.speed = Math.random() * 0.01 + 0.005;
+          this.dir = Math.random() > 0.5 ? 1 : -1;
+        }
+        update() {
+          this.alpha += this.speed * this.dir;
+          if (this.alpha >= 1 || this.alpha <= 0.1) {
+            this.dir *= -1;
+          }
+        }
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
+          ctx.fill();
+        }
+      }
+
+      const stars = Array.from({ length: 60 }, () => new Star());
+
+      function animateStars() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach(star => {
+          star.update();
+          star.draw();
+        });
+        requestAnimationFrame(animateStars);
+      }
+      animateStars();
     });
   </script>
- </body>
+</body>
 </html>
