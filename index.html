@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Revelação Romântica - Tela Cheia</title>
+  <title>Revelação Romântica - Flores Mágicas</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -12,8 +12,10 @@
     :root {
       --ink: #08020d;
       --violet: #a855f7;
+      --violet-dark: #7c3aed;
       --pink: #f472b6;
       --lavender: #e9d5ff;
+      --green-stem: #4ade80;
     }
 
     * { 
@@ -30,7 +32,7 @@
       font-family: "Alegreya", serif;
     }
 
-    /* Container Principal - Occupy Fullscreen */
+    /* Container Principal - Tela Cheia */
     .app-shell {
       position: relative;
       width: 100vw;
@@ -43,7 +45,7 @@
       isolation: isolate;
     }
 
-    /* Fundo dinâmico com brilhos */
+    /* Luzes de Fundo */
     .ambient {
       position: absolute;
       border-radius: 999px;
@@ -71,127 +73,207 @@
       animation-delay: -3.5s;
     }
 
-    /* Estágio de Revelação em Tela Toda */
+    /* Palco Principal */
     .reveal-stage {
       position: absolute;
       inset: 0;
       width: 100vw;
       height: 100vh;
-      z-index: 2;
+      z-index: 5;
       overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    /* Gradiente de proteção para texto */
-    .reveal-stage::after {
-      content: "";
+    /* 🌸 CONTAINER DAS FLORES NO CENTRO */
+    .flower-center {
+      position: relative;
+      width: 320px;
+      height: 420px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    /* Caule Principal */
+    .stem-main {
       position: absolute;
-      inset: 0;
-      z-index: 3;
-      pointer-events: none;
-      background: linear-gradient(
-        to top, 
-        rgba(8, 2, 13, 0.92) 0%, 
-        rgba(8, 2, 13, 0.3) 40%, 
-        rgba(8, 2, 13, 0.4) 100%
-      );
+      bottom: 40px;
+      width: 8px;
+      background: linear-gradient(to right, #2ec770, #4ade80);
+      border-radius: 4px;
+      height: 0;
+      transform-origin: bottom center;
+      animation: growStem 3s ease-out forwards;
+      box-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
     }
 
-    /* Camada da Foto com Animação de Revelação */
-    .photo-layer {
+    @keyframes growStem {
+      0% { height: 0; }
+      100% { height: 180px; }
+    }
+
+    /* Folhas Laterais */
+    .leaf {
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: #1a0925;
-      clip-path: circle(0% at 50% 50%);
-      animation: bloom 5.5s cubic-bezier(.16,.85,.25,1) 0.3s forwards;
-    }
-
-    .photo-layer img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      transform: scale(1.3);
-      filter: saturate(.7) blur(12px) brightness(.5);
-      animation: focus 5.5s cubic-bezier(.16,.85,.25,1) 0.3s forwards;
-    }
-
-    /* Varrida de Luz Magnífica */
-    .light-sweep {
-      position: absolute;
-      z-index: 4;
-      width: 50vw;
-      height: 200vh;
-      top: -50vh;
-      left: -60vw;
-      transform: rotate(25deg);
-      background: linear-gradient(to right, transparent, rgba(255,255,255,0.7), rgba(241, 190, 255, 0.4), transparent);
-      filter: blur(10px);
+      width: 0;
+      height: 0;
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      border-radius: 50% 0 50% 0;
       opacity: 0;
-      animation: sweep 3.5s ease-in-out 1.5s forwards;
-      pointer-events: none;
+      transform-origin: left center;
     }
 
-    /* Névoa Mística */
-    .mist {
+    .leaf-1 { bottom: 140px; left: -8px; transform: rotate(-35deg); animation: showLeaf 1.5s ease-out 2.2s forwards; }
+    .leaf-2 { bottom: 100px; right: -8px; transform: rotate(30deg); border-radius: 0 50% 0 50%; animation: showLeaf 1.5s ease-out 2.5s forwards; }
+    .leaf-3 { bottom: 60px; left: -6px; transform: rotate(-20deg); animation: showLeaf 1.5s ease-out 2.8s forwards; }
+
+    /* Folhas inferiores roxas (estilo da foto) */
+    .leaf-purple {
       position: absolute;
-      inset: auto -10% -10% -10%;
-      z-index: 4;
-      height: 60%;
-      border-radius: 50%;
-      background: radial-gradient(ellipse, rgba(217, 70, 239, .35), rgba(168, 85, 247, .15) 50%, transparent 75%);
-      filter: blur(25px);
+      width: 0;
+      height: 0;
+      background: linear-gradient(135deg, #a855f7, #7c3aed);
+      border-radius: 50% 0 50% 0;
       opacity: 0;
-      animation: mistRise 5s ease-out 1s forwards;
-      pointer-events: none;
+      transform-origin: left center;
+      box-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
     }
 
-    /* Estrelas Brilhantes (Sparks) espalhadas pela tela */
-    .spark {
+    .lp-1 { bottom: 50px; left: -15px; transform: rotate(-55deg); animation: showLeafPurple 1.8s ease-out 3.2s forwards; }
+    .lp-2 { bottom: 40px; left: 5px; transform: rotate(-25deg); animation: showLeafPurple 1.8s ease-out 3.4s forwards; }
+    .lp-3 { bottom: 40px; right: 5px; transform: rotate(25deg); border-radius: 0 50% 0 50%; animation: showLeafPurple 1.8s ease-out 3.6s forwards; }
+    .lp-4 { bottom: 50px; right: -15px; transform: rotate(55deg); border-radius: 0 50% 0 50%; animation: showLeafPurple 1.8s ease-out 3.8s forwards; }
+
+    @keyframes showLeaf {
+      0% { width: 0; height: 0; opacity: 0; }
+      100% { width: 45px; height: 25px; opacity: 1; }
+    }
+
+    @keyframes showLeafPurple {
+      0% { width: 0; height: 0; opacity: 0; }
+      100% { width: 55px; height: 30px; opacity: 1; }
+    }
+
+    /* Caules das flores laterais */
+    .stem-side {
       position: absolute;
-      z-index: 6;
+      bottom: 160px;
       width: 5px;
-      height: 5px;
-      border-radius: 999px;
-      background: #fff;
-      box-shadow: 0 0 12px 4px rgba(245, 208, 254, .9);
-      pointer-events: none;
-      animation: twinkle var(--time) ease-in-out var(--wait) infinite;
+      background: linear-gradient(to bottom, #4ade80, #2ec770);
+      border-radius: 3px;
+      height: 0;
+      transform-origin: bottom center;
+      opacity: 0.85;
     }
 
-    /* Pétalas Caindo em Tela Toda */
+    .stem-s1 { transform: rotate(-38deg); bottom: 150px; animation: growSide 2s ease-out 3s forwards; }
+    .stem-s2 { transform: rotate(32deg); bottom: 140px; animation: growSide 2s ease-out 3.3s forwards; }
+
+    @keyframes growSide {
+      0% { height: 0; }
+      100% { height: 110px; }
+    }
+
+    /* Flores */
+    .flower {
+      position: absolute;
+      opacity: 0;
+      transform-origin: bottom center;
+      transform: scale(0);
+    }
+
     .petal {
       position: absolute;
-      z-index: 6;
-      width: 14px;
-      height: 20px;
-      border-radius: 90% 20% 90% 20%;
-      background: linear-gradient(145deg, #fbcfe8, #c084fc);
-      box-shadow: 0 0 14px rgba(244,114,182,.8);
-      opacity: 0;
-      pointer-events: none;
-      animation: floatPetal var(--duration) ease-in var(--delay) infinite;
+      background: linear-gradient(135deg, #ffffff 0%, #e9d5ff 40%, #a855f7 100%);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      transform-origin: center bottom;
+      box-shadow: 0 0 10px rgba(168, 85, 247, 0.4), inset 0 -5px 10px rgba(139, 69, 213, 0.2);
     }
 
-    /* Posições das Pétalas */
-    .p1 { left: 8%;  top: -5%; --duration: 7s;   --delay: 0.5s; }
-    .p2 { left: 25%; top: -5%; --duration: 8.5s; --delay: 2s;   }
-    .p3 { left: 45%; top: -5%; --duration: 6.5s; --delay: 1.2s; }
-    .p4 { left: 65%; top: -5%; --duration: 9s;   --delay: 3s;   }
-    .p5 { left: 82%; top: -5%; --duration: 7.5s; --delay: 0.2s; }
-    .p6 { left: 93%; top: -5%; --duration: 8s;   --delay: 2.5s; }
+    .flower-main .petal:nth-child(1) { transform: rotate(0deg) translateY(-20px); }
+    .flower-main .petal:nth-child(2) { transform: rotate(72deg) translateY(-20px); }
+    .flower-main .petal:nth-child(3) { transform: rotate(144deg) translateY(-20px); }
+    .flower-main .petal:nth-child(4) { transform: rotate(216deg) translateY(-20px); }
+    .flower-main .petal:nth-child(5) { transform: rotate(288deg) translateY(-20px); }
 
-    /* Posições das Estrelas */
-    .s1 { top: 15%; left: 15%; --time: 2.5s; --wait: 0.2s; }
-    .s2 { top: 25%; left: 80%; --time: 3.2s; --wait: 1.0s; }
-    .s3 { top: 65%; left: 10%; --time: 2.2s; --wait: 1.8s; }
-    .s4 { top: 75%; left: 85%; --time: 3.0s; --wait: 0.5s; }
-    .s5 { top: 40%; left: 20%; --time: 2.8s; --wait: 1.5s; }
-    .s6 { top: 10%; left: 60%; --time: 3.5s; --wait: 2.2s; }
-    .s7 { top: 50%; left: 75%; --time: 2.4s; --wait: 0.8s; }
-    .s8 { top: 85%; left: 40%; --time: 3.1s; --wait: 2.8s; }
+    .flower-side .petal:nth-child(1) { transform: rotate(0deg) translateY(-15px); }
+    .flower-side .petal:nth-child(2) { transform: rotate(72deg) translateY(-15px); }
+    .flower-side .petal:nth-child(3) { transform: rotate(144deg) translateY(-15px); }
+    .flower-side .petal:nth-child(4) { transform: rotate(216deg) translateY(-15px); }
+    .flower-side .petal:nth-child(5) { transform: rotate(288deg) translateY(-15px); }
+
+    .pistil {
+      position: absolute;
+      width: 12px; height: 12px;
+      background: radial-gradient(circle, #fef08a, #facc15);
+      border-radius: 50%;
+      top: -9px; left: 50%;
+      margin-left: -6px;
+      box-shadow: 0 0 14px #facc15, 0 0 22px rgba(250, 204, 21, 0.5);
+      z-index: 10;
+    }
+
+    /* Tamanho das pétalas */
+    .flower-main .petal { width: 30px; height: 40px; }
+    .flower-side .petal { width: 23px; height: 32px; }
+
+    /* Animação de Desabrochar */
+    .flower-1 { top: -190px; left: 50%; margin-left: -35px; animation: bloom 2s ease-out 4s forwards; }
+    .flower-2 { top: -115px; left: 12%; animation: bloom 2s ease-out 4.8s forwards; }
+    .flower-3 { top: -105px; right: 10%; animation: bloom 2s ease-out 5.2s forwards; }
+
+    @keyframes bloom {
+      0% { opacity: 0; transform: scale(0) rotate(-12deg); }
+      60% { opacity: 1; transform: scale(1.2) rotate(4deg); }
+      80% { transform: scale(0.95) rotate(-2deg); }
+      100% { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+
+    /* Brilhos flutuantes ao redor das flores */
+    .sparkle {
+      position: absolute;
+      width: 6px; height: 6px;
+      background: radial-gradient(circle, #fff, #d8b4fe);
+      border-radius: 50%;
+      opacity: 0;
+      filter: blur(1px);
+      animation: twinkle 2s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; transform: scale(0.3); }
+      50% { opacity: 1; transform: scale(1.4); box-shadow: 0 0 10px rgba(216, 180, 254, 0.8); }
+    }
+
+    /* Brilho suave ao redor do buquê */
+    .glow-bouquet {
+      position: absolute;
+      width: 140px; height: 140px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.25), transparent 70%);
+      border-radius: 50%;
+      top: -130px; left: 50%; margin-left: -70px;
+      opacity: 0;
+      animation: glowPulse 3s ease-out 5.5s forwards;
+    }
+
+    @keyframes glowPulse {
+      0% { opacity: 0; transform: scale(0.5); }
+      50% { opacity: 0.7; transform: scale(1.2); }
+      100% { opacity: 0.4; transform: scale(1); }
+    }
+
+    /* Leve balanço como brisa */
+    .all-bouquet {
+      animation: breeze 5s ease-in-out 6s infinite alternate;
+      transform-origin: bottom center;
+    }
+
+    @keyframes breeze {
+      0% { transform: rotate(-1.5deg); }
+      100% { transform: rotate(1.5deg); }
+    }
 
     /* Mensagem Final */
     .message {
@@ -199,18 +281,18 @@
       z-index: 10;
       left: 1rem;
       right: 1rem;
-      bottom: 6rem;
+      bottom: 4rem;
       text-align: center;
       opacity: 0;
       transform: translateY(20px);
-      animation: messageIn 1.5s ease-out 4.2s forwards;
+      animation: messageIn 1.5s ease-out 7.2s forwards;
       pointer-events: none;
     }
 
-    /* Botão de Replay Reestilizado */
+    /* Botão de Replay */
     .replay-button-container {
       position: absolute;
-      bottom: 2rem;
+      bottom: 1.5rem;
       z-index: 20;
       display: flex;
       justify-content: center;
@@ -242,71 +324,50 @@
       transform: rotate(180deg);
     }
 
-    /* Keyframes de Animação */
-    @keyframes bloom {
-      0% { clip-path: circle(0% at 50% 50%); }
-      100% { clip-path: circle(120% at 50% 50%); }
-    }
-
-    @keyframes focus {
-      0% { transform: scale(1.3); filter: saturate(.7) blur(12px) brightness(.5); }
-      50% { filter: saturate(1.2) blur(3px) brightness(.95); }
-      100% { transform: scale(1); filter: saturate(1.15) blur(0) brightness(1); }
-    }
-
-    @keyframes sweep {
-      0% { left: -60vw; opacity: 0; }
-      20% { opacity: 0.7; }
-      80% { opacity: 0.5; }
-      100% { left: 120vw; opacity: 0; }
-    }
-
-    @keyframes mistRise {
-      0% { transform: translateY(80px) scale(0.8); opacity: 0; }
-      50% { opacity: 0.8; }
-      100% { transform: translateY(-30px) scale(1.1); opacity: 0.35; }
-    }
-
+    /* Animações Compartilhadas */
     @keyframes messageIn {
       to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes floatPetal {
-      0% { opacity: 0; transform: translateY(0) rotate(0deg) translateX(0); }
-      10% { opacity: 0.9; }
-      90% { opacity: 0.8; }
-      100% { opacity: 0; transform: translateY(105vh) rotate(360deg) translateX(50px); }
-    }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: scale(0.6); }
-      50% { opacity: 1; transform: scale(2); box-shadow: 0 0 18px 6px rgba(245, 208, 254, 1); }
     }
 
     @keyframes breathe {
       to { transform: scale(1.2) translate(20px, -10px); opacity: 0.8; }
     }
 
-    /* Estado de Reinício do Replay */
-    .is-replaying .photo-layer,
-    .is-replaying .photo-layer img,
-    .is-replaying .light-sweep,
-    .is-replaying .mist,
+    /* Responsividade */
+    @media (max-width: 360px) {
+      .flower-center { width: 280px; height: 380px; }
+      .flower-main .petal { width: 26px; height: 34px; }
+      .flower-side .petal { width: 20px; height: 28px; }
+      @keyframes growStem { 0%{height:0} 100%{height:150px} }
+      .flower-1 { top: -160px; }
+    }
+
+    /* Estado de Reinício */
+    .is-replaying .stem-main,
+    .is-replaying .stem-side,
+    .is-replaying .leaf,
+    .is-replaying .leaf-purple,
+    .is-replaying .flower,
+    .is-replaying .glow-bouquet,
     .is-replaying .message {
       animation: none !important;
     }
 
-    .is-replaying .photo-layer { clip-path: circle(0% at 50% 50%); }
-    .is-replaying .photo-layer img { transform: scale(1.3); filter: saturate(.7) blur(12px) brightness(.5); }
-    .is-replaying .light-sweep,
-    .is-replaying .mist,
-    .is-replaying .message { opacity: 0; }
-
-    .is-replaying.run .photo-layer { animation: bloom 5.5s cubic-bezier(.16,.85,.25,1) 0.3s forwards !important; }
-    .is-replaying.run .photo-layer img { animation: focus 5.5s cubic-bezier(.16,.85,.25,1) 0.3s forwards !important; }
-    .is-replaying.run .light-sweep { animation: sweep 3.5s ease-in-out 1.5s forwards !important; }
-    .is-replaying.run .mist { animation: mistRise 5s ease-out 1s forwards !important; }
-    .is-replaying.run .message { animation: messageIn 1.5s ease-out 4.2s forwards !important; }
+    .is-replaying.run .stem-main { animation: growStem 3s ease-out forwards !important; }
+    .is-replaying.run .leaf-1 { animation: showLeaf 1.5s ease-out 2.2s forwards !important; }
+    .is-replaying.run .leaf-2 { animation: showLeaf 1.5s ease-out 2.5s forwards !important; }
+    .is-replaying.run .leaf-3 { animation: showLeaf 1.5s ease-out 2.8s forwards !important; }
+    .is-replaying.run .lp-1 { animation: showLeafPurple 1.8s ease-out 3.2s forwards !important; }
+    .is-replaying.run .lp-2 { animation: showLeafPurple 1.8s ease-out 3.4s forwards !important; }
+    .is-replaying.run .lp-3 { animation: showLeafPurple 1.8s ease-out 3.6s forwards !important; }
+    .is-replaying.run .lp-4 { animation: showLeafPurple 1.8s ease-out 3.8s forwards !important; }
+    .is-replaying.run .stem-s1 { animation: growSide 2s ease-out 3s forwards !important; }
+    .is-replaying.run .stem-s2 { animation: growSide 2s ease-out 3.3s forwards !important; }
+    .is-replaying.run .flower-1 { animation: bloom 2s ease-out 4s forwards !important; }
+    .is-replaying.run .flower-2 { animation: bloom 2s ease-out 4.8s forwards !important; }
+    .is-replaying.run .flower-3 { animation: bloom 2s ease-out 5.2s forwards !important; }
+    .is-replaying.run .glow-bouquet { animation: glowPulse 3s ease-out 5.5s forwards !important; }
+    .is-replaying.run .message { animation: messageIn 1.5s ease-out 7.2s forwards !important; }
   </style>
 </head>
 
@@ -317,78 +378,107 @@
     <div class="ambient ambient-one"></div>
     <div class="ambient ambient-two"></div>
 
-    <!-- Canvas de Partículas Dinâmicas do Fundo -->
+    <!-- Canvas de Estrelas -->
     <canvas id="starsCanvas" class="absolute inset-0 z-1 pointer-events-none"></canvas>
 
-    <!-- Cabeçalho Flutuante -->
+    <!-- Cabeçalho -->
     <header class="relative z-10 pt-6 text-center w-full">
-      <p data-template-id="eyebrow-text" class="canva-text font-['Space_Mono'] text-xs uppercase tracking-[0.3em] text-purple-200 drop-shadow-md">
+      <p class="font-['Space_Mono'] text-xs uppercase tracking-[0.3em] text-purple-200 drop-shadow-md">
         Uma surpresa para você
       </p>
     </header>
 
-    <!-- Palco Principal (TELA TODA) -->
-    <main class="reveal-stage" id="reveal-stage" aria-label="Revelação Romântica">
-      
-      <!-- Camada da Imagem -->
-      <div class="photo-layer">
-        <img data-template-id="romantic-image" class="canva-image" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=1200&auto=format&fit=crop" alt="Foto Romântica">
+    <!-- 🌸 FLORES CRESCENDO NO CENTRO -->
+    <main class="reveal-stage" id="reveal-stage">
+      <div class="flower-center">
+        <div class="all-bouquet">
+          
+          <!-- Caule Principal + Folhas Verdes -->
+          <div class="stem-main">
+            <div class="leaf leaf-1"></div>
+            <div class="leaf leaf-2"></div>
+            <div class="leaf leaf-3"></div>
+            <!-- Folhas Roxas embaixo (estilo da foto) -->
+            <div class="leaf-purple lp-1"></div>
+            <div class="leaf-purple lp-2"></div>
+            <div class="leaf-purple lp-3"></div>
+            <div class="leaf-purple lp-4"></div>
+          </div>
+
+          <!-- Caules Laterais -->
+          <div class="stem-side stem-s1"></div>
+          <div class="stem-side stem-s2"></div>
+
+          <!-- Flor Principal (maior) -->
+          <div class="flower flower-main flower-1">
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="pistil"></div>
+          </div>
+
+          <!-- Flor Esquerda -->
+          <div class="flower flower-side flower-2">
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="pistil"></div>
+          </div>
+
+          <!-- Flor Direita -->
+          <div class="flower flower-side flower-3">
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="pistil"></div>
+          </div>
+
+          <!-- Brilhos ao redor -->
+          <div class="sparkle" style="top: -220px; left: 38%; animation-delay: 4.5s;"></div>
+          <div class="sparkle" style="top: -240px; left: 58%; animation-delay: 5s;"></div>
+          <div class="sparkle" style="top: -170px; left: 18%; animation-delay: 5.5s;"></div>
+          <div class="sparkle" style="top: -195px; right: 15%; animation-delay: 6s;"></div>
+          <div class="sparkle" style="top: -210px; right: 35%; animation-delay: 6.5s;"></div>
+
+          <!-- Brilho suave -->
+          <div class="glow-bouquet"></div>
+        </div>
       </div>
 
-      <!-- Efeitos Visuais -->
-      <div class="mist"></div>
-      <div class="light-sweep"></div>
-
-      <!-- Pétalas Caindo -->
-      <span class="petal p1" aria-hidden="true"></span>
-      <span class="petal p2" aria-hidden="true"></span>
-      <span class="petal p3" aria-hidden="true"></span>
-      <span class="petal p4" aria-hidden="true"></span>
-      <span class="petal p5" aria-hidden="true"></span>
-      <span class="petal p6" aria-hidden="true"></span>
-
-      <!-- Estrelas Brilhantes -->
-      <span class="spark s1" aria-hidden="true"></span>
-      <span class="spark s2" aria-hidden="true"></span>
-      <span class="spark s3" aria-hidden="true"></span>
-      <span class="spark s4" aria-hidden="true"></span>
-      <span class="spark s5" aria-hidden="true"></span>
-      <span class="spark s6" aria-hidden="true"></span>
-      <span class="spark s7" aria-hidden="true"></span>
-      <span class="spark s8" aria-hidden="true"></span>
-
-      <!-- Mensagem Romântica -->
+      <!-- Mensagem Final -->
       <div class="message">
-        <p data-template-id="message-line-one" class="canva-text text-2xl sm:text-4xl font-medium leading-tight text-white drop-shadow-lg">
-          Você é o meu momento favorito
+        <p class="text-2xl sm:text-4xl font-medium leading-tight text-white drop-shadow-lg">
+          Você é muito especial 💜
         </p>
-        <p data-template-id="message-line-two" class="canva-text text-lg sm:text-xl text-purple-200 italic mt-2 drop-shadow-md">
-          Para todo o sempre... ❤️
+        <p class="text-lg sm:text-xl text-purple-200 italic mt-2 drop-shadow-md">
+          E essas flores são para você... 🌸
         </p>
       </div>
     </main>
 
-    <!-- Botão de Replay Flutuante -->
+    <!-- Botão de Replay -->
     <div class="replay-button-container">
-      <button data-template-id="replay-button" id="replay-button" type="button" class="replay-button canva-button inline-flex items-center gap-3 rounded-full px-6 py-3.5 font-['Space_Mono'] text-xs uppercase tracking-[0.15em] cursor-pointer">
-        <i class="replay-icon h-4 w-4" data-lucide="rotate-ccw" aria-hidden="true"></i>
-        <span data-template-id="replay-label" class="canva-text">Reviver Momento</span>
+      <button id="replay-button" type="button" class="replay-button inline-flex items-center gap-3 rounded-full px-6 py-3.5 font-['Space_Mono'] text-xs uppercase tracking-[0.15em] cursor-pointer">
+        <i class="replay-icon h-4 w-4" data-lucide="rotate-ccw"></i>
+        <span>Reviver Momento</span>
       </button>
     </div>
 
-    <!-- Rodapé Discreto -->
     <footer class="relative z-10 pb-2 text-center">
-      <p data-template-id="footer-text" class="canva-text text-xs text-purple-300/60 italic"></p>
+      <p class="text-xs text-purple-300/60 italic"></p>
     </footer>
-
   </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // Inicializar Ícones Lucide
-      if (window.lucide) {
-        lucide.createIcons();
-      }
+      // Inicializar Ícones
+      if (window.lucide) lucide.createIcons();
 
       // Lógica de Replay
       const stage = document.getElementById("reveal-stage");
@@ -404,12 +494,12 @@
           });
         });
 
-        window.setTimeout(() => {
+        setTimeout(() => {
           stage.classList.remove("is-replaying", "run");
-        }, 6000);
+        }, 8500);
       });
 
-      // Canvas de Fundo de Estrelas / Vaga-lumes Dinâmicos
+      // Estrelas de fundo
       const canvas = document.getElementById('starsCanvas');
       const ctx = canvas.getContext('2d');
 
@@ -421,9 +511,7 @@
       window.addEventListener('resize', resizeCanvas);
 
       class Star {
-        constructor() {
-          this.reset();
-        }
+        constructor() { this.reset(); }
         reset() {
           this.x = Math.random() * canvas.width;
           this.y = Math.random() * canvas.height;
@@ -434,9 +522,7 @@
         }
         update() {
           this.alpha += this.speed * this.dir;
-          if (this.alpha >= 1 || this.alpha <= 0.1) {
-            this.dir *= -1;
-          }
+          if (this.alpha >= 1 || this.alpha <= 0.1) this.dir *= -1;
         }
         draw() {
           ctx.beginPath();
@@ -447,13 +533,9 @@
       }
 
       const stars = Array.from({ length: 60 }, () => new Star());
-
       function animateStars() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        stars.forEach(star => {
-          star.update();
-          star.draw();
-        });
+        stars.forEach(s => { s.update(); s.draw(); });
         requestAnimationFrame(animateStars);
       }
       animateStars();
