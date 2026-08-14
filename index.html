@@ -11,9 +11,7 @@
     --bg3:#f1e6f5;
   }
   *{ box-sizing:border-box; }
-  html,body{
-    margin:0; padding:0; width:100%; min-height:100vh;
-  }
+  html,body{ margin:0; padding:0; width:100%; min-height:100vh; }
   body{
     display:flex;
     flex-direction:column;
@@ -29,7 +27,7 @@
 
   .stage{
     width:100%;
-    max-width:620px;
+    max-width:640px;
     margin:0 auto;
     display:flex;
     flex-direction:column;
@@ -44,9 +42,7 @@
   }
 
   /* ---------- animações ---------- */
-  @keyframes growStem{
-    to{ stroke-dashoffset:0; }
-  }
+  @keyframes growStem{ to{ stroke-dashoffset:0; } }
   @keyframes popIn{
     0%{ opacity:0; transform:scale(0.2); }
     100%{ opacity:1; transform:scale(1); }
@@ -56,8 +52,12 @@
     55%{ opacity:1; transform:scale(1.08) rotate(4deg); }
     100%{ opacity:1; transform:scale(1) rotate(0deg); }
   }
-  @keyframes bowPop{
-    0%{ opacity:0; transform:scale(0.4) translateY(12px); }
+  @keyframes wrapPop{
+    0%{ opacity:0; transform:scale(0.85) translateY(14px); }
+    100%{ opacity:1; transform:scale(1) translateY(0); }
+  }
+  @keyframes ribbonPop{
+    0%{ opacity:0; transform:scale(0.5) translateY(10px); }
     100%{ opacity:1; transform:scale(1) translateY(0); }
   }
   @keyframes twinkle{
@@ -73,8 +73,8 @@
     100%{ opacity:1; transform:translateY(0); }
   }
   @keyframes glowPulse{
-    0%,100%{ text-shadow:0 0 8px rgba(232,93,117,0.25), 0 0 2px rgba(0,0,0,0.05); }
-    50%{ text-shadow:0 0 20px rgba(232,93,117,0.5), 0 0 6px rgba(0,0,0,0.05); }
+    0%,100%{ text-shadow:0 0 8px rgba(58,123,181,0.25), 0 0 2px rgba(0,0,0,0.05); }
+    50%{ text-shadow:0 0 20px rgba(58,123,181,0.45), 0 0 6px rgba(0,0,0,0.05); }
   }
 
   .stem{
@@ -107,12 +107,21 @@
     animation-timing-function:cubic-bezier(.34,1.56,.64,1);
     animation-fill-mode:forwards;
   }
-  .bow{
+  .wrap-part{
     opacity:0;
     transform-box:fill-box;
     transform-origin:center;
-    animation-name:bowPop;
+    animation-name:wrapPop;
     animation-duration:1s;
+    animation-timing-function:ease-out;
+    animation-fill-mode:forwards;
+  }
+  .ribbon{
+    opacity:0;
+    transform-box:fill-box;
+    transform-origin:center;
+    animation-name:ribbonPop;
+    animation-duration:0.9s;
     animation-timing-function:ease-out;
     animation-fill-mode:forwards;
   }
@@ -143,7 +152,7 @@
     font-weight:700;
     font-size:clamp(1.5rem, 5vw, 2.5rem);
     letter-spacing:0.4px;
-    background:linear-gradient(90deg,#e85d75,#f2994a,#c2478d);
+    background:linear-gradient(90deg,#3a7bb5,#5b9bd5,#e8590c);
     -webkit-background-clip:text;
     background-clip:text;
     color:transparent;
@@ -151,7 +160,7 @@
 
   @media (prefers-reduced-motion: reduce){
     .stem{ stroke-dashoffset:0; animation:none; }
-    .leaf,.flower,.bow{ opacity:1; transform:none; animation:none; }
+    .leaf,.flower,.wrap-part,.ribbon{ opacity:1; transform:none; animation:none; }
     .sparkle{ display:none; }
     #swayGroup{ animation:none; }
     .caption{ opacity:1; animation:none; }
@@ -171,19 +180,20 @@
           <stop offset="0%" stop-color="#82c06e"/>
           <stop offset="100%" stop-color="#4c7a3f"/>
         </linearGradient>
-        <radialGradient id="centerGradient" cx="35%" cy="35%" r="70%">
-          <stop offset="0%" stop-color="#fff3b0"/>
-          <stop offset="100%" stop-color="#f59f00"/>
+        <radialGradient id="sunflowerCenter" cx="35%" cy="35%" r="70%">
+          <stop offset="0%" stop-color="#8a5a2e"/>
+          <stop offset="100%" stop-color="#4a2c14"/>
         </radialGradient>
         <filter id="softShadow" x="-60%" y="-60%" width="220%" height="220%">
-          <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#3a1f2b" flood-opacity="0.18"/>
+          <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#1a2a3a" flood-opacity="0.18"/>
         </filter>
       </defs>
 
       <g id="swayGroup">
         <g id="stemsLayer"></g>
+        <g id="wrapLayer"></g>
+        <g id="ribbonLayer"></g>
         <g id="leavesLayer"></g>
-        <g id="bowLayer"></g>
         <g id="flowersLayer"></g>
         <g id="sparkleLayer"></g>
       </g>
@@ -194,33 +204,50 @@
 
 <script>
 (function(){
-  const base = { x:400, y:862 };
+  const base = { x:400, y:868 };
 
-  // ---------- dados do buquê ----------
+  // ---------- paleta ----------
+  const HYDRANGEA_COLORS = ['#4a90c9', '#5b9bd5', '#3f7fb8'];
+  const ROSE_SETS = [
+    { outer:'#ffb347', mid:'#ff9d2f', inner:'#ffcc33', center:'#e8590c' },
+    { outer:'#ffc55c', mid:'#ffab2e', inner:'#fff3b0', center:'#d9480f' },
+    { outer:'#ffa94d', mid:'#ff8f1f', inner:'#ffdb70', center:'#c2410c' }
+  ];
+
+  // ---------- dados do buquê (estilo redondo, girassol + rosas laranja + hortênsia azul) ----------
   const mainStems = [
-    { end:{x:195,y:300}, ctrl:{x:255,y:560}, type:'wild',  colors:{petal:'#9775fa', center:'#5f3dc4'} },
-    { end:{x:288,y:190}, ctrl:{x:330,y:520}, type:'rose',  colors:{outer:'#ffc2d1', mid:'#ff8fa3', inner:'#ff6392', center:'#e64980'} },
-    { end:{x:363,y:120}, ctrl:{x:385,y:480}, type:'daisy', colors:{petal:'#fffaf0'} },
-    { end:{x:430,y:98},  ctrl:{x:410,y:460}, type:'rose',  colors:{outer:'#ff9770', mid:'#ff7043', inner:'#ff5722', center:'#d84315'} },
-    { end:{x:500,y:128}, ctrl:{x:470,y:480}, type:'daisy', colors:{petal:'#fff3d6'} },
-    { end:{x:575,y:183}, ctrl:{x:540,y:520}, type:'rose',  colors:{outer:'#ff6f91', mid:'#ff4d6d', inner:'#e0355b', center:'#c9184a'} },
-    { end:{x:650,y:288}, ctrl:{x:580,y:560}, type:'wild',  colors:{petal:'#74c0fc', center:'#1971c2'} }
+    { end:{x:245,y:300}, type:'hydrangea', scale:1.15 },
+    { end:{x:255,y:225}, type:'rose', colors:ROSE_SETS[0], scale:1 },
+    { end:{x:285,y:175}, type:'hydrangea', scale:1.15 },
+    { end:{x:370,y:150}, type:'sunflower', scale:1.6 },
+    { end:{x:330,y:120}, type:'button', scale:0.55 },
+    { end:{x:420,y:135}, type:'hydrangea', scale:1.15 },
+    { end:{x:460,y:190}, type:'rose', colors:ROSE_SETS[1], scale:1 },
+    { end:{x:505,y:155}, type:'hydrangea', scale:1.15 },
+    { end:{x:555,y:215}, type:'hydrangea', scale:1.15 },
+    { end:{x:520,y:290}, type:'rose', colors:ROSE_SETS[2], scale:1 },
+    { end:{x:400,y:310}, type:'hydrangea', scale:1.15 },
+    { end:{x:455,y:130}, type:'button', scale:0.55 },
+    { end:{x:335,y:255}, type:'hydrangea', scale:1.15 }
   ];
   const fillerStems = [
-    { end:{x:330,y:300}, ctrl:{x:350,y:560}, type:'filler' },
-    { end:{x:498,y:300}, ctrl:{x:470,y:560}, type:'filler' }
+    { end:{x:210,y:260}, type:'filler', scale:0.9 },
+    { end:{x:590,y:260}, type:'filler', scale:0.9 },
+    { end:{x:400,y:120}, type:'filler', scale:0.9 },
+    { end:{x:305,y:330}, type:'filler', scale:0.9 }
   ];
   const allStems = mainStems.concat(fillerStems);
 
   // ---------- tempos ----------
-  const STEM_STAGGER = 0.12;
+  const STEM_STAGGER = 0.08;
   const STEM_DUR = 1.4;
   const stemsFinish = (allStems.length - 1) * STEM_STAGGER + STEM_DUR;
 
-  const BOW_START = 0.5;
+  const WRAP_START = 0.6;
+  const RIBBON_START = 1.05;
 
   const FLOWER_START = stemsFinish + 0.25;
-  const FLOWER_STAGGER = 0.4;
+  const FLOWER_STAGGER = 0.22;
   const FLOWER_DUR = 1.0;
   const flowersFinish = FLOWER_START + (mainStems.length - 1) * FLOWER_STAGGER + FLOWER_DUR;
 
@@ -228,12 +255,17 @@
   const CAPTION_DELAY = SPARKLE_START + 0.4;
 
   // ---------- helpers ----------
+  function ctrlFor(end){
+    return {
+      x: base.x + (end.x - base.x) * 0.6,
+      y: base.y - (base.y - end.y) * 0.78
+    };
+  }
   function bez(p0, p1, p2, t){
     const x = (1-t)*(1-t)*p0.x + 2*(1-t)*t*p1.x + t*t*p2.x;
     const y = (1-t)*(1-t)*p0.y + 2*(1-t)*t*p1.y + t*t*p2.y;
     return { x, y };
   }
-
   function petalRing(count, rx, ry, dist, color, ringRotate){
     ringRotate = ringRotate || 0;
     let s = '<g transform="rotate(' + ringRotate + ')">';
@@ -253,17 +285,40 @@
       '<circle cx="0" cy="0" r="6" fill="' + c.center + '"/>' +
       '</g>';
   }
-  function daisyInner(c){
-    return '<g filter="url(#softShadow)">' +
-      petalRing(10, 7, 28, 26, c.petal, 0) +
-      '<circle cx="0" cy="0" r="15" fill="url(#centerGradient)"/>' +
-      '</g>';
+  function sunflowerInner(){
+    let s = '<g filter="url(#softShadow)">';
+    s += petalRing(16, 6, 34, 30, '#ffcf3d', 0);
+    s += petalRing(16, 5, 26, 24, '#ffb200', 11.25);
+    s += '<circle cx="0" cy="0" r="22" fill="url(#sunflowerCenter)"/>';
+    const dots = [[0,0],[7,4],[-7,4],[7,-4],[-7,-4],[0,9],[0,-9],[12,0],[-12,0],[4,12],[-4,-12]];
+    dots.forEach(function(d){
+      s += '<circle cx="' + d[0] + '" cy="' + d[1] + '" r="1.6" fill="#2e1c0d" opacity="0.7"/>';
+    });
+    s += '</g>';
+    return s;
   }
-  function wildInner(c){
-    return '<g filter="url(#softShadow)">' +
-      petalRing(5, 9, 15, 11, c.petal, 0) +
-      '<circle cx="0" cy="0" r="4.5" fill="' + c.center + '"/>' +
-      '</g>';
+  function hydrangeaInner(color){
+    const offsets = [[0,0],[16,-9],[-16,-9],[16,9],[-16,9],[0,-19],[0,19],[25,0],[-25,0]];
+    const angles = [10,-15,20,-5,25,-20,5,15,-10];
+    let s = '<g filter="url(#softShadow)">';
+    offsets.forEach(function(o,i){
+      s += '<g transform="translate(' + o[0] + ',' + o[1] + ') rotate(' + angles[i] + ')">' +
+        petalRing(4, 5, 9, 6, color, 0) +
+        '<circle cx="0" cy="0" r="2" fill="#eaf5ff"/>' +
+        '</g>';
+    });
+    s += '</g>';
+    return s;
+  }
+  function buttonInner(){
+    let s = '<g filter="url(#softShadow)">';
+    s += '<circle cx="0" cy="0" r="9" fill="#ffcb3d"/>';
+    const dots = [[3,-3],[-3,-3],[3,3],[-3,3],[0,5],[0,-5],[5,0],[-5,0]];
+    dots.forEach(function(d){
+      s += '<circle cx="' + d[0] + '" cy="' + d[1] + '" r="1.2" fill="#e8a800"/>';
+    });
+    s += '</g>';
+    return s;
   }
   function fillerInner(){
     const dots = [[0,0],[10,-14],[-9,-12],[4,-26],[-4,-24],[0,-38],[8,-34],[-9,-32]];
@@ -275,13 +330,19 @@
     return s;
   }
 
+  let hydrangeaIndex = 0;
   function flowerMarkup(stem, delay){
     let inner = '';
+    const scale = stem.scale || 1;
     if(stem.type === 'rose') inner = roseInner(stem.colors);
-    else if(stem.type === 'daisy') inner = daisyInner(stem.colors);
-    else if(stem.type === 'wild') inner = wildInner(stem.colors);
+    else if(stem.type === 'sunflower') inner = sunflowerInner();
+    else if(stem.type === 'hydrangea'){
+      inner = hydrangeaInner(HYDRANGEA_COLORS[hydrangeaIndex % HYDRANGEA_COLORS.length]);
+      hydrangeaIndex++;
+    }
+    else if(stem.type === 'button') inner = buttonInner();
     else inner = fillerInner();
-    return '<g class="flower" style="animation-delay:' + delay + 's" transform="translate(' + stem.end.x + ',' + stem.end.y + ')">' + inner + '</g>';
+    return '<g class="flower" style="animation-delay:' + delay + 's" transform="translate(' + stem.end.x + ',' + stem.end.y + ') scale(' + scale + ')">' + inner + '</g>';
   }
 
   function leafMarkup(x, y, rot, delay){
@@ -290,27 +351,36 @@
       '<path d="M0,-32 L0,4" stroke="#3f6b34" stroke-width="1.1" opacity="0.45"/>' +
       '</g>';
   }
-
   function sparkleMarkup(x, y, delay, size){
     return '<g class="sparkle" style="animation-delay:' + delay + 's" transform="translate(' + x + ',' + y + ') scale(' + size + ')">' +
       '<path d="M0,-9 L2.2,-2.2 L9,0 L2.2,2.2 L0,9 L-2.2,2.2 L-9,0 L-2.2,-2.2 Z" fill="#fff6d8"/>' +
       '</g>';
   }
 
-  const bowMarkup =
-    '<g class="bow" style="animation-delay:' + BOW_START + 's" transform="translate(400,845)" filter="url(#softShadow)">' +
-      '<path d="M0,0 C-42,-26 -58,10 -18,15 C-46,21 -38,46 0,18 Z" fill="#e3b04b"/>' +
-      '<path d="M0,0 C42,-26 58,10 18,15 C46,21 38,46 0,18 Z" fill="#d69b32"/>' +
-      '<path d="M-4,10 L-30,58 L-14,54 L-4,26 Z" fill="#e3b04b"/>' +
-      '<path d="M4,10 L30,58 L14,54 L4,26 Z" fill="#d69b32"/>' +
-      '<ellipse cx="0" cy="10" rx="12" ry="9" fill="#c8912f"/>' +
+  const wrapMarkup =
+    '<g class="wrap-part" style="animation-delay:' + WRAP_START + 's">' +
+      '<path d="M 400 870 L 210 430 Q 400 380 590 430 L 400 870 Z" fill="#bfe3f5"/>' +
+      '<path d="M 400 870 L 260 460 Q 400 420 540 460 L 400 870 Z" fill="#8ecbe8" opacity="0.85"/>' +
+      '<path d="M 400 870 L 340 500 L 400 470 L 460 500 Z" fill="#6fb8dd" opacity="0.7"/>' +
+    '</g>';
+
+  const ribbonMarkup =
+    '<g class="ribbon" style="animation-delay:' + RIBBON_START + 's" transform="translate(400,565)" filter="url(#softShadow)">' +
+      '<rect x="-95" y="-16" width="190" height="30" rx="14" fill="#3a7bb5"/>' +
+      '<rect x="-95" y="-16" width="190" height="10" rx="5" fill="#5b9bd5" opacity="0.6"/>' +
+      '<path d="M0,0 C-40,-24 -56,10 -18,14 C-45,20 -38,44 0,17 Z" fill="#3a7bb5"/>' +
+      '<path d="M0,0 C40,-24 56,10 18,14 C45,20 38,44 0,17 Z" fill="#2f5f8a"/>' +
+      '<path d="M-5,10 L-26,90 L-11,84 L-4,26 Z" fill="#3a7bb5"/>' +
+      '<path d="M5,10 L26,90 L11,84 L4,26 Z" fill="#2f5f8a"/>' +
+      '<ellipse cx="0" cy="10" rx="12" ry="9" fill="#274d6e"/>' +
     '</g>';
 
   // ---------- montagem ----------
   const stemsLayer = document.getElementById('stemsLayer');
+  const wrapLayer = document.getElementById('wrapLayer');
+  const ribbonLayer = document.getElementById('ribbonLayer');
   const leavesLayer = document.getElementById('leavesLayer');
   const flowersLayer = document.getElementById('flowersLayer');
-  const bowLayer = document.getElementById('bowLayer');
   const sparkleLayer = document.getElementById('sparkleLayer');
   const swayGroup = document.getElementById('swayGroup');
   const caption = document.getElementById('caption');
@@ -320,13 +390,14 @@
 
   allStems.forEach(function(stem, i){
     const delay = i * STEM_STAGGER;
+    const ctrl = ctrlFor(stem.end);
     stemsHTML += '<path class="stem" pathLength="100" d="M ' + base.x + ' ' + base.y +
-      ' Q ' + stem.ctrl.x + ' ' + stem.ctrl.y + ' ' + stem.end.x + ' ' + stem.end.y +
+      ' Q ' + ctrl.x + ' ' + ctrl.y + ' ' + stem.end.x + ' ' + stem.end.y +
       '" style="animation-delay:' + delay + 's"/>';
 
     if(stem.type !== 'filler'){
-      const p1 = bez(base, stem.ctrl, stem.end, 0.5);
-      const p2 = bez(base, stem.ctrl, stem.end, 0.72);
+      const p1 = bez(base, ctrl, stem.end, 0.5);
+      const p2 = bez(base, ctrl, stem.end, 0.72);
       const leanLeft = stem.end.x < 400;
       leavesHTML += leafMarkup(p1.x, p1.y, leanLeft ? -48 : 48, delay + 0.45);
       leavesHTML += leafMarkup(p2.x, p2.y, leanLeft ? -35 : 35, delay + 0.6);
@@ -335,7 +406,8 @@
 
   stemsLayer.innerHTML = stemsHTML;
   leavesLayer.innerHTML = leavesHTML;
-  bowLayer.innerHTML = bowMarkup;
+  wrapLayer.innerHTML = wrapMarkup;
+  ribbonLayer.innerHTML = ribbonMarkup;
 
   let flowersHTML = '';
   mainStems.forEach(function(stem, i){
@@ -350,8 +422,8 @@
 
   let sparklesHTML = '';
   const sparkleSpots = [
-    [220,240],[300,150],[365,90],[430,70],[500,100],[575,150],[650,250],
-    [260,330],[520,330],[400,180],[340,220],[470,220]
+    [230,240],[300,150],[365,100],[420,90],[490,120],[555,170],[590,240],
+    [260,330],[520,330],[400,160],[340,200],[470,200],[350,300]
   ];
   sparkleSpots.forEach(function(pt, i){
     const delay = SPARKLE_START + Math.random() * 1.6 + i * 0.05;
