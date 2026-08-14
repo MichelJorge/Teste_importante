@@ -1,545 +1,454 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Revelação Romântica - Flores Mágicas</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  
-  <style>
-    :root {
-      --ink: #08020d;
-      --violet: #a855f7;
-      --violet-dark: #7c3aed;
-      --pink: #f472b6;
-      --lavender: #e9d5ff;
-      --green-stem: #4ade80;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flores Mágicas Neon</title>
 
-    * { 
-      box-sizing: border-box; 
-      margin: 0;
-      padding: 0;
-    }
+<link href="https://apis.com/css2?family=Alegreya:wght@400;700&display=swap
 
-    html, body {
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-      background-color: var(--ink);
-      font-family: "Alegreya", serif;
-    }
+<style>
 
-    /* Container Principal - Tela Cheia */
-    .app-shell {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      overflow: hidden;
-      isolation: isolate;
-    }
+:root{
+  --bg:#090015;
+  --purple:#a855f7;
+  --purple2:#c084fc;
+  --pink:#ffb7ff;
+}
 
-    /* Luzes de Fundo */
-    .ambient {
-      position: absolute;
-      border-radius: 999px;
-      filter: blur(60px);
-      opacity: 0.6;
-      pointer-events: none;
-      z-index: 1;
-      animation: breathe 7s ease-in-out infinite alternate;
-    }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-    .ambient-one {
-      width: 40vw;
-      height: 40vw;
-      top: -10vw;
-      left: -10vw;
-      background: #7e22ce;
-    }
+body{
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+  background:radial-gradient(circle at center,#120029,#05000d);
+  font-family:Alegreya,serif;
+}
 
-    .ambient-two {
-      width: 45vw;
-      height: 45vw;
-      bottom: -10vw;
-      right: -10vw;
-      background: #be185d;
-      animation-delay: -3.5s;
-    }
+canvas{
+  position:absolute;
+  inset:0;
+}
 
-    /* Palco Principal */
-    .reveal-stage {
-      position: absolute;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 5;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+.container{
+  position:relative;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
 
-    /* 🌸 CONTAINER DAS FLORES NO CENTRO */
-    .flower-center {
-      position: relative;
-      width: 320px;
-      height: 420px;
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-    }
+.magic-garden{
+  position:relative;
+  width:450px;
+  height:600px;
+}
 
-    /* Caule Principal */
-    .stem-main {
-      position: absolute;
-      bottom: 40px;
-      width: 8px;
-      background: linear-gradient(to right, #2ec770, #4ade80);
-      border-radius: 4px;
-      height: 0;
-      transform-origin: bottom center;
-      animation: growStem 3s ease-out forwards;
-      box-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
-    }
+/* FLORES */
 
-    @keyframes growStem {
-      0% { height: 0; }
-      100% { height: 180px; }
-    }
+.flower{
+  position:absolute;
+  bottom:80px;
+}
 
-    /* Folhas Laterais */
-    .leaf {
-      position: absolute;
-      width: 0;
-      height: 0;
-      background: linear-gradient(135deg, #4ade80, #22c55e);
-      border-radius: 50% 0 50% 0;
-      opacity: 0;
-      transform-origin: left center;
-    }
+.stem{
+  width:4px;
+  height:0;
+  border-radius:20px;
+  background:linear-gradient(
+    to top,
+    #512bff,
+    #8d5eff,
+    #c084fc
+  );
 
-    .leaf-1 { bottom: 140px; left: -8px; transform: rotate(-35deg); animation: showLeaf 1.5s ease-out 2.2s forwards; }
-    .leaf-2 { bottom: 100px; right: -8px; transform: rotate(30deg); border-radius: 0 50% 0 50%; animation: showLeaf 1.5s ease-out 2.5s forwards; }
-    .leaf-3 { bottom: 60px; left: -6px; transform: rotate(-20deg); animation: showLeaf 1.5s ease-out 2.8s forwards; }
+  box-shadow:
+  0 0 8px #8d5eff,
+  0 0 20px #8d5eff;
 
-    /* Folhas inferiores roxas (estilo da foto) */
-    .leaf-purple {
-      position: absolute;
-      width: 0;
-      height: 0;
-      background: linear-gradient(135deg, #a855f7, #7c3aed);
-      border-radius: 50% 0 50% 0;
-      opacity: 0;
-      transform-origin: left center;
-      box-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
-    }
+  animation:growStem 3s ease forwards;
+}
 
-    .lp-1 { bottom: 50px; left: -15px; transform: rotate(-55deg); animation: showLeafPurple 1.8s ease-out 3.2s forwards; }
-    .lp-2 { bottom: 40px; left: 5px; transform: rotate(-25deg); animation: showLeafPurple 1.8s ease-out 3.4s forwards; }
-    .lp-3 { bottom: 40px; right: 5px; transform: rotate(25deg); border-radius: 0 50% 0 50%; animation: showLeafPurple 1.8s ease-out 3.6s forwards; }
-    .lp-4 { bottom: 50px; right: -15px; transform: rotate(55deg); border-radius: 0 50% 0 50%; animation: showLeafPurple 1.8s ease-out 3.8s forwards; }
+.head{
+  position:absolute;
+  width:74px;
+  height:74px;
+  left:-35px;
+  top:-38px;
+  transform:scale(0);
+  opacity:0;
+  animation:bloom 2s ease forwards;
+}
 
-    @keyframes showLeaf {
-      0% { width: 0; height: 0; opacity: 0; }
-      100% { width: 45px; height: 25px; opacity: 1; }
-    }
+.head::before{
+  content:"";
+  position:absolute;
+  inset:0;
 
-    @keyframes showLeafPurple {
-      0% { width: 0; height: 0; opacity: 0; }
-      100% { width: 55px; height: 30px; opacity: 1; }
-    }
+  background:
+  radial-gradient(circle at 50% 40%, #ffd2ff 0 8px, transparent 10px),
 
-    /* Caules das flores laterais */
-    .stem-side {
-      position: absolute;
-      bottom: 160px;
-      width: 5px;
-      background: linear-gradient(to bottom, #4ade80, #2ec770);
-      border-radius: 3px;
-      height: 0;
-      transform-origin: bottom center;
-      opacity: 0.85;
-    }
+  radial-gradient(circle at 50% 0%, #ca8fff 0 17px, transparent 18px),
 
-    .stem-s1 { transform: rotate(-38deg); bottom: 150px; animation: growSide 2s ease-out 3s forwards; }
-    .stem-s2 { transform: rotate(32deg); bottom: 140px; animation: growSide 2s ease-out 3.3s forwards; }
+  radial-gradient(circle at 15% 35%, #ca8fff 0 17px, transparent 18px),
 
-    @keyframes growSide {
-      0% { height: 0; }
-      100% { height: 110px; }
-    }
+  radial-gradient(circle at 85% 35%, #ca8fff 0 17px, transparent 18px),
 
-    /* Flores */
-    .flower {
-      position: absolute;
-      opacity: 0;
-      transform-origin: bottom center;
-      transform: scale(0);
-    }
+  radial-gradient(circle at 30% 85%, #ca8fff 0 17px, transparent 18px),
 
-    .petal {
-      position: absolute;
-      background: linear-gradient(135deg, #ffffff 0%, #e9d5ff 40%, #a855f7 100%);
-      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-      transform-origin: center bottom;
-      box-shadow: 0 0 10px rgba(168, 85, 247, 0.4), inset 0 -5px 10px rgba(139, 69, 213, 0.2);
-    }
+  radial-gradient(circle at 70% 85%, #ca8fff 0 17px, transparent 18px);
 
-    .flower-main .petal:nth-child(1) { transform: rotate(0deg) translateY(-20px); }
-    .flower-main .petal:nth-child(2) { transform: rotate(72deg) translateY(-20px); }
-    .flower-main .petal:nth-child(3) { transform: rotate(144deg) translateY(-20px); }
-    .flower-main .petal:nth-child(4) { transform: rotate(216deg) translateY(-20px); }
-    .flower-main .petal:nth-child(5) { transform: rotate(288deg) translateY(-20px); }
+  filter:
+  drop-shadow(0 0 10px #d8b4fe)
+  drop-shadow(0 0 25px #9333ea)
+  drop-shadow(0 0 40px #9333ea);
+}
 
-    .flower-side .petal:nth-child(1) { transform: rotate(0deg) translateY(-15px); }
-    .flower-side .petal:nth-child(2) { transform: rotate(72deg) translateY(-15px); }
-    .flower-side .petal:nth-child(3) { transform: rotate(144deg) translateY(-15px); }
-    .flower-side .petal:nth-child(4) { transform: rotate(216deg) translateY(-15px); }
-    .flower-side .petal:nth-child(5) { transform: rotate(288deg) translateY(-15px); }
+/* POSIÇÕES */
 
-    .pistil {
-      position: absolute;
-      width: 12px; height: 12px;
-      background: radial-gradient(circle, #fef08a, #facc15);
-      border-radius: 50%;
-      top: -9px; left: 50%;
-      margin-left: -6px;
-      box-shadow: 0 0 14px #facc15, 0 0 22px rgba(250, 204, 21, 0.5);
-      z-index: 10;
-    }
+.f1{left:220px;}
+.f2{left:150px;}
+.f3{left:290px;}
+.f4{left:100px;}
+.f5{left:340px;}
+.f6{left:180px;}
+.f7{left:250px;}
+.f8{left:310px;}
 
-    /* Tamanho das pétalas */
-    .flower-main .petal { width: 30px; height: 40px; }
-    .flower-side .petal { width: 23px; height: 32px; }
+.f1 .stem{height:300px;}
+.f2 .stem{height:250px;}
+.f3 .stem{height:240px;}
+.f4 .stem{height:210px;}
+.f5 .stem{height:220px;}
+.f6 .stem{height:180px;}
+.f7 .stem{height:170px;}
+.f8 .stem{height:180px;}
 
-    /* Animação de Desabrochar */
-    .flower-1 { top: -190px; left: 50%; margin-left: -35px; animation: bloom 2s ease-out 4s forwards; }
-    .flower-2 { top: -115px; left: 12%; animation: bloom 2s ease-out 4.8s forwards; }
-    .flower-3 { top: -105px; right: 10%; animation: bloom 2s ease-out 5.2s forwards; }
+.f1 .head{animation-delay:2.8s;}
+.f2 .head{animation-delay:3.2s;}
+.f3 .head{animation-delay:3.6s;}
+.f4 .head{animation-delay:4s;}
+.f5 .head{animation-delay:4.4s;}
+.f6 .head{animation-delay:4.8s;}
+.f7 .head{animation-delay:5.2s;}
+.f8 .head{animation-delay:5.6s;}
 
-    @keyframes bloom {
-      0% { opacity: 0; transform: scale(0) rotate(-12deg); }
-      60% { opacity: 1; transform: scale(1.2) rotate(4deg); }
-      80% { transform: scale(0.95) rotate(-2deg); }
-      100% { opacity: 1; transform: scale(1) rotate(0deg); }
-    }
+/* BOTÕES */
 
-    /* Brilhos flutuantes ao redor das flores */
-    .sparkle {
-      position: absolute;
-      width: 6px; height: 6px;
-      background: radial-gradient(circle, #fff, #d8b4fe);
-      border-radius: 50%;
-      opacity: 0;
-      filter: blur(1px);
-      animation: twinkle 2s ease-in-out infinite;
-    }
+.bud{
+  position:absolute;
+  width:28px;
+  height:42px;
+  border-radius:50%;
 
-    @keyframes twinkle {
-      0%, 100% { opacity: 0; transform: scale(0.3); }
-      50% { opacity: 1; transform: scale(1.4); box-shadow: 0 0 10px rgba(216, 180, 254, 0.8); }
-    }
+  background:
+  radial-gradient(circle at 50% 30%,
+  #ffd5ff,
+  #cf91ff,
+  #6d28d9);
 
-    /* Brilho suave ao redor do buquê */
-    .glow-bouquet {
-      position: absolute;
-      width: 140px; height: 140px;
-      background: radial-gradient(circle, rgba(168, 85, 247, 0.25), transparent 70%);
-      border-radius: 50%;
-      top: -130px; left: 50%; margin-left: -70px;
-      opacity: 0;
-      animation: glowPulse 3s ease-out 5.5s forwards;
-    }
+  box-shadow:
+  0 0 15px #c084fc,
+  0 0 40px #9333ea;
 
-    @keyframes glowPulse {
-      0% { opacity: 0; transform: scale(0.5); }
-      50% { opacity: 0.7; transform: scale(1.2); }
-      100% { opacity: 0.4; transform: scale(1); }
-    }
+  transform:scale(0);
+  opacity:0;
 
-    /* Leve balanço como brisa */
-    .all-bouquet {
-      animation: breeze 5s ease-in-out 6s infinite alternate;
-      transform-origin: bottom center;
-    }
+  animation:bloom 2s ease forwards;
+}
 
-    @keyframes breeze {
-      0% { transform: rotate(-1.5deg); }
-      100% { transform: rotate(1.5deg); }
-    }
+.b1{
+  left:195px;
+  bottom:220px;
+  animation-delay:4s;
+}
 
-    /* Mensagem Final */
-    .message {
-      position: absolute;
-      z-index: 10;
-      left: 1rem;
-      right: 1rem;
-      bottom: 4rem;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: messageIn 1.5s ease-out 7.2s forwards;
-      pointer-events: none;
-    }
+.b2{
+  left:160px;
+  bottom:180px;
+  animation-delay:4.5s;
+}
 
-    /* Botão de Replay */
-    .replay-button-container {
-      position: absolute;
-      bottom: 1.5rem;
-      z-index: 20;
-      display: flex;
-      justify-content: center;
-      width: 100%;
-    }
+.b3{
+  left:240px;
+  bottom:180px;
+  animation-delay:5s;
+}
 
-    .replay-button {
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      color: #ffffff;
-      transition: all 0.4s ease;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    }
+/* FOLHAS */
 
-    .replay-button:hover {
-      background: rgba(255, 255, 255, 0.25);
-      border-color: rgba(255, 255, 255, 0.5);
-      transform: translateY(-2px) scale(1.03);
-      box-shadow: 0 12px 40px 0 rgba(168, 85, 247, 0.4);
-    }
+.base{
+  position:absolute;
+  width:220px;
+  height:120px;
+  left:50%;
+  bottom:50px;
+  transform:translateX(-50%);
+}
 
-    .replay-icon {
-      transition: transform 0.6s ease;
-    }
+.leaf{
+  position:absolute;
+  border-radius:50%;
+  background:#2e1346;
+  box-shadow:0 0 20px rgba(140,80,255,.4);
+}
 
-    .replay-button:hover .replay-icon {
-      transform: rotate(180deg);
-    }
+.leaf:nth-child(1){
+  width:55px;
+  height:55px;
+  left:0;
+  top:40px;
+}
 
-    /* Animações Compartilhadas */
-    @keyframes messageIn {
-      to { opacity: 1; transform: translateY(0); }
-    }
+.leaf:nth-child(2){
+  width:65px;
+  height:65px;
+  left:35px;
+  top:25px;
+}
 
-    @keyframes breathe {
-      to { transform: scale(1.2) translate(20px, -10px); opacity: 0.8; }
-    }
+.leaf:nth-child(3){
+  width:75px;
+  height:75px;
+  left:75px;
+  top:15px;
+}
 
-    /* Responsividade */
-    @media (max-width: 360px) {
-      .flower-center { width: 280px; height: 380px; }
-      .flower-main .petal { width: 26px; height: 34px; }
-      .flower-side .petal { width: 20px; height: 28px; }
-      @keyframes growStem { 0%{height:0} 100%{height:150px} }
-      .flower-1 { top: -160px; }
-    }
+.leaf:nth-child(4){
+  width:65px;
+  height:65px;
+  left:130px;
+  top:25px;
+}
 
-    /* Estado de Reinício */
-    .is-replaying .stem-main,
-    .is-replaying .stem-side,
-    .is-replaying .leaf,
-    .is-replaying .leaf-purple,
-    .is-replaying .flower,
-    .is-replaying .glow-bouquet,
-    .is-replaying .message {
-      animation: none !important;
-    }
+.leaf:nth-child(5){
+  width:55px;
+  height:55px;
+  left:170px;
+  top:40px;
+}
 
-    .is-replaying.run .stem-main { animation: growStem 3s ease-out forwards !important; }
-    .is-replaying.run .leaf-1 { animation: showLeaf 1.5s ease-out 2.2s forwards !important; }
-    .is-replaying.run .leaf-2 { animation: showLeaf 1.5s ease-out 2.5s forwards !important; }
-    .is-replaying.run .leaf-3 { animation: showLeaf 1.5s ease-out 2.8s forwards !important; }
-    .is-replaying.run .lp-1 { animation: showLeafPurple 1.8s ease-out 3.2s forwards !important; }
-    .is-replaying.run .lp-2 { animation: showLeafPurple 1.8s ease-out 3.4s forwards !important; }
-    .is-replaying.run .lp-3 { animation: showLeafPurple 1.8s ease-out 3.6s forwards !important; }
-    .is-replaying.run .lp-4 { animation: showLeafPurple 1.8s ease-out 3.8s forwards !important; }
-    .is-replaying.run .stem-s1 { animation: growSide 2s ease-out 3s forwards !important; }
-    .is-replaying.run .stem-s2 { animation: growSide 2s ease-out 3.3s forwards !important; }
-    .is-replaying.run .flower-1 { animation: bloom 2s ease-out 4s forwards !important; }
-    .is-replaying.run .flower-2 { animation: bloom 2s ease-out 4.8s forwards !important; }
-    .is-replaying.run .flower-3 { animation: bloom 2s ease-out 5.2s forwards !important; }
-    .is-replaying.run .glow-bouquet { animation: glowPulse 3s ease-out 5.5s forwards !important; }
-    .is-replaying.run .message { animation: messageIn 1.5s ease-out 7.2s forwards !important; }
-  </style>
+/* GRAMA */
+
+.grass{
+  position:absolute;
+  bottom:30px;
+  width:3px;
+  background:#7028ff;
+  border-radius:30px;
+  box-shadow:0 0 15px #9333ea;
+}
+
+.g1{
+  left:20px;
+  height:150px;
+  transform:rotate(-15deg);
+}
+
+.g2{
+  left:50px;
+  height:120px;
+  transform:rotate(15deg);
+}
+
+.g3{
+  left:80px;
+  height:90px;
+  transform:rotate(-20deg);
+}
+
+.g4{
+  right:80px;
+  height:90px;
+  transform:rotate(20deg);
+}
+
+.g5{
+  right:50px;
+  height:120px;
+  transform:rotate(-15deg);
+}
+
+.g6{
+  right:20px;
+  height:150px;
+  transform:rotate(15deg);
+}
+
+.spark{
+  position:absolute;
+  width:4px;
+  height:4px;
+  background:white;
+  border-radius:50%;
+  animation:twinkle 3s infinite;
+}
+
+/* TEXTO */
+
+.message{
+  position:absolute;
+  bottom:-10px;
+  width:100%;
+  text-align:center;
+  color:white;
+  opacity:0;
+  animation:showText 2s ease 6s forwards;
+}
+
+.message h1{
+  font-size:2rem;
+}
+
+.message p{
+  color:#c084fc;
+}
+
+/* ANIMAÇÕES */
+
+@keyframes growStem{
+  from{
+    height:0;
+  }
+}
+
+@keyframes bloom{
+
+  0%{
+    opacity:0;
+    transform:scale(0);
+  }
+
+  70%{
+    opacity:1;
+    transform:scale(1.2);
+  }
+
+  100%{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+@keyframes twinkle{
+
+  0%,100%{
+    opacity:.2;
+  }
+
+  50%{
+    opacity:1;
+    box-shadow:0 0 10px white;
+  }
+}
+
+@keyframes showText{
+  to{
+    opacity:1;
+  }
+}
+
+</style>
 </head>
-
 <body>
-  <div class="app-shell">
-    
-    <!-- Luzes de Fundo -->
-    <div class="ambient ambient-one"></div>
-    <div class="ambient ambient-two"></div>
 
-    <!-- Canvas de Estrelas -->
-    <canvas id="starsCanvas" class="absolute inset-0 z-1 pointer-events-none"></canvas>
+<canvas id="stars"></canvas>
 
-    <!-- Cabeçalho -->
-    <header class="relative z-10 pt-6 text-center w-full">
-      <p class="font-['Space_Mono'] text-xs uppercase tracking-[0.3em] text-purple-200 drop-shadow-md">
-        Uma surpresa para você
-      </p>
-    </header>
+<div class="container">
 
-    <!-- 🌸 FLORES CRESCENDO NO CENTRO -->
-    <main class="reveal-stage" id="reveal-stage">
-      <div class="flower-center">
-        <div class="all-bouquet">
-          
-          <!-- Caule Principal + Folhas Verdes -->
-          <div class="stem-main">
-            <div class="leaf leaf-1"></div>
-            <div class="leaf leaf-2"></div>
-            <div class="leaf leaf-3"></div>
-            <!-- Folhas Roxas embaixo (estilo da foto) -->
-            <div class="leaf-purple lp-1"></div>
-            <div class="leaf-purple lp-2"></div>
-            <div class="leaf-purple lp-3"></div>
-            <div class="leaf-purple lp-4"></div>
-          </div>
+  <div class="magic-garden">
 
-          <!-- Caules Laterais -->
-          <div class="stem-side stem-s1"></div>
-          <div class="stem-side stem-s2"></div>
+    <div class="grass g1"></div>
+    <div class="grass g2"></div>
+    <div class="grass g3"></div>
+    <div class="grass g4"></div>
+    <div class="grass g5"></div>
+    <div class="grass g6"></div>
 
-          <!-- Flor Principal (maior) -->
-          <div class="flower flower-main flower-1">
-            <div class="petal"></div>
-            <div class="petal"></div>
-            <div class="petal"></div>
-            <div class="petal"></div>
-            <div class="petal"></div>
-            <div class="pistil"></div>
-          </div>
+    <div class="flower f1"><div class="stem"></div><div class="head"></div></div>
+    <div class="flower f2"><div class="stem"></div><div class="head"></div></div>
+    <div class="flower f3"><div class="stem"></div><div class="head"></div></div>
+    <div class="flower f4"><div class="stem"></div><div class="head"></div></div>
+    <div class="flower f5"><div class="stem"></div><div class="head"></div></div>
+    <div class="flower f6"><div class="stem"></div><div class="head"></div></div>
+    <div class="flower f7"><div class="stem"></div><div class="head"></div></div>
+    <div class="flower f8"><div class="stem"></div><div class="head"></div></div>
 
-          <!-- Flor Esquerda -->
-          <div class="flower flower-side flower-2">
-            <div class="petal"></div>
-            <div class="petal"></div>
-            <div class="petal"></div>
-            <div class="petal"></div>
-            <div class="petal"></div>
-            <div class="pistil"></div>
-          </div>
+    <div class="bud b1"></div>
+    <div class="bud b2"></div>
+    <div class="bud b3"></div>
 
-          <!-- Flor Direita -->
-          <div class="flower flower-side flower-3">
-            <div class="petal"></div>
-            <div class="petal"></div>
-            <div class="petal"></div>
-            <div class="petal"></div>
-            <div class="petal"></div>
-            <div class="pistil"></div>
-          </div>
-
-          <!-- Brilhos ao redor -->
-          <div class="sparkle" style="top: -220px; left: 38%; animation-delay: 4.5s;"></div>
-          <div class="sparkle" style="top: -240px; left: 58%; animation-delay: 5s;"></div>
-          <div class="sparkle" style="top: -170px; left: 18%; animation-delay: 5.5s;"></div>
-          <div class="sparkle" style="top: -195px; right: 15%; animation-delay: 6s;"></div>
-          <div class="sparkle" style="top: -210px; right: 35%; animation-delay: 6.5s;"></div>
-
-          <!-- Brilho suave -->
-          <div class="glow-bouquet"></div>
-        </div>
-      </div>
-
-      <!-- Mensagem Final -->
-      <div class="message">
-        <p class="text-2xl sm:text-4xl font-medium leading-tight text-white drop-shadow-lg">
-          Você é muito especial 💜
-        </p>
-        <p class="text-lg sm:text-xl text-purple-200 italic mt-2 drop-shadow-md">
-          E essas flores são para você... 🌸
-        </p>
-      </div>
-    </main>
-
-    <!-- Botão de Replay -->
-    <div class="replay-button-container">
-      <button id="replay-button" type="button" class="replay-button inline-flex items-center gap-3 rounded-full px-6 py-3.5 font-['Space_Mono'] text-xs uppercase tracking-[0.15em] cursor-pointer">
-        <i class="replay-icon h-4 w-4" data-lucide="rotate-ccw"></i>
-        <span>Reviver Momento</span>
-      </button>
+    <div class="base">
+      <div class="leaf"></div>
+      <div class="leaf"></div>
+      <div class="leaf"></div>
+      <div class="leaf"></div>
+      <div class="leaf"></div>
     </div>
 
-    <footer class="relative z-10 pb-2 text-center">
-      <p class="text-xs text-purple-300/60 italic"></p>
-    </footer>
+    <div class="message">
+      <h1>Você é muito especial 💜</h1>
+      <p>E essas flores são para você ✨</p>
+    </div>
+
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Inicializar Ícones
-      if (window.lucide) lucide.createIcons();
+</div>
 
-      // Lógica de Replay
-      const stage = document.getElementById("reveal-stage");
-      const replayButton = document.getElementById("replay-button");
+<script>
 
-      replayButton.addEventListener("click", () => {
-        stage.classList.remove("run");
-        stage.classList.add("is-replaying");
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
 
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            stage.classList.add("run");
-          });
-        });
+function resize(){
+  canvas.width=innerWidth;
+  canvas.height=innerHeight;
+}
 
-        setTimeout(() => {
-          stage.classList.remove("is-replaying", "run");
-        }, 8500);
-      });
+resize();
+addEventListener("resize",resize);
 
-      // Estrelas de fundo
-      const canvas = document.getElementById('starsCanvas');
-      const ctx = canvas.getContext('2d');
+const stars=[];
 
-      function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      }
-      resizeCanvas();
-      window.addEventListener('resize', resizeCanvas);
+for(let i=0;i<120;i++){
+  stars.push({
+    x:Math.random()*innerWidth,
+    y:Math.random()*innerHeight,
+    r:Math.random()*2,
+    a:Math.random()
+  });
+}
 
-      class Star {
-        constructor() { this.reset(); }
-        reset() {
-          this.x = Math.random() * canvas.width;
-          this.y = Math.random() * canvas.height;
-          this.size = Math.random() * 2 + 0.5;
-          this.alpha = Math.random();
-          this.speed = Math.random() * 0.01 + 0.005;
-          this.dir = Math.random() > 0.5 ? 1 : -1;
-        }
-        update() {
-          this.alpha += this.speed * this.dir;
-          if (this.alpha >= 1 || this.alpha <= 0.1) this.dir *= -1;
-        }
-        draw() {
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255, 255, 255, ${this.alpha})`;
-          ctx.fill();
-        }
-      }
+function animate(){
 
-      const stars = Array.from({ length: 60 }, () => new Star());
-      function animateStars() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        stars.forEach(s => { s.update(); s.draw(); });
-        requestAnimationFrame(animateStars);
-      }
-      animateStars();
-    });
-  </script>
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  stars.forEach(s=>{
+
+    s.a+=((Math.random()-0.5)*0.02);
+
+    if(s.a>1)s.a=1;
+    if(s.a<0.1)s.a=0.1;
+
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(255,255,255,${s.a})`;
+    ctx.fill();
+
+  });
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+</script>
+
 </body>
 </html>
