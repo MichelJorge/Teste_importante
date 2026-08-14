@@ -1,476 +1,300 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Seu Buquê Especial</title>
-<style>
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Você 🌸</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  body {
-    width: 100vw;
-    height: 100vh;
-    background-color: #05030a;
-    background-image: radial-gradient(circle at 50% 40%, #150a21 0%, #05030a 80%);
-    overflow: hidden;
-    font-family: 'Georgia', serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f0520 0%, #1a0530 50%, #0d0220 100%);
+            overflow: hidden;
+            font-family: 'Georgia', serif;
+        }
 
-  canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-  }
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
 
-  .container {
-    position: relative;
-    width: 100%;
-    max-width: 450px;
-    height: 85vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    z-index: 2;
-  }
+        /* 🌿 Caule Principal */
+        .stem-main {
+            position: absolute;
+            bottom: 60px;
+            width: 8px;
+            background: linear-gradient(to right, #2ec770, #4ade80);
+            border-radius: 4px;
+            height: 0;
+            transform-origin: bottom center;
+            animation: growStem 3s ease-out forwards;
+            box-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
+        }
 
-  .bouquet-svg {
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-  }
+        @keyframes growStem {
+            0% { height: 0; }
+            100% { height: 180px; }
+        }
 
-  /* --- Animações Principais --- */
-  
-  /* Crescimento dos caules */
-  .stem {
-    stroke-dasharray: 600;
-    stroke-dashoffset: 600;
-    animation: growStem 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  }
+        /* 🍃 Folhas */
+        .leaf {
+            position: absolute;
+            width: 0;
+            height: 0;
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            border-radius: 50% 0 50% 0;
+            opacity: 0;
+            transform-origin: left center;
+        }
 
-  @keyframes growStem {
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
+        .leaf-1 {
+            bottom: 140px; left: -8px; transform: rotate(-30deg);
+            animation: showLeaf 1.5s ease-out 2.2s forwards;
+        }
+        .leaf-2 {
+            bottom: 100px; right: -8px; transform: rotate(30deg); border-radius: 0 50% 0 50%;
+            animation: showLeaf 1.5s ease-out 2.5s forwards;
+        }
+        .leaf-3 {
+            bottom: 60px; left: -6px; transform: rotate(-20deg);
+            animation: showLeaf 1.5s ease-out 2.8s forwards;
+        }
 
-  /* Desabrochar das Flores e Elementos */
-  .bloom-element {
-    transform-origin: center;
-    transform-box: fill-box;
-    opacity: 0;
-    transform: scale(0) rotate(-15deg);
-    animation: bloomAnim 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  }
+        @keyframes showLeaf {
+            0% { width: 0; height: 0; opacity: 0; }
+            100% { width: 45px; height: 25px; opacity: 1; }
+        }
 
-  @keyframes bloomAnim {
-    0% {
-      opacity: 0;
-      transform: scale(0) rotate(-15deg);
-    }
-    60% {
-      opacity: 1;
-      transform: scale(1.1) rotate(3deg);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1) rotate(0deg);
-    }
-  }
+        /* 🌱 Caule das Flores Secundárias */
+        .stem-side {
+            position: absolute;
+            bottom: 180px;
+            width: 4px;
+            background: linear-gradient(to bottom, #4ade80, #2ec770);
+            border-radius: 2px;
+            height: 0;
+            transform-origin: bottom center;
+            opacity: 0.8;
+        }
 
-  /* Aparição Suave do Embrulho */
-  .wrap-element {
-    transform-origin: bottom center;
-    transform-box: fill-box;
-    opacity: 0;
-    transform: translateY(30px) scale(0.8);
-    animation: wrapAnim 1.2s ease-out forwards;
-  }
+        .stem-s1 { transform: rotate(-35deg); bottom: 160px; animation: growSide 2s ease-out 3s forwards; }
+        .stem-s2 { transform: rotate(30deg); bottom: 150px; animation: growSide 2s ease-out 3.3s forwards; }
 
-  @keyframes wrapAnim {
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  }
+        @keyframes growSide {
+            0% { height: 0; }
+            100% { height: 100px; }
+        }
 
-  /* Balanço Suave do Buquê Inteiro (Efeito Vento) */
-  .sway-group {
-    transform-origin: 200px 580px;
-    animation: swayAnim 4.5s ease-in-out infinite alternate;
-  }
+        /* 💜 Flores */
+        .flower {
+            position: absolute;
+            opacity: 0;
+            transform-origin: bottom center;
+            transform: scale(0) rotate(0deg);
+        }
 
-  @keyframes swayAnim {
-    0% { transform: rotate(-1.8deg); }
-    100% { transform: rotate(1.8deg); }
-  }
+        .flower-center {
+            position: relative;
+            top: -10px;
+        }
 
-  /* Texto Romântico Neon */
-  .caption {
-    position: absolute;
-    bottom: 25px;
-    width: 100%;
-    text-align: center;
-    color: #ffe6a7;
-    font-size: clamp(1.4rem, 5vw, 2.2rem);
-    font-style: italic;
-    font-weight: bold;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: captionIn 1.2s ease-out 4.2s forwards, neonGlow 2.5s ease-in-out 5.4s infinite alternate;
-    text-shadow: 0 0 10px rgba(255, 230, 167, 0.5), 0 0 20px rgba(255, 183, 3, 0.3);
-    padding: 0 10px;
-  }
+        /* Pétalas */
+        .petal {
+            position: absolute;
+            background: linear-gradient(135deg, #ffffff 0%, #e2d5ff 40%, #a855f7 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            transform-origin: center bottom;
+            box-shadow: 0 0 8px rgba(168, 85, 247, 0.4), inset 0 -5px 10px rgba(139, 69, 213, 0.2);
+        }
 
-  @keyframes captionIn {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+        .flower-main .petal:nth-child(1) { transform: rotate(0deg) translateY(-18px); }
+        .flower-main .petal:nth-child(2) { transform: rotate(72deg) translateY(-18px); }
+        .flower-main .petal:nth-child(3) { transform: rotate(144deg) translateY(-18px); }
+        .flower-main .petal:nth-child(4) { transform: rotate(216deg) translateY(-18px); }
+        .flower-main .petal:nth-child(5) { transform: rotate(288deg) translateY(-18px); }
 
-  @keyframes neonGlow {
-    from {
-      text-shadow: 0 0 8px rgba(255, 230, 167, 0.4), 0 0 15px rgba(255, 183, 3, 0.2);
-    }
-    to {
-      text-shadow: 0 0 15px rgba(255, 230, 167, 0.9), 0 0 30px rgba(255, 183, 3, 0.7), 0 0 45px rgba(72, 149, 239, 0.5);
-    }
-  }
+        .flower-side .petal:nth-child(1) { transform: rotate(0deg) translateY(-14px); }
+        .flower-side .petal:nth-child(2) { transform: rotate(72deg) translateY(-14px); }
+        .flower-side .petal:nth-child(3) { transform: rotate(144deg) translateY(-14px); }
+        .flower-side .petal:nth-child(4) { transform: rotate(216deg) translateY(-14px); }
+        .flower-side .petal:nth-child(5) { transform: rotate(288deg) translateY(-14px); }
 
-  /* Dica para o Usuário */
-  .hint {
-    position: absolute;
-    top: 20px;
-    color: rgba(255, 255, 255, 0.4);
-    font-size: 0.85rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-</style>
+        .pistil {
+            position: absolute;
+            width: 10px; height: 10px;
+            background: radial-gradient(circle, #fef08a, #facc15);
+            border-radius: 50%;
+            top: -8px; left: 50%;
+            margin-left: -5px;
+            box-shadow: 0 0 12px #facc15, 0 0 20px rgba(250, 204, 21, 0.5);
+            z-index: 10;
+        }
+
+        /* Animação Flores */
+        .flower-1 { top: -180px; left: 50%; margin-left: -30px; animation: bloom 1.8s ease-out 4s forwards; }
+        .flower-2 { top: -110px; left: 18%; animation: bloom 1.8s ease-out 4.8s forwards; }
+        .flower-3 { top: -100px; right: 15%; animation: bloom 1.8s ease-out 5.2s forwards; }
+
+        @keyframes bloom {
+            0% { opacity: 0; transform: scale(0) rotate(-10deg); }
+            60% { opacity: 1; transform: scale(1.15) rotate(3deg); }
+            80% { transform: scale(0.95) rotate(-1deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+
+        /* Brilhos e Partículas */
+        .sparkle {
+            position: absolute;
+            width: 6px; height: 6px;
+            background: radial-gradient(circle, #fff, #d8b4fe);
+            border-radius: 50%;
+            opacity: 0;
+            filter: blur(1px);
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.3); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .glow {
+            position: absolute;
+            width: 80px; height: 80px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.25), transparent 70%);
+            border-radius: 50%;
+            top: -150px; left: 50%; margin-left: -40px;
+            opacity: 0;
+            animation: glowPulse 3s ease-out 5s forwards;
+        }
+
+        @keyframes glowPulse {
+            0% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+            100% { opacity: 0.35; transform: scale(1); }
+        }
+
+        /* Texto */
+        .text-box {
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(25px);
+            animation: showText 2s ease-out 7s forwards;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .message {
+            font-size: clamp(1.3rem, 5vw, 1.8rem);
+            color: #e9d5ff;
+            text-shadow: 0 0 10px rgba(168, 85, 247, 0.6), 0 0 20px rgba(124, 58, 237, 0.3);
+            letter-spacing: 1px;
+            font-style: italic;
+        }
+
+        /* Brisa suave */
+        .all-flowers {
+            animation: breeze 5s ease-in-out 6s infinite alternate;
+            transform-origin: bottom center;
+        }
+
+        @keyframes breeze {
+            0% { transform: rotate(-1.5deg); }
+            100% { transform: rotate(1.5deg); }
+        }
+
+        /* Responsividade das pétalas */
+        .flower-main .petal { width: 28px; height: 38px; }
+        .flower-side .petal { width: 22px; height: 30px; }
+
+        @media (max-width: 360px) {
+            .flower-main .petal { width: 24px; height: 32px; }
+            .flower-side .petal { width: 19px; height: 26px; }
+            @keyframes growStem { 0%{height:0} 100%{height:150px} }
+            .flower-1 { top: -150px; }
+        }
+    </style>
 </head>
 <body>
 
-<div class="hint">Toque na tela para florescer novamente</div>
-<canvas id="particlesCanvas"></canvas>
+    <div class="container">
+        <div class="all-flowers">
+            <div class="glow"></div>
 
-<div class="container" id="stage">
-  <svg class="bouquet-svg" viewBox="0 0 400 620">
-    <defs>
-      <!-- Brilho Neon (Glow) -->
-      <filter id="neonGlowFilter" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-        <feMerge>
-          <feMergeNode in="coloredBlur"/>
-          <feMergeNode in="SourceGraphic"/>
-        </feMerge>
-      </filter>
+            <!-- Caule Principal -->
+            <div class="stem-main">
+                <div class="leaf leaf-1"></div>
+                <div class="leaf leaf-2"></div>
+                <div class="leaf leaf-3"></div>
+            </div>
 
-      <!-- Sombra das Pétalas -->
-      <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
-        <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/>
-      </filter>
+            <!-- Caules Secundários -->
+            <div class="stem-side stem-s1"></div>
+            <div class="stem-side stem-s2"></div>
 
-      <!-- Gradientes -->
-      <linearGradient id="stemGrad" x1="0" y1="1" x2="0" y2="0">
-        <stop offset="0%" stop-color="#1b4313"/>
-        <stop offset="100%" stop-color="#52b788"/>
-      </linearGradient>
+            <!-- Flor Principal (maior) -->
+            <div class="flower flower-main flower-1">
+                <div class="flower-center">
+                    <div class="petal"></div>
+                    <div class="petal"></div>
+                    <div class="petal"></div>
+                    <div class="petal"></div>
+                    <div class="petal"></div>
+                    <div class="pistil"></div>
+                </div>
+            </div>
 
-      <radialGradient id="sunflowerCenter" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#1f0c02"/>
-        <stop offset="75%" stop-color="#421d05"/>
-        <stop offset="100%" stop-color="#120500"/>
-      </radialGradient>
+            <!-- Flor Esquerda -->
+            <div class="flower flower-side flower-2">
+                <div class="flower-center">
+                    <div class="petal"></div>
+                    <div class="petal"></div>
+                    <div class="petal"></div>
+                    <div class="petal"></div>
+                    <div class="petal"></div>
+                    <div class="pistil"></div>
+                </div>
+            </div>
 
-      <radialGradient id="blueRoseGrad" cx="35%" cy="35%" r="65%">
-        <stop offset="0%" stop-color="#a2d2ff"/>
-        <stop offset="45%" stop-color="#3a86ff"/>
-        <stop offset="85%" stop-color="#03045e"/>
-        <stop offset="100%" stop-color="#02010a"/>
-      </radialGradient>
+            <!-- Flor Direita -->
+            <div class="flower flower-side flower-3">
+                <div class="flower-center">
+                    <div class="petal"></div>
+                    <div class="petal"></div>
+                    <div class="petal"></div>
+                    <div class="petal"></div>
+                    <div class="petal"></div>
+                    <div class="pistil"></div>
+                </div>
+            </div>
 
-      <linearGradient id="kraftGrad" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#c68b59"/>
-        <stop offset="100%" stop-color="#7b5231"/>
-      </linearGradient>
+            <!-- Brilhos flutuantes -->
+            <div class="sparkle" style="top: -210px; left: 42%; animation-delay: 4.5s;"></div>
+            <div class="sparkle" style="top: -230px; left: 55%; animation-delay: 5s;"></div>
+            <div class="sparkle" style="top: -160px; left: 25%; animation-delay: 5.5s;"></div>
+            <div class="sparkle" style="top: -185px; right: 20%; animation-delay: 6s;"></div>
+            <div class="sparkle" style="top: -200px; right: 40%; animation-delay: 6.5s;"></div>
+        </div>
+    </div>
 
-      <linearGradient id="blackPaperGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#2b2d42"/>
-        <stop offset="100%" stop-color="#0f1016"/>
-      </linearGradient>
-
-      <!-- Cartão A Noite Estrelada -->
-      <linearGradient id="vanGoghSky" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#03045e"/>
-        <stop offset="50%" stop-color="#0077b6"/>
-        <stop offset="100%" stop-color="#001219"/>
-      </linearGradient>
-    </defs>
-
-    <g class="sway-group">
-      
-      <!-- 1. CAULES (Crescem primeiro de baixo para cima) -->
-      <g id="stemsLayer">
-        <path class="stem" stroke="url(#stemGrad)" stroke-width="5.5" stroke-linecap="round" fill="none" d="M 200 580 Q 190 420 120 280" style="animation-delay: 0.1s;"/>
-        <path class="stem" stroke="url(#stemGrad)" stroke-width="6" stroke-linecap="round" fill="none" d="M 200 580 Q 195 380 195 210" style="animation-delay: 0.25s;"/>
-        <path class="stem" stroke="url(#stemGrad)" stroke-width="5.5" stroke-linecap="round" fill="none" d="M 200 580 Q 210 420 285 280" style="animation-delay: 0.4s;"/>
-        <path class="stem" stroke="url(#stemGrad)" stroke-width="4.5" stroke-linecap="round" fill="none" d="M 200 580 Q 170 420 85 240" style="animation-delay: 0.2s;"/>
-        <path class="stem" stroke="url(#stemGrad)" stroke-width="4.5" stroke-linecap="round" fill="none" d="M 200 580 Q 230 420 315 230" style="animation-delay: 0.35s;"/>
-      </g>
-
-      <!-- 2. PAPEL DE EMBRULHO (Surge em seguida) -->
-      <g id="wrapLayer">
-        <!-- Papel Interno Escuro -->
-        <path class="wrap-element" fill="url(#blackPaperGrad)" d="M 200 580 L 60 270 L 340 270 Z" style="animation-delay: 0.8s;"/>
-        <!-- Papel Kraft Externo Cônico -->
-        <path class="wrap-element" fill="url(#kraftGrad)" filter="url(#softShadow)" d="M 200 590 L 30 320 L 110 500 Z" style="animation-delay: 1.0s;"/>
-        <path class="wrap-element" fill="url(#kraftGrad)" filter="url(#softShadow)" d="M 200 590 L 370 320 L 290 500 Z" style="animation-delay: 1.1s;"/>
-        <path class="wrap-element" fill="url(#kraftGrad)" d="M 200 590 L 50 350 L 350 350 Z" style="animation-delay: 1.2s;"/>
-        <!-- Laço Dourado do Embrulho -->
-        <path class="bloom-element" fill="#ffb703" filter="url(#softShadow)" d="M 180 480 Q 200 490 220 480 Q 225 500 200 505 Q 175 500 180 480 Z" style="animation-delay: 1.4s;"/>
-      </g>
-
-      <!-- 3. FOLHAS E RAMOS (Gipsonas e Folhagens) -->
-      <g id="foliageLayer">
-        <g class="bloom-element" transform="translate(130, 200)" style="animation-delay: 1.6s;">
-          <circle cx="0" cy="0" r="3" fill="#ffb703" filter="url(#neonGlowFilter)"/>
-          <circle cx="8" cy="-6" r="2.5" fill="#ffb703"/>
-          <circle cx="-6" cy="-10" r="3" fill="#52b788"/>
-        </g>
-        <g class="bloom-element" transform="translate(260, 180)" style="animation-delay: 1.7s;">
-          <circle cx="0" cy="0" r="3.5" fill="#ffb703" filter="url(#neonGlowFilter)"/>
-          <circle cx="-8" cy="-5" r="3" fill="#ffb703"/>
-          <circle cx="6" cy="-8" r="3" fill="#52b788"/>
-        </g>
-        <!-- Mini Flores Brancas (Gipsonas) -->
-        <g class="bloom-element" transform="translate(110, 310)" style="animation-delay: 1.8s;">
-          <circle cx="0" cy="0" r="4.5" fill="#ffffff" filter="url(#neonGlowFilter)"/>
-          <circle cx="7" cy="4" r="3.5" fill="#ffffff"/>
-          <circle cx="3" cy="-7" r="4" fill="#ffffff"/>
-          <circle cx="0" cy="0" r="1.5" fill="#ffb703"/>
-        </g>
-        <g class="bloom-element" transform="translate(290, 320)" style="animation-delay: 1.9s;">
-          <circle cx="0" cy="0" r="4.5" fill="#ffffff" filter="url(#neonGlowFilter)"/>
-          <circle cx="-6" cy="5" r="3.5" fill="#ffffff"/>
-          <circle cx="-2" cy="-6" r="4" fill="#ffffff"/>
-          <circle cx="0" cy="0" r="1.5" fill="#ffb703"/>
-        </g>
-      </g>
-
-      <!-- 4. CARTÃO VAN GOGH (A Noite Estrelada) -->
-      <g class="bloom-element" transform="translate(50, 120) rotate(-18)" filter="url(#softShadow)" style="animation-delay: 2.1s;">
-        <rect x="0" y="0" width="75" height="95" rx="4" fill="url(#vanGoghSky)" stroke="#ffb703" stroke-width="1.2"/>
-        <!-- Espirais de Vento de Van Gogh -->
-        <path d="M 10 35 C 25 20, 35 45, 55 30" fill="none" stroke="#48cae4" stroke-width="3" stroke-linecap="round" opacity="0.9" filter="url(#neonGlowFilter)"/>
-        <path d="M 8 50 C 25 35, 45 60, 65 40" fill="none" stroke="#ffb703" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
-        <!-- Sol/Lua de Van Gogh -->
-        <circle cx="58" cy="20" r="10" fill="#ffb703" filter="url(#neonGlowFilter)"/>
-        <circle cx="58" cy="20" r="6" fill="#fff"/>
-        <!-- Cipreste -->
-        <path d="M 10 95 Q 18 55 25 95 Z" fill="#0b1d08"/>
-      </g>
-
-      <!-- 5. ROSAS AZUIS (Brilhantes estilo Neon) -->
-      <!-- Rosa Azul Topo Direita -->
-      <g class="bloom-element" transform="translate(235, 170) scale(0.9)" filter="url(#softShadow)" style="animation-delay: 2.3s;">
-        <circle cx="0" cy="0" r="26" fill="url(#blueRoseGrad)" filter="url(#neonGlowFilter)"/>
-        <path d="M -12 -5 C -6 -22, 6 -22, 12 -5 C 18 12, -18 12, -12 -5 Z" fill="#90e0ef" opacity="0.8"/>
-        <circle cx="0" cy="0" r="6" fill="#03045e"/>
-      </g>
-
-      <!-- Rosa Azul Centro Direita -->
-      <g class="bloom-element" transform="translate(285, 235) scale(1.15)" filter="url(#softShadow)" style="animation-delay: 2.5s;">
-        <circle cx="0" cy="0" r="27" fill="url(#blueRoseGrad)" filter="url(#neonGlowFilter)"/>
-        <path d="M -10 -4 C -5 -18, 5 -18, 10 -4 C 15 10, -15 10, -10 -4 Z" fill="#ade8f4" opacity="0.85"/>
-        <circle cx="0" cy="0" r="7" fill="#03045e"/>
-      </g>
-
-      <!-- Rosa Azul Baixo Direita -->
-      <g class="bloom-element" transform="translate(280, 315) scale(1)" filter="url(#softShadow)" style="animation-delay: 2.7s;">
-        <circle cx="0" cy="0" r="25" fill="url(#blueRoseGrad)"/>
-        <path d="M -8 -3 C -4 -15, 4 -15, 8 -3 C 12 8, -12 8, -8 -3 Z" fill="#caf0f8" opacity="0.8"/>
-        <circle cx="0" cy="0" r="5" fill="#03045e"/>
-      </g>
-
-      <!-- Rosa Azul Base Centro -->
-      <g class="bloom-element" transform="translate(210, 335) scale(0.95)" filter="url(#softShadow)" style="animation-delay: 2.9s;">
-        <circle cx="0" cy="0" r="25" fill="url(#blueRoseGrad)"/>
-        <path d="M -8 -3 C -4 -15, 4 -15, 8 -3 Z" fill="#90e0ef" opacity="0.85"/>
-        <circle cx="0" cy="0" r="5" fill="#03045e"/>
-      </g>
-
-      <!-- 6. GIRASSÓIS IMPERIAIS (Desabrocham por último) -->
-      
-      <!-- Girassol 1: Superior Esquerdo -->
-      <g class="bloom-element" transform="translate(145, 205) scale(1.3)" filter="url(#softShadow)" style="animation-delay: 3.2s;">
-        <!-- Pétalas -->
-        <g>
-          <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffb703" transform="rotate(0)"/>
-          <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ff8f00" transform="rotate(22.5)"/>
-          <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffb703" transform="rotate(45)"/>
-          <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ff8f00" transform="rotate(67.5)"/>
-          <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffb703" transform="rotate(90)"/>
-          <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ff8f00" transform="rotate(112.5)"/>
-          <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffb703" transform="rotate(135)"/>
-          <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ff8f00" transform="rotate(157.5)"/>
-          <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffb703" transform="rotate(180)"/>
-          <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ff8f00" transform="rotate(202.5)"/>
-          <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffb703" transform="rotate(225)"/>
-          <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ff8f00" transform="rotate(247.5)"/>
-          <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffb703" transform="rotate(270)"/>
-          <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ff8f00" transform="rotate(292.5)"/>
-          <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffb703" transform="rotate(315)"/>
-          <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ff8f00" transform="rotate(337.5)"/>
-        </g>
-        <!-- Centro do Girassol -->
-        <circle cx="0" cy="0" r="21" fill="url(#sunflowerCenter)"/>
-        <circle cx="0" cy="0" r="19" fill="none" stroke="#ffb703" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.8"/>
-      </g>
-
-      <!-- Girassol 2: Centro Principal (O Maior de Todos) -->
-      <g class="bloom-element" transform="translate(195, 275) scale(1.45)" filter="url(#softShadow)" style="animation-delay: 3.5s;">
-        <g>
-          <path d="M0,0 L-8,-46 L0,-52 L8,-46 Z" fill="#ffd000" transform="rotate(10)"/>
-          <path d="M0,0 L-8,-46 L0,-52 L8,-46 Z" fill="#ff9100" transform="rotate(32.5)"/>
-          <path d="M0,0 L-8,-46 L0,-52 L8,-46 Z" fill="#ffd000" transform="rotate(55)"/>
-          <path d="M0,0 L-8,-46 L0,-52 L8,-46 Z" fill="#ff9100" transform="rotate(77.5)"/>
-          <path d="M0,0 L-8,-46 L0,-52 L8,-46 Z" fill="#ffd000" transform="rotate(100)"/>
-          <path d="M0,0 L-8,-46 L0,-52 L8,-46 Z" fill="#ff9100" transform="rotate(122.5)"/>
-          <path d="M0,0 L-8,-46 L0,-52 L8,-46 Z" fill="#ffd000" transform="rotate(145)"/>
-          <path d="M0,0 L-8,-46 L0,-52 L8,-46 Z" fill="#ff9100" transform="rotate(167.5)"/>
-          <path d="M0,0 L-8,-46 L0,-52 L8,-46 Z" fill="#ffd000" transform="rotate(190)"/>
-          <path d="M0,0 L-8,-46 L0,-52 L8,-46 Z" fill="#ff9100" transform="rotate(212.5)"/>
-          <path d="M0,0 L-8,-46 L0,-52 L8,-46 Z" fill="#ffd000" transform="rotate(235)"/>
-          <path d="M0,0 L-8,-46 L0,-52 L8,-46 Z" fill="#ff9100" transform="rotate(257.5)"/>
-          <path d="M0,0 L-8,-46 L0,-52 L8,-46 Z" fill="#ffd000" transform="rotate(280)"/>
-          <path d="M0,0 L-8,-46 L0,-52 L8,-46 Z" fill="#ff9100" transform="rotate(302.5)"/>
-          <path d="M0,0 L-8,-46 L0,-52 L8,-46 Z" fill="#ffd000" transform="rotate(325)"/>
-          <path d="M0,0 L-8,-46 L0,-52 L8,-46 Z" fill="#ff9100" transform="rotate(347.5)"/>
-        </g>
-        <circle cx="0" cy="0" r="22" fill="url(#sunflowerCenter)"/>
-        <circle cx="0" cy="0" r="20" fill="none" stroke="#ffd000" stroke-width="1.5" stroke-dasharray="4,2" opacity="0.8"/>
-      </g>
-
-      <!-- Girassol 3: Lateral Direita -->
-      <g class="bloom-element" transform="translate(305, 275) scale(1.15)" filter="url(#softShadow)" style="animation-delay: 3.8s;">
-        <g>
-          <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ffb703" transform="rotate(5)"/>
-          <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ff8f00" transform="rotate(30)"/>
-          <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ffb703" transform="rotate(55)"/>
-          <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ff8f00" transform="rotate(80)"/>
-          <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ffb703" transform="rotate(105)"/>
-          <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ff8f00" transform="rotate(130)"/>
-          <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ffb703" transform="rotate(155)"/>
-          <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ff8f00" transform="rotate(180)"/>
-          <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ffb703" transform="rotate(205)"/>
-          <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ff8f00" transform="rotate(230)"/>
-          <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ffb703" transform="rotate(255)"/>
-          <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ff8f00" transform="rotate(280)"/>
-          <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ffb703" transform="rotate(305)"/>
-          <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ff8f00" transform="rotate(330)"/>
-        </g>
-        <circle cx="0" cy="0" r="18" fill="url(#sunflowerCenter)"/>
-      </g>
-
-    </g>
-  </svg>
-
-  <div class="caption">Você é muito especial ❤️</div>
-</div>
-
-<script>
-  /* --- Sistema de Partículas Flutuantes e Vaga-lumes em HTML5 Canvas --- */
-  const canvas = document.getElementById('particlesCanvas');
-  const ctx = canvas.getContext('2d');
-
-  let width, height;
-  function resize() {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-  }
-  window.addEventListener('resize', resize);
-  resize();
-
-  class Particle {
-    constructor() {
-      this.reset();
-    }
-
-    reset() {
-      this.x = Math.random() * width;
-      this.y = height + Math.random() * 100;
-      this.size = Math.random() * 3 + 1;
-      this.speedY = Math.random() * 1.5 + 0.5;
-      this.speedX = (Math.random() - 0.5) * 0.8;
-      this.opacity = Math.random() * 0.8 + 0.2;
-      // Alterna entre partículas amarelas neon e azuis brilhantes
-      this.color = Math.random() > 0.4 ? '#ffb703' : '#48cae4';
-      this.pulse = Math.random() * 0.05 + 0.01;
-    }
-
-    update() {
-      this.y -= this.speedY;
-      this.x += Math.sin(this.y * 0.02) + this.speedX;
-      this.opacity += Math.sin(this.y * 0.05) * 0.02;
-
-      if (this.y < -20) {
-        this.reset();
-      }
-    }
-
-    draw() {
-      ctx.save();
-      ctx.globalAlpha = Math.max(0, Math.min(1, this.opacity));
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = this.color;
-      ctx.shadowBlur = 12;
-      ctx.shadowColor = this.color;
-      ctx.fill();
-      ctx.restore();
-    }
-  }
-
-  const particles = Array.from({ length: 45 }, () => new Particle());
-
-  function animateParticles() {
-    ctx.clearRect(0, 0, width, height);
-    particles.forEach(p => {
-      p.update();
-      p.draw();
-    });
-    requestAnimationFrame(animateParticles);
-  }
-
-  animateParticles();
-
-  /* --- Função para Reanimar ao Toque (Celular) --- */
-  function restartAnimation() {
-    const animatedElements = document.querySelectorAll('.stem, .bloom-element, .wrap-element, .caption');
-    animatedElements.forEach(el => {
-      el.style.animation = 'none';
-      el.offsetHeight; // Força recomputação CSS
-      el.style.animation = null;
-    });
-  }
-
-  document.body.addEventListener('click', restartAnimation);
-  document.body.addEventListener('touchstart', restartAnimation);
-</script>
+    <!-- Mensagem Final -->
+    <div class="text-box">
+        <p class="message">💜 Você é muito especial 💜</p>
+    </div>
 
 </body>
 </html>
