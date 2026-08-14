@@ -1,251 +1,371 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Um Recado Especial para Nicolly</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Lexend:wght@400;600&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Um buquê especial para você</title>
+<style>
+  :root{
+    --bg1:#fffaf3;
+    --bg2:#fbeef0;
+    --bg3:#f1e6f5;
+  }
+  *{ box-sizing:border-box; }
+  html,body{
+    margin:0; padding:0; width:100%; min-height:100vh;
+  }
+  body{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:32px 16px;
+    background:
+      radial-gradient(circle at 50% 30%, var(--bg1) 0%, var(--bg2) 45%, var(--bg3) 100%);
+    font-family: Georgia, 'Times New Roman', 'Palatino Linotype', serif;
+    overflow-x:hidden;
+  }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+  .stage{
+    width:100%;
+    max-width:620px;
+    margin:0 auto;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
 
-        body {
-            background: radial-gradient(circle at center, #1b365d 0%, #081125 100%);
-            font-family: 'Lexend', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-            position: relative;
-        }
+  .bouquet-svg{
+    width:100%;
+    height:auto;
+    display:block;
+    overflow:visible;
+  }
 
-        /* Estrelas brilhantes ao fundo */
-        .stars {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            background-image: 
-                radial-gradient(circle at 20% 30%, #fff 1px, transparent 1px),
-                radial-gradient(circle at 75% 15%, #fff 2px, transparent 2px),
-                radial-gradient(circle at 50% 60%, #fff 1px, transparent 1px),
-                radial-gradient(circle at 85% 80%, #fff 1px, transparent 1px),
-                radial-gradient(circle at 10% 70%, #fff 2px, transparent 2px);
-            background-size: 200px 200px;
-            animation: twinkle 4s infinite linear;
-            opacity: 0.6;
-        }
+  /* ---------- animações ---------- */
+  @keyframes growStem{
+    to{ stroke-dashoffset:0; }
+  }
+  @keyframes popIn{
+    0%{ opacity:0; transform:scale(0.2); }
+    100%{ opacity:1; transform:scale(1); }
+  }
+  @keyframes bloom{
+    0%{ opacity:0; transform:scale(0.15) rotate(-18deg); }
+    55%{ opacity:1; transform:scale(1.08) rotate(4deg); }
+    100%{ opacity:1; transform:scale(1) rotate(0deg); }
+  }
+  @keyframes bowPop{
+    0%{ opacity:0; transform:scale(0.4) translateY(12px); }
+    100%{ opacity:1; transform:scale(1) translateY(0); }
+  }
+  @keyframes twinkle{
+    0%,100%{ opacity:0; transform:scale(0.4) rotate(0deg); }
+    50%{ opacity:1; transform:scale(1.15) rotate(25deg); }
+  }
+  @keyframes sway{
+    0%,100%{ transform:rotate(-1.1deg); }
+    50%{ transform:rotate(1.1deg); }
+  }
+  @keyframes captionIn{
+    0%{ opacity:0; transform:translateY(16px); }
+    100%{ opacity:1; transform:translateY(0); }
+  }
+  @keyframes glowPulse{
+    0%,100%{ text-shadow:0 0 8px rgba(232,93,117,0.25), 0 0 2px rgba(0,0,0,0.05); }
+    50%{ text-shadow:0 0 20px rgba(232,93,117,0.5), 0 0 6px rgba(0,0,0,0.05); }
+  }
 
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 0.8; }
-        }
+  .stem{
+    fill:none;
+    stroke:url(#stemGradient);
+    stroke-width:7;
+    stroke-linecap:round;
+    stroke-dasharray:100;
+    stroke-dashoffset:100;
+    animation-name:growStem;
+    animation-duration:1.4s;
+    animation-timing-function:ease-out;
+    animation-fill-mode:forwards;
+  }
+  .leaf{
+    opacity:0;
+    transform-box:fill-box;
+    transform-origin:center;
+    animation-name:popIn;
+    animation-duration:0.7s;
+    animation-timing-function:ease-out;
+    animation-fill-mode:forwards;
+  }
+  .flower{
+    opacity:0;
+    transform-box:fill-box;
+    transform-origin:center;
+    animation-name:bloom;
+    animation-duration:1s;
+    animation-timing-function:cubic-bezier(.34,1.56,.64,1);
+    animation-fill-mode:forwards;
+  }
+  .bow{
+    opacity:0;
+    transform-box:fill-box;
+    transform-origin:center;
+    animation-name:bowPop;
+    animation-duration:1s;
+    animation-timing-function:ease-out;
+    animation-fill-mode:forwards;
+  }
+  .sparkle{
+    opacity:0;
+    transform-box:fill-box;
+    transform-origin:center;
+    animation-name:twinkle;
+    animation-duration:2.6s;
+    animation-timing-function:ease-in-out;
+    animation-iteration-count:infinite;
+  }
+  #swayGroup{
+    transform-box:fill-box;
+    transform-origin:400px 862px;
+    animation-name:sway;
+    animation-duration:4.5s;
+    animation-timing-function:ease-in-out;
+    animation-iteration-count:infinite;
+  }
 
-        /* Balões flutuantes estilo Up - Altas Aventuras */
-        .balloon-container {
-            position: absolute;
-            bottom: -100px; width: 100%; height: 100%;
-            overflow: hidden; pointer-events: none;
-        }
+  .caption{
+    opacity:0;
+    margin-top:22px;
+    text-align:center;
+    padding:0 20px;
+    font-style:italic;
+    font-weight:700;
+    font-size:clamp(1.5rem, 5vw, 2.5rem);
+    letter-spacing:0.4px;
+    background:linear-gradient(90deg,#e85d75,#f2994a,#c2478d);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
 
-        .balloon {
-            position: absolute;
-            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
-            animation: floatUp 8s infinite ease-in-out;
-            opacity: 0.8;
-        }
-
-        .balloon::after {
-            content: ""; position: absolute; bottom: -8px; left: 50%;
-            transform: translateX(-50%);
-            border-left: 4px solid transparent;
-            border-right: 4px solid transparent;
-            border-bottom: 8px solid rgba(255,255,255,0.4);
-        }
-
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(-120px) scale(1) rotate(15deg); opacity: 0; }
-        }
-
-        /* Card Mágico Translúcido */
-        .card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            padding: 40px;
-            border-radius: 30px;
-            width: 90%; max-width: 500px;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.1);
-            position: relative; z-index: 10;
-            transform: translateY(30px); opacity: 0;
-            animation: cardAppear 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        @keyframes cardAppear {
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        /* Brilho neon colorido giratório nas bordas */
-        .card::before {
-            content: ''; position: absolute;
-            top: -5px; left: -5px; right: -5px; bottom: -5px;
-            background: linear-gradient(45deg, #ff4b2b, #ff416c, #a8ff78, #78ffd6, #00c6ff, #0072ff);
-            border-radius: 35px; z-index: -1; background-size: 400%;
-            animation: magicGlow 12s linear infinite; opacity: 0.4; filter: blur(10px);
-        }
-
-        @keyframes magicGlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Título Estilo Logo Pixar/Disney 3D */
-        h1 {
-            font-family: 'Fredoka One', cursive;
-            font-size: 45px; color: #fff;
-            text-shadow: 0 2px 0 #0056b3, 0 4px 0 #004085, 0 6px 0 #002752, 0 8px 15px rgba(0,0,0,0.6);
-            letter-spacing: 2px; margin-bottom: 25px;
-            animation: popIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s forwards;
-            opacity: 0; transform: scale(0.7);
-        }
-
-        @keyframes popIn {
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        /* Estilização dos Textos e Transições */
-        p {
-            font-size: 18px; line-height: 1.6; color: #f0f3f8; margin-bottom: 20px;
-            opacity: 0; transform: translateY(20px);
-            animation: fadeInUp 0.8s ease forwards 0.8s;
-        }
-
-        .highlight-miss {
-            color: #ffde6a; font-weight: 600; display: inline-block;
-            animation: pulse 2s infinite;
-        }
-
-        .highlight-chatice {
-            background: rgba(255, 75, 108, 0.2); border: 1px dashed #ff4b6c;
-            padding: 2px 8px; border-radius: 10px; color: #ff758f; font-style: italic;
-        }
-
-        .highlight-bless { color: #a8ff78; font-weight: 600; }
-
-        .highlight-success {
-            font-family: 'Fredoka One', cursive;
-            background: linear-gradient(to right, #78ffd6, #a8ff78);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            font-size: 22px; display: inline-block; margin: 10px 0;
-        }
-
-        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-
-        /* Botão Interativo com Efeito Mágico */
-        .btn-magic {
-            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
-            border: none; padding: 12px 30px; border-radius: 50px;
-            color: white; font-family: 'Fredoka One', cursive; font-size: 16px;
-            cursor: pointer; box-shadow: 0 10px 20px rgba(255, 65, 108, 0.4);
-            transition: all 0.3s ease; margin-top: 15px;
-            opacity: 0; animation: fadeInUp 0.8s ease forwards 1.2s;
-        }
-
-        .btn-magic:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 25px rgba(255, 65, 108, 0.6);
-        }
-
-        /* Estrelinhas cintilantes da Disney */
-        .sparkle {
-            position: absolute; background: white; width: 4px; height: 4px; border-radius: 50%;
-            box-shadow: 0 0 10px 2px #fff; animation: flash 1.5s infinite alternate;
-        }
-        @keyframes flash { 0% { opacity: 0.2; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.5); } }
-    </style>
+  @media (prefers-reduced-motion: reduce){
+    .stem{ stroke-dashoffset:0; animation:none; }
+    .leaf,.flower,.bow{ opacity:1; transform:none; animation:none; }
+    .sparkle{ display:none; }
+    #swayGroup{ animation:none; }
+    .caption{ opacity:1; animation:none; }
+  }
+</style>
 </head>
 <body>
 
-    <div class="stars"></div>
-    <div class="balloon-container" id="balloons"></div>
+  <div class="stage">
+    <svg class="bouquet-svg" viewBox="0 0 800 900" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="stemGradient" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stop-color="#3f6b34"/>
+          <stop offset="100%" stop-color="#79b968"/>
+        </linearGradient>
+        <linearGradient id="leafGradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#82c06e"/>
+          <stop offset="100%" stop-color="#4c7a3f"/>
+        </linearGradient>
+        <radialGradient id="centerGradient" cx="35%" cy="35%" r="70%">
+          <stop offset="0%" stop-color="#fff3b0"/>
+          <stop offset="100%" stop-color="#f59f00"/>
+        </radialGradient>
+        <filter id="softShadow" x="-60%" y="-60%" width="220%" height="220%">
+          <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#3a1f2b" flood-opacity="0.18"/>
+        </filter>
+      </defs>
 
-    <div class="card">
-        <div class="sparkle" style="top: 15%; left: 10%;"></div>
-        <div class="sparkle" style="top: 80%; right: 12%; animation-delay: 0.5s;"></div>
-        <div class="sparkle" style="top: 40%; right: 5%; animation-delay: 0.8s;"></div>
+      <g id="swayGroup">
+        <g id="stemsLayer"></g>
+        <g id="leavesLayer"></g>
+        <g id="bowLayer"></g>
+        <g id="flowersLayer"></g>
+        <g id="sparkleLayer"></g>
+      </g>
+    </svg>
 
-        <h1>Nicolly!</h1>
-        
-        <p>Estou com <span class="highlight-miss">muitas saudades</span> de você, sua <span class="highlight-chatice">chatice</span>! 🤪</p>
-        <p>Que <span class="highlight-bless">Deus te abençoe muito</span> nesta sua caminhada e na sua vida!</p>
-        <p>Desejo <span class="highlight-success">MUITO SUCESSO</span> em tudo o que fizer!</p>
-        <p style="font-weight: 600; color: #ff758f;">Te adoro viu! ✨💙</p>
+    <div class="caption" id="caption">Você é muito especial</div>
+  </div>
 
-        <button class="btn-magic" onclick="createBurst()">Receber Abraço Mágico</button>
-    </div>
+<script>
+(function(){
+  const base = { x:400, y:862 };
 
-    <script>
-        // Gerador automático de Balões Flutuantes (Estilo Pixar)
-        const colors = ['#ff4b6c', '#ffbe0b', '#fb5607', '#ff006e', '#3a86ff', '#8338ec', '#06d6a0'];
-        const container = document.getElementById('balloons');
+  // ---------- dados do buquê ----------
+  const mainStems = [
+    { end:{x:195,y:300}, ctrl:{x:255,y:560}, type:'wild',  colors:{petal:'#9775fa', center:'#5f3dc4'} },
+    { end:{x:288,y:190}, ctrl:{x:330,y:520}, type:'rose',  colors:{outer:'#ffc2d1', mid:'#ff8fa3', inner:'#ff6392', center:'#e64980'} },
+    { end:{x:363,y:120}, ctrl:{x:385,y:480}, type:'daisy', colors:{petal:'#fffaf0'} },
+    { end:{x:430,y:98},  ctrl:{x:410,y:460}, type:'rose',  colors:{outer:'#ff9770', mid:'#ff7043', inner:'#ff5722', center:'#d84315'} },
+    { end:{x:500,y:128}, ctrl:{x:470,y:480}, type:'daisy', colors:{petal:'#fff3d6'} },
+    { end:{x:575,y:183}, ctrl:{x:540,y:520}, type:'rose',  colors:{outer:'#ff6f91', mid:'#ff4d6d', inner:'#e0355b', center:'#c9184a'} },
+    { end:{x:650,y:288}, ctrl:{x:580,y:560}, type:'wild',  colors:{petal:'#74c0fc', center:'#1971c2'} }
+  ];
+  const fillerStems = [
+    { end:{x:330,y:300}, ctrl:{x:350,y:560}, type:'filler' },
+    { end:{x:498,y:300}, ctrl:{x:470,y:560}, type:'filler' }
+  ];
+  const allStems = mainStems.concat(fillerStems);
 
-        function generateBalloons() {
-            for (let i = 0; i < 15; i++) {
-                setTimeout(() => {
-                    const balloon = document.createElement('div');
-                    balloon.classList.add('balloon');
-                    const size = Math.floor(Math.random() * 30) + 20; 
-                    const left = Math.floor(Math.random() * 100);
-                    const delay = Math.random() * 5;
-                    const duration = Math.random() * 4 + 6;
-                    const color = colors[Math.floor(Math.random() * colors.length)];
+  // ---------- tempos ----------
+  const STEM_STAGGER = 0.12;
+  const STEM_DUR = 1.4;
+  const stemsFinish = (allStems.length - 1) * STEM_STAGGER + STEM_DUR;
 
-                    balloon.style.width = `${size}px`;
-                    balloon.style.height = `${size * 1.2}px`;
-                    balloon.style.left = `${left}%`;
-                    balloon.style.backgroundColor = color;
-                    balloon.style.boxShadow = `inset -5px -5px 10px rgba(0,0,0,0.2), 0 5px 10px rgba(0,0,0,0.3)`;
-                    balloon.style.animationDelay = `${delay}s`;
-                    balloon.style.animationDuration = `${duration}s`;
-                    container.appendChild(balloon);
-                    setTimeout(() => balloon.remove(), (duration + delay) * 1000);
-                }, i * 300);
-            }
-        }
-        generateBalloons();
-        setInterval(generateBalloons, 10000);
+  const BOW_START = 0.5;
 
-        // Efeito de partículas ao clicar no botão
-        function createBurst() {
-            for (let i = 0; i < 30; i++) {
-                const p = document.createElement('div');
-                p.style.position = 'absolute'; p.style.width = '8px'; p.style.height = '8px'; p.style.borderRadius = '50%';
-                p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                p.style.left = '50%'; p.style.top = '50%'; p.style.zIndex = '100'; p.style.pointerEvents = 'none';
-                
-                const angle = Math.random() * Math.PI * 2;
-                const vel = Math.random() * 150 + 50;
-                const x = Math.cos(angle) * vel; const y = Math.sin(angle) * vel;
-                document.body.appendChild(p);
+  const FLOWER_START = stemsFinish + 0.25;
+  const FLOWER_STAGGER = 0.4;
+  const FLOWER_DUR = 1.0;
+  const flowersFinish = FLOWER_START + (mainStems.length - 1) * FLOWER_STAGGER + FLOWER_DUR;
 
-                p.animate([
-                    { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
-                    { transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(0)`, opacity: 0 }
-                ], { duration: 1000, easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)', fill: 'forwards' });
-                setTimeout(() => p.remove(), 1000);
-            }
-        }
-    </script>
+  const SPARKLE_START = flowersFinish + 0.3;
+  const CAPTION_DELAY = SPARKLE_START + 0.4;
+
+  // ---------- helpers ----------
+  function bez(p0, p1, p2, t){
+    const x = (1-t)*(1-t)*p0.x + 2*(1-t)*t*p1.x + t*t*p2.x;
+    const y = (1-t)*(1-t)*p0.y + 2*(1-t)*t*p1.y + t*t*p2.y;
+    return { x, y };
+  }
+
+  function petalRing(count, rx, ry, dist, color, ringRotate){
+    ringRotate = ringRotate || 0;
+    let s = '<g transform="rotate(' + ringRotate + ')">';
+    const step = 360 / count;
+    for(let i=0;i<count;i++){
+      s += '<ellipse transform="rotate(' + (i*step) + ')" cx="0" cy="-' + dist + '" rx="' + rx + '" ry="' + ry + '" fill="' + color + '"/>';
+    }
+    s += '</g>';
+    return s;
+  }
+
+  function roseInner(c){
+    return '<g filter="url(#softShadow)">' +
+      petalRing(6, 24, 36, 28, c.outer, 0) +
+      petalRing(6, 19, 29, 17, c.mid, 30) +
+      petalRing(5, 12, 18, 8, c.inner, 15) +
+      '<circle cx="0" cy="0" r="6" fill="' + c.center + '"/>' +
+      '</g>';
+  }
+  function daisyInner(c){
+    return '<g filter="url(#softShadow)">' +
+      petalRing(10, 7, 28, 26, c.petal, 0) +
+      '<circle cx="0" cy="0" r="15" fill="url(#centerGradient)"/>' +
+      '</g>';
+  }
+  function wildInner(c){
+    return '<g filter="url(#softShadow)">' +
+      petalRing(5, 9, 15, 11, c.petal, 0) +
+      '<circle cx="0" cy="0" r="4.5" fill="' + c.center + '"/>' +
+      '</g>';
+  }
+  function fillerInner(){
+    const dots = [[0,0],[10,-14],[-9,-12],[4,-26],[-4,-24],[0,-38],[8,-34],[-9,-32]];
+    let s = '<g filter="url(#softShadow)">';
+    dots.forEach(function(d){
+      s += '<circle cx="' + d[0] + '" cy="' + d[1] + '" r="3.6" fill="#fff9f5" opacity="0.92"/>';
+    });
+    s += '</g>';
+    return s;
+  }
+
+  function flowerMarkup(stem, delay){
+    let inner = '';
+    if(stem.type === 'rose') inner = roseInner(stem.colors);
+    else if(stem.type === 'daisy') inner = daisyInner(stem.colors);
+    else if(stem.type === 'wild') inner = wildInner(stem.colors);
+    else inner = fillerInner();
+    return '<g class="flower" style="animation-delay:' + delay + 's" transform="translate(' + stem.end.x + ',' + stem.end.y + ')">' + inner + '</g>';
+  }
+
+  function leafMarkup(x, y, rot, delay){
+    return '<g class="leaf" style="animation-delay:' + delay + 's" transform="translate(' + x + ',' + y + ') rotate(' + rot + ')">' +
+      '<ellipse cx="0" cy="-14" rx="9" ry="20" fill="url(#leafGradient)"/>' +
+      '<path d="M0,-32 L0,4" stroke="#3f6b34" stroke-width="1.1" opacity="0.45"/>' +
+      '</g>';
+  }
+
+  function sparkleMarkup(x, y, delay, size){
+    return '<g class="sparkle" style="animation-delay:' + delay + 's" transform="translate(' + x + ',' + y + ') scale(' + size + ')">' +
+      '<path d="M0,-9 L2.2,-2.2 L9,0 L2.2,2.2 L0,9 L-2.2,2.2 L-9,0 L-2.2,-2.2 Z" fill="#fff6d8"/>' +
+      '</g>';
+  }
+
+  const bowMarkup =
+    '<g class="bow" style="animation-delay:' + BOW_START + 's" transform="translate(400,845)" filter="url(#softShadow)">' +
+      '<path d="M0,0 C-42,-26 -58,10 -18,15 C-46,21 -38,46 0,18 Z" fill="#e3b04b"/>' +
+      '<path d="M0,0 C42,-26 58,10 18,15 C46,21 38,46 0,18 Z" fill="#d69b32"/>' +
+      '<path d="M-4,10 L-30,58 L-14,54 L-4,26 Z" fill="#e3b04b"/>' +
+      '<path d="M4,10 L30,58 L14,54 L4,26 Z" fill="#d69b32"/>' +
+      '<ellipse cx="0" cy="10" rx="12" ry="9" fill="#c8912f"/>' +
+    '</g>';
+
+  // ---------- montagem ----------
+  const stemsLayer = document.getElementById('stemsLayer');
+  const leavesLayer = document.getElementById('leavesLayer');
+  const flowersLayer = document.getElementById('flowersLayer');
+  const bowLayer = document.getElementById('bowLayer');
+  const sparkleLayer = document.getElementById('sparkleLayer');
+  const swayGroup = document.getElementById('swayGroup');
+  const caption = document.getElementById('caption');
+
+  let stemsHTML = '';
+  let leavesHTML = '';
+
+  allStems.forEach(function(stem, i){
+    const delay = i * STEM_STAGGER;
+    stemsHTML += '<path class="stem" pathLength="100" d="M ' + base.x + ' ' + base.y +
+      ' Q ' + stem.ctrl.x + ' ' + stem.ctrl.y + ' ' + stem.end.x + ' ' + stem.end.y +
+      '" style="animation-delay:' + delay + 's"/>';
+
+    if(stem.type !== 'filler'){
+      const p1 = bez(base, stem.ctrl, stem.end, 0.5);
+      const p2 = bez(base, stem.ctrl, stem.end, 0.72);
+      const leanLeft = stem.end.x < 400;
+      leavesHTML += leafMarkup(p1.x, p1.y, leanLeft ? -48 : 48, delay + 0.45);
+      leavesHTML += leafMarkup(p2.x, p2.y, leanLeft ? -35 : 35, delay + 0.6);
+    }
+  });
+
+  stemsLayer.innerHTML = stemsHTML;
+  leavesLayer.innerHTML = leavesHTML;
+  bowLayer.innerHTML = bowMarkup;
+
+  let flowersHTML = '';
+  mainStems.forEach(function(stem, i){
+    const delay = FLOWER_START + i * FLOWER_STAGGER;
+    flowersHTML += flowerMarkup(stem, delay);
+  });
+  fillerStems.forEach(function(stem, i){
+    const delay = FLOWER_START * 0.55 + i * 0.3;
+    flowersHTML += flowerMarkup(stem, delay);
+  });
+  flowersLayer.innerHTML = flowersHTML;
+
+  let sparklesHTML = '';
+  const sparkleSpots = [
+    [220,240],[300,150],[365,90],[430,70],[500,100],[575,150],[650,250],
+    [260,330],[520,330],[400,180],[340,220],[470,220]
+  ];
+  sparkleSpots.forEach(function(pt, i){
+    const delay = SPARKLE_START + Math.random() * 1.6 + i * 0.05;
+    const size = 0.6 + Math.random() * 0.7;
+    sparklesHTML += sparkleMarkup(pt[0], pt[1], delay, size.toFixed(2));
+  });
+  sparkleLayer.innerHTML = sparklesHTML;
+
+  swayGroup.style.animationDelay = flowersFinish + 's';
+
+  caption.style.animation =
+    'captionIn 1s ease-out ' + CAPTION_DELAY + 's forwards, ' +
+    'glowPulse 3s ease-in-out ' + (CAPTION_DELAY + 1) + 's infinite';
+})();
+</script>
 </body>
 </html>
