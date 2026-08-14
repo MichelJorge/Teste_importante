@@ -2,442 +2,353 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>Um buquê especial para você</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Um Buquê Especial Para Você</title>
 <style>
-  :root{
-    --bg1:#fffaf3;
-    --bg2:#fbeef0;
-    --bg3:#f1e6f5;
+  :root {
+    --bg-gradient: radial-gradient(circle at 50% 30%, #fffdfa 0%, #f4eae1 50%, #e8d9cb 100%);
   }
-  *{ box-sizing:border-box; }
-  html,body{ margin:0; padding:0; width:100%; min-height:100vh; }
-  body{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    min-height:100vh;
-    padding:32px 16px;
-    background:
-      radial-gradient(circle at 50% 30%, var(--bg1) 0%, var(--bg2) 45%, var(--bg3) 100%);
-    font-family: Georgia, 'Times New Roman', 'Palatino Linotype', serif;
-    overflow-x:hidden;
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: var(--bg-gradient);
+    font-family: 'Georgia', serif;
+    overflow: hidden;
+    touch-action: manipulation;
   }
 
-  .stage{
-    width:100%;
-    max-width:640px;
-    margin:0 auto;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
+  .stage {
+    width: 100%;
+    max-width: 500px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 10px;
   }
 
-  .bouquet-svg{
-    width:100%;
-    height:auto;
-    display:block;
-    overflow:visible;
+  .bouquet-svg {
+    width: 100%;
+    height: auto;
+    max-height: 75vh;
+    filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15));
   }
 
-  /* ---------- animações ---------- */
-  @keyframes growStem{ to{ stroke-dashoffset:0; } }
-  @keyframes popIn{
-    0%{ opacity:0; transform:scale(0.2); }
-    100%{ opacity:1; transform:scale(1); }
+  /* Animações CSS */
+  @keyframes growStem { to { stroke-dashoffset: 0; } }
+  @keyframes popIn { to { opacity: 1; transform: scale(1); } }
+  @keyframes bloom {
+    0% { opacity: 0; transform: scale(0) rotate(-20deg); }
+    60% { opacity: 1; transform: scale(1.1) rotate(5deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
   }
-  @keyframes bloom{
-    0%{ opacity:0; transform:scale(0.15) rotate(-18deg); }
-    55%{ opacity:1; transform:scale(1.08) rotate(4deg); }
-    100%{ opacity:1; transform:scale(1) rotate(0deg); }
+  @keyframes floatHeart {
+    0% { opacity: 0; transform: translateY(0) scale(0.5) rotate(0deg); }
+    50% { opacity: 0.8; }
+    100% { opacity: 0; transform: translateY(-120px) scale(1.2) rotate(25deg); }
   }
-  @keyframes wrapPop{
-    0%{ opacity:0; transform:scale(0.85) translateY(14px); }
-    100%{ opacity:1; transform:scale(1) translateY(0); }
+  @keyframes sway {
+    0%, 100% { transform: rotate(-1.5deg); }
+    50% { transform: rotate(1.5deg); }
   }
-  @keyframes ribbonPop{
-    0%{ opacity:0; transform:scale(0.5) translateY(10px); }
-    100%{ opacity:1; transform:scale(1) translateY(0); }
-  }
-  @keyframes twinkle{
-    0%,100%{ opacity:0; transform:scale(0.4) rotate(0deg); }
-    50%{ opacity:1; transform:scale(1.15) rotate(25deg); }
-  }
-  @keyframes sway{
-    0%,100%{ transform:rotate(-1.1deg); }
-    50%{ transform:rotate(1.1deg); }
-  }
-  @keyframes captionIn{
-    0%{ opacity:0; transform:translateY(16px); }
-    100%{ opacity:1; transform:translateY(0); }
-  }
-  @keyframes glowPulse{
-    0%,100%{ text-shadow:0 0 8px rgba(58,123,181,0.25), 0 0 2px rgba(0,0,0,0.05); }
-    50%{ text-shadow:0 0 20px rgba(58,123,181,0.45), 0 0 6px rgba(0,0,0,0.05); }
+  @keyframes captionIn { to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulseGlow {
+    0%, 100% { text-shadow: 0 0 10px rgba(212, 143, 56, 0.3); }
+    50% { text-shadow: 0 0 22px rgba(212, 143, 56, 0.7); }
   }
 
-  .stem{
-    fill:none;
-    stroke:url(#stemGradient);
-    stroke-width:7;
-    stroke-linecap:round;
-    stroke-dasharray:100;
-    stroke-dashoffset:100;
-    animation-name:growStem;
-    animation-duration:1.4s;
-    animation-timing-function:ease-out;
-    animation-fill-mode:forwards;
-  }
-  .leaf{
-    opacity:0;
-    transform-box:fill-box;
-    transform-origin:center;
-    animation-name:popIn;
-    animation-duration:0.7s;
-    animation-timing-function:ease-out;
-    animation-fill-mode:forwards;
-  }
-  .flower{
-    opacity:0;
-    transform-box:fill-box;
-    transform-origin:center;
-    animation-name:bloom;
-    animation-duration:1s;
-    animation-timing-function:cubic-bezier(.34,1.56,.64,1);
-    animation-fill-mode:forwards;
-  }
-  .wrap-part{
-    opacity:0;
-    transform-box:fill-box;
-    transform-origin:center;
-    animation-name:wrapPop;
-    animation-duration:1s;
-    animation-timing-function:ease-out;
-    animation-fill-mode:forwards;
-  }
-  .ribbon{
-    opacity:0;
-    transform-box:fill-box;
-    transform-origin:center;
-    animation-name:ribbonPop;
-    animation-duration:0.9s;
-    animation-timing-function:ease-out;
-    animation-fill-mode:forwards;
-  }
-  .sparkle{
-    opacity:0;
-    transform-box:fill-box;
-    transform-origin:center;
-    animation-name:twinkle;
-    animation-duration:2.6s;
-    animation-timing-function:ease-in-out;
-    animation-iteration-count:infinite;
-  }
-  #swayGroup{
-    transform-box:fill-box;
-    transform-origin:400px 862px;
-    animation-name:sway;
-    animation-duration:4.5s;
-    animation-timing-function:ease-in-out;
-    animation-iteration-count:infinite;
+  .stem {
+    fill: none;
+    stroke: #3a5a24;
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    animation: growStem 1.2s ease-out forwards;
   }
 
-  .caption{
-    opacity:0;
-    margin-top:22px;
-    text-align:center;
-    padding:0 20px;
-    font-style:italic;
-    font-weight:700;
-    font-size:clamp(1.5rem, 5vw, 2.5rem);
-    letter-spacing:0.4px;
-    background:linear-gradient(90deg,#3a7bb5,#5b9bd5,#e8590c);
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
+  .flower, .card {
+    opacity: 0;
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: bloom 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   }
 
-  @media (prefers-reduced-motion: reduce){
-    .stem{ stroke-dashoffset:0; animation:none; }
-    .leaf,.flower,.wrap-part,.ribbon{ opacity:1; transform:none; animation:none; }
-    .sparkle{ display:none; }
-    #swayGroup{ animation:none; }
-    .caption{ opacity:1; animation:none; }
+  .leaf, .wrap {
+    opacity: 0;
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: popIn 0.8s ease-out forwards;
+  }
+
+  #swayGroup {
+    transform-origin: 200px 520px;
+    animation: sway 4s ease-in-out infinite alternate;
+  }
+
+  .caption {
+    opacity: 0;
+    transform: translateY(15px);
+    margin-top: 10px;
+    text-align: center;
+    font-style: italic;
+    font-weight: bold;
+    font-size: clamp(1.4rem, 5vw, 2.1rem);
+    color: #4a2810;
+    animation: captionIn 1s ease-out 3.5s forwards, pulseGlow 3s ease-in-out 4.5s infinite;
+  }
+
+  .heart-particle {
+    position: absolute;
+    pointer-events: none;
+    color: #e63946;
+    font-size: 18px;
+    animation: floatHeart 3s ease-in-out infinite;
   }
 </style>
 </head>
 <body>
 
-  <div class="stage">
-    <svg class="bouquet-svg" viewBox="0 0 800 900" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="stemGradient" x1="0" y1="1" x2="0" y2="0">
-          <stop offset="0%" stop-color="#3f6b34"/>
-          <stop offset="100%" stop-color="#79b968"/>
-        </linearGradient>
-        <linearGradient id="leafGradient" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#82c06e"/>
-          <stop offset="100%" stop-color="#4c7a3f"/>
-        </linearGradient>
-        <radialGradient id="sunflowerCenter" cx="35%" cy="35%" r="70%">
-          <stop offset="0%" stop-color="#8a5a2e"/>
-          <stop offset="100%" stop-color="#4a2c14"/>
-        </radialGradient>
-        <filter id="softShadow" x="-60%" y="-60%" width="220%" height="220%">
-          <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#1a2a3a" flood-opacity="0.18"/>
-        </filter>
-      </defs>
+<div class="stage" id="stage">
+  <svg class="bouquet-svg" viewBox="0 0 400 600">
+    <defs>
+      <!-- Gradientes e Filtros -->
+      <linearGradient id="kraftPaper" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#d7a15c"/>
+        <stop offset="100%" stop-color="#a37035"/>
+      </linearGradient>
+      
+      <linearGradient id="blackPaper" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#2b2b2b"/>
+        <stop offset="100%" stop-color="#111111"/>
+      </linearGradient>
 
-      <g id="swayGroup">
-        <g id="stemsLayer"></g>
-        <g id="wrapLayer"></g>
-        <g id="ribbonLayer"></g>
-        <g id="leavesLayer"></g>
-        <g id="flowersLayer"></g>
-        <g id="sparkleLayer"></g>
+      <radialGradient id="sunCenter" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#2a1202"/>
+        <stop offset="70%" stop-color="#4a2408"/>
+        <stop offset="100%" stop-color="#1a0a01"/>
+      </radialGradient>
+
+      <radialGradient id="blueRose" cx="40%" cy="40%" r="60%">
+        <stop offset="0%" stop-color="#6ba4e8"/>
+        <stop offset="50%" stop-color="#1d59b3"/>
+        <stop offset="100%" stop-color="#0b2866"/>
+      </radialGradient>
+
+      <!-- Cartão Noite Estrelada -->
+      <linearGradient id="starrySky" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#0e2a47"/>
+        <stop offset="50%" stop-color="#1b4975"/>
+        <stop offset="100%" stop-color="#08182b"/>
+      </linearGradient>
+
+      <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="2" dy="5" stdDeviation="4" flood-opacity="0.3"/>
+      </filter>
+    </defs>
+
+    <g id="swayGroup">
+      <!-- Caules -->
+      <g id="stemsLayer">
+        <path class="stem" d="M 200 520 Q 190 400 130 280" style="animation-delay: 0.1s;"/>
+        <path class="stem" d="M 200 520 Q 200 380 200 240" style="animation-delay: 0.2s;"/>
+        <path class="stem" d="M 200 520 Q 210 400 280 270" style="animation-delay: 0.3s;"/>
+        <path class="stem" d="M 200 520 Q 180 420 100 220" style="animation-delay: 0.15s;"/>
+        <path class="stem" d="M 200 520 Q 220 420 300 210" style="animation-delay: 0.25s;"/>
       </g>
-    </svg>
 
-    <div class="caption" id="caption">Você é muito especial</div>
-  </div>
+      <!-- Papel de Embrulho (Fundo Escuro e Pardo) -->
+      <g id="wrapLayer">
+        <!-- Papel Preto Interno -->
+        <path class="wrap" d="M 200 520 L 80 260 L 320 260 Z" fill="url(#blackPaper)" style="animation-delay: 0.5s;"/>
+        <!-- Papel Kraft Externo -->
+        <path class="wrap" d="M 200 530 L 40 320 L 120 480 Z" fill="url(#kraftPaper)" filter="url(#shadow)" style="animation-delay: 0.6s;"/>
+        <path class="wrap" d="M 200 530 L 360 320 L 280 480 Z" fill="url(#kraftPaper)" filter="url(#shadow)" style="animation-delay: 0.7s;"/>
+        <path class="wrap" d="M 200 530 L 60 340 L 340 340 Z" fill="url(#kraftPaper)" style="animation-delay: 0.8s;"/>
+      </g>
+
+      <!-- Cartão Van Gogh (A Noite Estrelada) -->
+      <g class="card" transform="translate(60, 110) rotate(-18)" filter="url(#shadow)" style="animation-delay: 1.2s;">
+        <rect x="0" y="0" width="70" height="90" rx="3" fill="url(#starrySky)" stroke="#fff" stroke-width="1.5"/>
+        <!-- Sol/Lua de Van Gogh -->
+        <circle cx="55" cy="20" r="10" fill="#ffd13b" opacity="0.9"/>
+        <circle cx="55" cy="20" r="6" fill="#fff59d"/>
+        <!-- Espirais de Vento -->
+        <path d="M 10 30 C 25 15, 35 40, 50 25" fill="none" stroke="#5cb3ff" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+        <path d="M 5 45 C 20 30, 40 55, 60 35" fill="none" stroke="#eedd82" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+        <!-- Cipreste Escuro -->
+        <path d="M 8 90 Q 15 50 22 90 Z" fill="#09200f"/>
+      </g>
+
+      <!-- Preenchimentos Verdes e Amarelinhos (Gipsonas) -->
+      <g id="foliageLayer">
+        <!-- Folhagens Amarelas/Verdes (Solidago) -->
+        <g class="leaf" transform="translate(240, 150)" style="animation-delay: 1.0s;">
+          <circle cx="0" cy="0" r="3" fill="#e2c044"/><circle cx="5" cy="-5" r="2.5" fill="#e2c044"/><circle cx="-4" cy="-8" r="3" fill="#88aa22"/>
+        </g>
+        <g class="leaf" transform="translate(140, 180)" style="animation-delay: 1.1s;">
+          <circle cx="0" cy="0" r="4" fill="#e2c044"/><circle cx="-6" cy="-4" r="3" fill="#e2c044"/><circle cx="5" cy="-6" r="3.5" fill="#88aa22"/>
+        </g>
+        <!-- Flores Brancas Pequenas -->
+        <g class="leaf" transform="translate(160, 320)" style="animation-delay: 1.3s;">
+          <circle cx="0" cy="0" r="5" fill="#ffffff"/><circle cx="8" cy="3" r="4" fill="#ffffff"/><circle cx="4" cy="-6" r="4.5" fill="#ffffff"/>
+          <circle cx="0" cy="0" r="1.5" fill="#ddb033"/>
+        </g>
+      </g>
+
+      <!-- Camada de Flores Principais -->
+      <g id="flowersLayer">
+        
+        <!-- Rosas Azuis -->
+        <!-- Rosa Azul Superior -->
+        <g class="flower" transform="translate(230, 160) scale(0.85)" style="animation-delay: 1.5s;">
+          <circle cx="0" cy="0" r="25" fill="url(#blueRose)" filter="url(#shadow)"/>
+          <path d="M -10 -5 C -5 -20, 5 -20, 10 -5 C 15 10, -15 10, -10 -5 Z" fill="#9bc2f7" opacity="0.6"/>
+        </g>
+
+        <!-- Rosa Azul Central Direita -->
+        <g class="flower" transform="translate(280, 220) scale(1.1)" style="animation-delay: 1.7s;">
+          <circle cx="0" cy="0" r="28" fill="url(#blueRose)" filter="url(#shadow)"/>
+          <circle cx="-2" cy="-2" r="18" fill="#2b6cb0" opacity="0.5"/>
+          <path d="M -8 -4 C -4 -15, 4 -15, 8 -4 Z" fill="#bbd7fb" opacity="0.8"/>
+        </g>
+
+        <!-- Rosa Azul Inferior Direita -->
+        <g class="flower" transform="translate(290, 310) scale(1)" style="animation-delay: 1.9s;">
+          <circle cx="0" cy="0" r="26" fill="url(#blueRose)" filter="url(#shadow)"/>
+          <path d="M -6 -3 C -3 -12, 3 -12, 6 -3 Z" fill="#bbd7fb" opacity="0.7"/>
+        </g>
+
+        <!-- Rosa Azul Base Centro -->
+        <g class="flower" transform="translate(220, 330) scale(0.95)" style="animation-delay: 2.1s;">
+          <circle cx="0" cy="0" r="25" fill="url(#blueRose)" filter="url(#shadow)"/>
+          <path d="M -6 -3 C -3 -12, 3 -12, 6 -3 Z" fill="#9bc2f7" opacity="0.8"/>
+        </g>
+
+        <!-- GRANDES GIRASSÓIS (Destaque Principal) -->
+        
+        <!-- Girassol 1: Superior Esquerdo -->
+        <g class="flower" transform="translate(150, 200) scale(1.3)" style="animation-delay: 2.3s;">
+          <g filter="url(#shadow)">
+            <!-- Pétalas Amarelas -->
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffca28" transform="rotate(0)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffb300" transform="rotate(22.5)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffca28" transform="rotate(45)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffb300" transform="rotate(67.5)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffca28" transform="rotate(90)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffb300" transform="rotate(112.5)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffca28" transform="rotate(135)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffb300" transform="rotate(157.5)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffca28" transform="rotate(180)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffb300" transform="rotate(202.5)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffca28" transform="rotate(225)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffb300" transform="rotate(247.5)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffca28" transform="rotate(270)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffb300" transform="rotate(292.5)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffca28" transform="rotate(315)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffb300" transform="rotate(337.5)"/>
+            <!-- Centro Marrom escuro -->
+            <circle cx="0" cy="0" r="22" fill="url(#sunCenter)"/>
+            <circle cx="0" cy="0" r="20" fill="none" stroke="#3a1a04" stroke-width="2" stroke-dasharray="3,3"/>
+          </g>
+        </g>
+
+        <!-- Girassol 2: Centro Baixo (O Maior) -->
+        <g class="flower" transform="translate(200, 270) scale(1.4)" style="animation-delay: 2.6s;">
+          <g filter="url(#shadow)">
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffca28" transform="rotate(10)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffa000" transform="rotate(32.5)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffca28" transform="rotate(55)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffa000" transform="rotate(77.5)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffca28" transform="rotate(100)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffa000" transform="rotate(122.5)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffca28" transform="rotate(145)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffa000" transform="rotate(167.5)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffca28" transform="rotate(190)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffa000" transform="rotate(212.5)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffca28" transform="rotate(235)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffa000" transform="rotate(257.5)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffca28" transform="rotate(280)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffa000" transform="rotate(302.5)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffca28" transform="rotate(325)"/>
+            <path d="M0,0 L-8,-45 L0,-50 L8,-45 Z" fill="#ffa000" transform="rotate(347.5)"/>
+            <!-- Centro Marrom -->
+            <circle cx="0" cy="0" r="23" fill="url(#sunCenter)"/>
+            <circle cx="0" cy="0" r="21" fill="none" stroke="#54280a" stroke-width="2" stroke-dasharray="4,2"/>
+          </g>
+        </g>
+
+        <!-- Girassol 3: Lateral Direita -->
+        <g class="flower" transform="translate(310, 270) scale(1.1)" style="animation-delay: 2.9s;">
+          <g filter="url(#shadow)">
+            <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ffca28" transform="rotate(5)"/>
+            <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ffb300" transform="rotate(30)"/>
+            <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ffca28" transform="rotate(55)"/>
+            <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ffb300" transform="rotate(80)"/>
+            <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ffca28" transform="rotate(105)"/>
+            <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ffb300" transform="rotate(130)"/>
+            <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ffca28" transform="rotate(155)"/>
+            <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ffb300" transform="rotate(180)"/>
+            <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ffca28" transform="rotate(205)"/>
+            <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ffb300" transform="rotate(230)"/>
+            <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ffca28" transform="rotate(255)"/>
+            <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ffb300" transform="rotate(280)"/>
+            <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ffca28" transform="rotate(305)"/>
+            <path d="M0,0 L-7,-40 L0,-45 L7,-40 Z" fill="#ffb300" transform="rotate(330)"/>
+            <circle cx="0" cy="0" r="19" fill="url(#sunCenter)"/>
+          </g>
+        </g>
+
+      </g>
+    </g>
+  </svg>
+
+  <div class="caption">Você é muito especial ❤️</div>
+</div>
 
 <script>
-(function(){
-  const base = { x:400, y:868 };
-
-  // ---------- paleta ----------
-  const HYDRANGEA_COLORS = ['#4a90c9', '#5b9bd5', '#3f7fb8'];
-  const ROSE_SETS = [
-    { outer:'#ffb347', mid:'#ff9d2f', inner:'#ffcc33', center:'#e8590c' },
-    { outer:'#ffc55c', mid:'#ffab2e', inner:'#fff3b0', center:'#d9480f' },
-    { outer:'#ffa94d', mid:'#ff8f1f', inner:'#ffdb70', center:'#c2410c' }
-  ];
-
-  // ---------- dados do buquê (estilo redondo, girassol + rosas laranja + hortênsia azul) ----------
-  const mainStems = [
-    { end:{x:245,y:300}, type:'hydrangea', scale:1.15 },
-    { end:{x:255,y:225}, type:'rose', colors:ROSE_SETS[0], scale:1 },
-    { end:{x:285,y:175}, type:'hydrangea', scale:1.15 },
-    { end:{x:370,y:150}, type:'sunflower', scale:1.6 },
-    { end:{x:330,y:120}, type:'button', scale:0.55 },
-    { end:{x:420,y:135}, type:'hydrangea', scale:1.15 },
-    { end:{x:460,y:190}, type:'rose', colors:ROSE_SETS[1], scale:1 },
-    { end:{x:505,y:155}, type:'hydrangea', scale:1.15 },
-    { end:{x:555,y:215}, type:'hydrangea', scale:1.15 },
-    { end:{x:520,y:290}, type:'rose', colors:ROSE_SETS[2], scale:1 },
-    { end:{x:400,y:310}, type:'hydrangea', scale:1.15 },
-    { end:{x:455,y:130}, type:'button', scale:0.55 },
-    { end:{x:335,y:255}, type:'hydrangea', scale:1.15 }
-  ];
-  const fillerStems = [
-    { end:{x:210,y:260}, type:'filler', scale:0.9 },
-    { end:{x:590,y:260}, type:'filler', scale:0.9 },
-    { end:{x:400,y:120}, type:'filler', scale:0.9 },
-    { end:{x:305,y:330}, type:'filler', scale:0.9 }
-  ];
-  const allStems = mainStems.concat(fillerStems);
-
-  // ---------- tempos ----------
-  const STEM_STAGGER = 0.08;
-  const STEM_DUR = 1.4;
-  const stemsFinish = (allStems.length - 1) * STEM_STAGGER + STEM_DUR;
-
-  const WRAP_START = 0.6;
-  const RIBBON_START = 1.05;
-
-  const FLOWER_START = stemsFinish + 0.25;
-  const FLOWER_STAGGER = 0.22;
-  const FLOWER_DUR = 1.0;
-  const flowersFinish = FLOWER_START + (mainStems.length - 1) * FLOWER_STAGGER + FLOWER_DUR;
-
-  const SPARKLE_START = flowersFinish + 0.3;
-  const CAPTION_DELAY = SPARKLE_START + 0.4;
-
-  // ---------- helpers ----------
-  function ctrlFor(end){
-    return {
-      x: base.x + (end.x - base.x) * 0.6,
-      y: base.y - (base.y - end.y) * 0.78
-    };
-  }
-  function bez(p0, p1, p2, t){
-    const x = (1-t)*(1-t)*p0.x + 2*(1-t)*t*p1.x + t*t*p2.x;
-    const y = (1-t)*(1-t)*p0.y + 2*(1-t)*t*p1.y + t*t*p2.y;
-    return { x, y };
-  }
-  function petalRing(count, rx, ry, dist, color, ringRotate){
-    ringRotate = ringRotate || 0;
-    let s = '<g transform="rotate(' + ringRotate + ')">';
-    const step = 360 / count;
-    for(let i=0;i<count;i++){
-      s += '<ellipse transform="rotate(' + (i*step) + ')" cx="0" cy="-' + dist + '" rx="' + rx + '" ry="' + ry + '" fill="' + color + '"/>';
-    }
-    s += '</g>';
-    return s;
+  // Gerador de corações flutuantes românticos
+  function createHeart() {
+    const stage = document.getElementById('stage');
+    const heart = document.createElement('div');
+    heart.classList.add('heart-particle');
+    heart.innerHTML = ['❤️', '✨', '🌸', '💖'][Math.floor(Math.random() * 4)];
+    
+    // Posição aleatória na largura do buquê
+    heart.style.left = (30 + Math.random() * 40) + '%';
+    heart.style.top = (40 + Math.random() * 30) + '%';
+    heart.style.animationDuration = (2.5 + Math.random() * 2) + 's';
+    
+    stage.appendChild(heart);
+    
+    setTimeout(() => {
+      heart.remove();
+    }, 4500);
   }
 
-  function roseInner(c){
-    return '<g filter="url(#softShadow)">' +
-      petalRing(6, 24, 36, 28, c.outer, 0) +
-      petalRing(6, 19, 29, 17, c.mid, 30) +
-      petalRing(5, 12, 18, 8, c.inner, 15) +
-      '<circle cx="0" cy="0" r="6" fill="' + c.center + '"/>' +
-      '</g>';
-  }
-  function sunflowerInner(){
-    let s = '<g filter="url(#softShadow)">';
-    s += petalRing(16, 6, 34, 30, '#ffcf3d', 0);
-    s += petalRing(16, 5, 26, 24, '#ffb200', 11.25);
-    s += '<circle cx="0" cy="0" r="22" fill="url(#sunflowerCenter)"/>';
-    const dots = [[0,0],[7,4],[-7,4],[7,-4],[-7,-4],[0,9],[0,-9],[12,0],[-12,0],[4,12],[-4,-12]];
-    dots.forEach(function(d){
-      s += '<circle cx="' + d[0] + '" cy="' + d[1] + '" r="1.6" fill="#2e1c0d" opacity="0.7"/>';
+  // Ativa os corações aos poucos após o desabrochar das flores
+  setTimeout(() => {
+    setInterval(createHeart, 600);
+  }, 2500);
+
+  // Reiniciar animação ao tocar na tela (ótimo para celular)
+  document.body.addEventListener('click', () => {
+    const elements = document.querySelectorAll('.stem, .flower, .leaf, .wrap, .card, .caption');
+    elements.forEach(el => {
+      el.style.animation = 'none';
+      el.offsetHeight; // Trigger reflow
+      el.style.animation = null;
     });
-    s += '</g>';
-    return s;
-  }
-  function hydrangeaInner(color){
-    const offsets = [[0,0],[16,-9],[-16,-9],[16,9],[-16,9],[0,-19],[0,19],[25,0],[-25,0]];
-    const angles = [10,-15,20,-5,25,-20,5,15,-10];
-    let s = '<g filter="url(#softShadow)">';
-    offsets.forEach(function(o,i){
-      s += '<g transform="translate(' + o[0] + ',' + o[1] + ') rotate(' + angles[i] + ')">' +
-        petalRing(4, 5, 9, 6, color, 0) +
-        '<circle cx="0" cy="0" r="2" fill="#eaf5ff"/>' +
-        '</g>';
-    });
-    s += '</g>';
-    return s;
-  }
-  function buttonInner(){
-    let s = '<g filter="url(#softShadow)">';
-    s += '<circle cx="0" cy="0" r="9" fill="#ffcb3d"/>';
-    const dots = [[3,-3],[-3,-3],[3,3],[-3,3],[0,5],[0,-5],[5,0],[-5,0]];
-    dots.forEach(function(d){
-      s += '<circle cx="' + d[0] + '" cy="' + d[1] + '" r="1.2" fill="#e8a800"/>';
-    });
-    s += '</g>';
-    return s;
-  }
-  function fillerInner(){
-    const dots = [[0,0],[10,-14],[-9,-12],[4,-26],[-4,-24],[0,-38],[8,-34],[-9,-32]];
-    let s = '<g filter="url(#softShadow)">';
-    dots.forEach(function(d){
-      s += '<circle cx="' + d[0] + '" cy="' + d[1] + '" r="3.6" fill="#fff9f5" opacity="0.92"/>';
-    });
-    s += '</g>';
-    return s;
-  }
-
-  let hydrangeaIndex = 0;
-  function flowerMarkup(stem, delay){
-    let inner = '';
-    const scale = stem.scale || 1;
-    if(stem.type === 'rose') inner = roseInner(stem.colors);
-    else if(stem.type === 'sunflower') inner = sunflowerInner();
-    else if(stem.type === 'hydrangea'){
-      inner = hydrangeaInner(HYDRANGEA_COLORS[hydrangeaIndex % HYDRANGEA_COLORS.length]);
-      hydrangeaIndex++;
-    }
-    else if(stem.type === 'button') inner = buttonInner();
-    else inner = fillerInner();
-    return '<g class="flower" style="animation-delay:' + delay + 's" transform="translate(' + stem.end.x + ',' + stem.end.y + ') scale(' + scale + ')">' + inner + '</g>';
-  }
-
-  function leafMarkup(x, y, rot, delay){
-    return '<g class="leaf" style="animation-delay:' + delay + 's" transform="translate(' + x + ',' + y + ') rotate(' + rot + ')">' +
-      '<ellipse cx="0" cy="-14" rx="9" ry="20" fill="url(#leafGradient)"/>' +
-      '<path d="M0,-32 L0,4" stroke="#3f6b34" stroke-width="1.1" opacity="0.45"/>' +
-      '</g>';
-  }
-  function sparkleMarkup(x, y, delay, size){
-    return '<g class="sparkle" style="animation-delay:' + delay + 's" transform="translate(' + x + ',' + y + ') scale(' + size + ')">' +
-      '<path d="M0,-9 L2.2,-2.2 L9,0 L2.2,2.2 L0,9 L-2.2,2.2 L-9,0 L-2.2,-2.2 Z" fill="#fff6d8"/>' +
-      '</g>';
-  }
-
-  const wrapMarkup =
-    '<g class="wrap-part" style="animation-delay:' + WRAP_START + 's">' +
-      '<path d="M 400 870 L 210 430 Q 400 380 590 430 L 400 870 Z" fill="#bfe3f5"/>' +
-      '<path d="M 400 870 L 260 460 Q 400 420 540 460 L 400 870 Z" fill="#8ecbe8" opacity="0.85"/>' +
-      '<path d="M 400 870 L 340 500 L 400 470 L 460 500 Z" fill="#6fb8dd" opacity="0.7"/>' +
-    '</g>';
-
-  const ribbonMarkup =
-    '<g class="ribbon" style="animation-delay:' + RIBBON_START + 's" transform="translate(400,565)" filter="url(#softShadow)">' +
-      '<rect x="-95" y="-16" width="190" height="30" rx="14" fill="#3a7bb5"/>' +
-      '<rect x="-95" y="-16" width="190" height="10" rx="5" fill="#5b9bd5" opacity="0.6"/>' +
-      '<path d="M0,0 C-40,-24 -56,10 -18,14 C-45,20 -38,44 0,17 Z" fill="#3a7bb5"/>' +
-      '<path d="M0,0 C40,-24 56,10 18,14 C45,20 38,44 0,17 Z" fill="#2f5f8a"/>' +
-      '<path d="M-5,10 L-26,90 L-11,84 L-4,26 Z" fill="#3a7bb5"/>' +
-      '<path d="M5,10 L26,90 L11,84 L4,26 Z" fill="#2f5f8a"/>' +
-      '<ellipse cx="0" cy="10" rx="12" ry="9" fill="#274d6e"/>' +
-    '</g>';
-
-  // ---------- montagem ----------
-  const stemsLayer = document.getElementById('stemsLayer');
-  const wrapLayer = document.getElementById('wrapLayer');
-  const ribbonLayer = document.getElementById('ribbonLayer');
-  const leavesLayer = document.getElementById('leavesLayer');
-  const flowersLayer = document.getElementById('flowersLayer');
-  const sparkleLayer = document.getElementById('sparkleLayer');
-  const swayGroup = document.getElementById('swayGroup');
-  const caption = document.getElementById('caption');
-
-  let stemsHTML = '';
-  let leavesHTML = '';
-
-  allStems.forEach(function(stem, i){
-    const delay = i * STEM_STAGGER;
-    const ctrl = ctrlFor(stem.end);
-    stemsHTML += '<path class="stem" pathLength="100" d="M ' + base.x + ' ' + base.y +
-      ' Q ' + ctrl.x + ' ' + ctrl.y + ' ' + stem.end.x + ' ' + stem.end.y +
-      '" style="animation-delay:' + delay + 's"/>';
-
-    if(stem.type !== 'filler'){
-      const p1 = bez(base, ctrl, stem.end, 0.5);
-      const p2 = bez(base, ctrl, stem.end, 0.72);
-      const leanLeft = stem.end.x < 400;
-      leavesHTML += leafMarkup(p1.x, p1.y, leanLeft ? -48 : 48, delay + 0.45);
-      leavesHTML += leafMarkup(p2.x, p2.y, leanLeft ? -35 : 35, delay + 0.6);
-    }
   });
-
-  stemsLayer.innerHTML = stemsHTML;
-  leavesLayer.innerHTML = leavesHTML;
-  wrapLayer.innerHTML = wrapMarkup;
-  ribbonLayer.innerHTML = ribbonMarkup;
-
-  let flowersHTML = '';
-  mainStems.forEach(function(stem, i){
-    const delay = FLOWER_START + i * FLOWER_STAGGER;
-    flowersHTML += flowerMarkup(stem, delay);
-  });
-  fillerStems.forEach(function(stem, i){
-    const delay = FLOWER_START * 0.55 + i * 0.3;
-    flowersHTML += flowerMarkup(stem, delay);
-  });
-  flowersLayer.innerHTML = flowersHTML;
-
-  let sparklesHTML = '';
-  const sparkleSpots = [
-    [230,240],[300,150],[365,100],[420,90],[490,120],[555,170],[590,240],
-    [260,330],[520,330],[400,160],[340,200],[470,200],[350,300]
-  ];
-  sparkleSpots.forEach(function(pt, i){
-    const delay = SPARKLE_START + Math.random() * 1.6 + i * 0.05;
-    const size = 0.6 + Math.random() * 0.7;
-    sparklesHTML += sparkleMarkup(pt[0], pt[1], delay, size.toFixed(2));
-  });
-  sparkleLayer.innerHTML = sparklesHTML;
-
-  swayGroup.style.animationDelay = flowersFinish + 's';
-
-  caption.style.animation =
-    'captionIn 1s ease-out ' + CAPTION_DELAY + 's forwards, ' +
-    'glowPulse 3s ease-in-out ' + (CAPTION_DELAY + 1) + 's infinite';
-})();
 </script>
+
 </body>
 </html>
