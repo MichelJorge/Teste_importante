@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Teste Sociológico</title>
+    <title>Teste de Relacionamento</title>
     
     <!-- Fontes Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -77,7 +77,7 @@
             100% { transform: scale(1.3) translate(40px, 30px); }
         }
 
-        /* Container Principal (Profissional) */
+        /* Container Principal */
         .container {
             width: 100%;
             max-width: 640px;
@@ -122,7 +122,7 @@
             line-height: 1.5;
         }
 
-        /* Perguntas Corporativas */
+        /* Cartões das Perguntas */
         .question-card {
             background: #F8FAFC;
             border: 1px solid #E2E8F0;
@@ -141,12 +141,20 @@
 
         .question-title {
             font-size: 0.98rem;
-            font-weight: 600;
+            font-weight: 700;
             color: #1E293B;
-            margin-bottom: 1rem;
+            margin-bottom: 0.4rem;
             display: flex;
             align-items: flex-start;
             gap: 0.5rem;
+        }
+
+        .question-desc {
+            font-size: 0.88rem;
+            color: #475569;
+            line-height: 1.45;
+            margin-bottom: 1rem;
+            padding-left: 1.7rem;
         }
 
         .q-num {
@@ -213,7 +221,7 @@
             background: var(--primary);
         }
 
-        /* Botão Enviar Profissional */
+        /* Botão Enviar */
         .btn-submit {
             width: 100%;
             padding: 1.1rem;
@@ -239,9 +247,7 @@
             box-shadow: 0 16px 32px -6px rgba(79, 70, 229, 0.5);
         }
 
-        /* =======================================================
-           PÁGINA DEDICADA DE RESULTADO (MODAL/SCREEN OVERLAY)
-           ======================================================= */
+        /* Tela de Resultado */
         .result-screen {
             position: fixed;
             inset: 0;
@@ -333,7 +339,6 @@
             margin-bottom: 1.8rem;
         }
 
-        /* Score Meter Fun */
         .score-pill {
             display: inline-flex;
             align-items: center;
@@ -347,7 +352,7 @@
             margin-bottom: 2rem;
         }
 
-        /* Botão do WhatsApp Divertido */
+        /* Botão do WhatsApp */
         .btn-whatsapp {
             display: flex;
             align-items: center;
@@ -372,7 +377,6 @@
             box-shadow: 0 16px 35px rgba(37, 211, 102, 0.5);
         }
 
-        /* Botão Fuga (Caso de Reprovação/Brincadeira) */
         .btn-retry {
             margin-top: 1rem;
             background: transparent;
@@ -384,11 +388,11 @@
             text-decoration: underline;
         }
 
-        /* Ajustes Responsivos */
         @media (max-width: 480px) {
             body { padding: 0.8rem 0.5rem; }
             .container { padding: 1.8rem 1.2rem; border-radius: 20px; }
             .question-card { padding: 1rem; }
+            .question-desc { padding-left: 0; }
             .result-box { padding: 2.2rem 1.2rem; border-radius: 24px; }
         }
     </style>
@@ -399,17 +403,20 @@
     <div class="bg-glow"></div>
     <div class="bg-glow-2"></div>
 
-    <!-- TELA PRINCIPAL (FORMULÁRIO PROFISSIONAL) -->
+    <!-- TELA PRINCIPAL -->
     <main class="container">
         <div class="header-badge">📋 Avaliação de Compatibilidade</div>
-        <h1 class="title">Questionário de Perfil</h1>
-        <p class="subtitle">Responda aos parâmetros com precisão técnica de 1 a 10 para calcularmos o índice de sintonia interpessoal.</p>
+        <h1 class="title">Questionário de Relacionamento</h1>
+        <p class="subtitle">Avalie a importância de cada fator para você de 1 a 10 para podermos calcular nosso índice de sintonia afetiva.</p>
 
         <form id="testForm">
             <!-- P1 -->
             <div class="question-card">
                 <div class="question-title">
-                    <span class="q-num">01.</span> O quanto você se preocupa com a equidade e justiça social?
+                    <span class="q-num">01.</span> Conexão emocional
+                </div>
+                <div class="question-desc">
+                    Quanto é importante para você sentir que pode conversar profundamente com a pessoa, compartilhar sentimentos, medos, sonhos e pensamentos sem precisar se esconder?
                 </div>
                 <div class="slider-wrap">
                     <div class="slider-header">
@@ -419,7 +426,7 @@
                     <input type="range" id="q1" min="1" max="10" value="5">
                     <div class="slider-labels">
                         <span>1 - Baixo</span>
-                        <span>10 - Elevado</span>
+                        <span>10 - Essencial</span>
                     </div>
                 </div>
             </div>
@@ -427,7 +434,10 @@
             <!-- P2 -->
             <div class="question-card">
                 <div class="question-title">
-                    <span class="q-num">02.</span> Qual a importância do hábito de leitura contínua no dia a dia?
+                    <span class="q-num">02.</span> Companheirismo
+                </div>
+                <div class="question-desc">
+                    Quanto você valoriza ter alguém que queira compartilhar a vida cotidiana com você — viagens, refeições, passeios, conquistas, momentos simples e até os dias difíceis?
                 </div>
                 <div class="slider-wrap">
                     <div class="slider-header">
@@ -436,8 +446,8 @@
                     </div>
                     <input type="range" id="q2" min="1" max="10" value="5">
                     <div class="slider-labels">
-                        <span>1 - Irrelevante</span>
-                        <span>10 - Indispensável</span>
+                        <span>1 - Baixo</span>
+                        <span>10 - Essencial</span>
                     </div>
                 </div>
             </div>
@@ -445,7 +455,10 @@
             <!-- P3 -->
             <div class="question-card">
                 <div class="question-title">
-                    <span class="q-num">03.</span> O quanto você acredita no conceito de meritocracia pura?
+                    <span class="q-num">03.</span> Carinho e demonstração de afeto
+                </div>
+                <div class="question-desc">
+                    Quanto você precisa de demonstrações de carinho, atenção, contato físico, palavras e pequenos gestos para se sentir amado(a)?
                 </div>
                 <div class="slider-wrap">
                     <div class="slider-header">
@@ -454,8 +467,8 @@
                     </div>
                     <input type="range" id="q3" min="1" max="10" value="5">
                     <div class="slider-labels">
-                        <span>1 - Discordo</span>
-                        <span>10 - Concordo</span>
+                        <span>1 - Baixo</span>
+                        <span>10 - Essencial</span>
                     </div>
                 </div>
             </div>
@@ -463,7 +476,10 @@
             <!-- P4 -->
             <div class="question-card">
                 <div class="question-title">
-                    <span class="q-num">04.</span> Qual a relevância dos grandes agentes econômicos (bilionários) para a evolução da sociedade?
+                    <span class="q-num">04.</span> Liberdade dentro da relação
+                </div>
+                <div class="question-desc">
+                    Quanto é importante para você que cada pessoa mantenha sua individualidade, amizades, interesses e espaço pessoal mesmo estando em um relacionamento?
                 </div>
                 <div class="slider-wrap">
                     <div class="slider-header">
@@ -472,8 +488,8 @@
                     </div>
                     <input type="range" id="q4" min="1" max="10" value="5">
                     <div class="slider-labels">
-                        <span>1 - Nula</span>
-                        <span>10 - Vital</span>
+                        <span>1 - Baixo</span>
+                        <span>10 - Essencial</span>
                     </div>
                 </div>
             </div>
@@ -481,7 +497,10 @@
             <!-- P5 -->
             <div class="question-card">
                 <div class="question-title">
-                    <span class="q-num">05.</span> O quanto considera a saga Star Wars o ápice da cultura pop moderna?
+                    <span class="q-num">05.</span> Comunicação e resolução de conflitos
+                </div>
+                <div class="question-desc">
+                    Quanto você valoriza uma pessoa que consiga conversar sobre problemas, ouvir o outro e tentar resolver conflitos em vez de simplesmente se afastar ou guardar tudo?
                 </div>
                 <div class="slider-wrap">
                     <div class="slider-header">
@@ -490,8 +509,8 @@
                     </div>
                     <input type="range" id="q5" min="1" max="10" value="5">
                     <div class="slider-labels">
-                        <span>1 - Razoável</span>
-                        <span>10 - Obra-Prima</span>
+                        <span>1 - Baixo</span>
+                        <span>10 - Essencial</span>
                     </div>
                 </div>
             </div>
@@ -499,17 +518,104 @@
             <!-- P6 -->
             <div class="question-card">
                 <div class="question-title">
-                    <span class="q-num">06.</span> Qual é o seu nível atual de disponibilidade afetiva (status solteira)?
+                    <span class="q-num">06.</span> Admiração pelo parceiro
+                </div>
+                <div class="question-desc">
+                    Quanto é importante você admirar a pessoa — pela personalidade, inteligência, maneira de agir, valores, trabalho, postura diante da vida ou outras características?
                 </div>
                 <div class="slider-wrap">
                     <div class="slider-header">
-                        <span style="font-size:0.8rem; color:#64748B;">Nível de disponibilidade</span>
+                        <span style="font-size:0.8rem; color:#64748B;">Nível de relevância</span>
                         <span class="badge-value" id="v6">5</span>
                     </div>
                     <input type="range" id="q6" min="1" max="10" value="5">
                     <div class="slider-labels">
-                        <span>1 - Indisponível</span>
-                        <span>10 - 100% Livre</span>
+                        <span>1 - Baixo</span>
+                        <span>10 - Essencial</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- P7 -->
+            <div class="question-card">
+                <div class="question-title">
+                    <span class="q-num">07.</span> Química e atração
+                </div>
+                <div class="question-desc">
+                    Quanto a atração física, o olhar, a química, o desejo e aquela sensação de “tem alguma coisa entre nós” são importantes para você?
+                </div>
+                <div class="slider-wrap">
+                    <div class="slider-header">
+                        <span style="font-size:0.8rem; color:#64748B;">Nível de relevância</span>
+                        <span class="badge-value" id="v7">5</span>
+                    </div>
+                    <input type="range" id="q7" min="1" max="10" value="5">
+                    <div class="slider-labels">
+                        <span>1 - Baixo</span>
+                        <span>10 - Essencial</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- P8 -->
+            <div class="question-card">
+                <div class="question-title">
+                    <span class="q-num">08.</span> Projeto de vida
+                </div>
+                <div class="question-desc">
+                    Quanto é importante que vocês tenham objetivos de vida compatíveis — casamento, família, filhos, estabilidade, viagens, crescimento pessoal e profissional?
+                </div>
+                <div class="slider-wrap">
+                    <div class="slider-header">
+                        <span style="font-size:0.8rem; color:#64748B;">Nível de relevância</span>
+                        <span class="badge-value" id="v8">5</span>
+                    </div>
+                    <input type="range" id="q8" min="1" max="10" value="5">
+                    <div class="slider-labels">
+                        <span>1 - Baixo</span>
+                        <span>10 - Essencial</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- P9 -->
+            <div class="question-card">
+                <div class="question-title">
+                    <span class="q-num">09.</span> Confiança e segurança emocional
+                </div>
+                <div class="question-desc">
+                    Quanto você precisa sentir que pode confiar plenamente na pessoa, sem viver em dúvida sobre o que ela sente, pretende ou está fazendo?
+                </div>
+                <div class="slider-wrap">
+                    <div class="slider-header">
+                        <span style="font-size:0.8rem; color:#64748B;">Nível de relevância</span>
+                        <span class="badge-value" id="v9">5</span>
+                    </div>
+                    <input type="range" id="q9" min="1" max="10" value="5">
+                    <div class="slider-labels">
+                        <span>1 - Baixo</span>
+                        <span>10 - Essencial</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- P10 -->
+            <div class="question-card">
+                <div class="question-title">
+                    <span class="q-num">10.</span> Escolher um ao outro todos os dias
+                </div>
+                <div class="question-desc">
+                    Quanto significa para você estar com alguém que não seja apenas uma paixão, mas uma verdadeira parceria — alguém que queira construir uma história, permanecer nos momentos difíceis e ser sua companhia ao longo da vida?
+                </div>
+                <div class="slider-wrap">
+                    <div class="slider-header">
+                        <span style="font-size:0.8rem; color:#64748B;">Nível de relevância</span>
+                        <span class="badge-value" id="v10">5</span>
+                    </div>
+                    <input type="range" id="q10" min="1" max="10" value="5">
+                    <div class="slider-labels">
+                        <span>1 - Baixo</span>
+                        <span>10 - Essencial</span>
                     </div>
                 </div>
             </div>
@@ -521,18 +627,18 @@
         </form>
     </main>
 
-    <!-- =======================================================
-         TELA DEDICADA DE RESULTADO (ABRE EM NOVA CAMADA)
-         ======================================================= -->
+    <!-- TELA DE RESULTADO -->
     <div class="result-screen" id="resultScreen">
         <div class="result-box" id="resultBox">
-            <!-- O conteúdo será gerado dinamicamente via JS -->
+            <!-- Gerado via JS -->
         </div>
     </div>
 
     <script>
-        // Atualizar os indicadores visuais dos sliders
-        for (let i = 1; i <= 6; i++) {
+        const TOTAL_QUESTIONS = 10;
+
+        // Atualiza dinamicamente os valores dos visores
+        for (let i = 1; i <= TOTAL_QUESTIONS; i++) {
             const slider = document.getElementById(`q${i}`);
             const display = document.getElementById(`v${i}`);
             
@@ -541,16 +647,16 @@
             });
         }
 
-        // Número de Destino
+        // Número de Destino do WhatsApp
         const PHONE_NUMBER = "5511937041846";
 
-        // Submissão e Análise
+        // Lógica ao enviar formulário
         document.getElementById('testForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             let total = 0;
             const answers = [];
-            for (let i = 1; i <= 6; i++) {
+            for (let i = 1; i <= TOTAL_QUESTIONS; i++) {
                 const val = parseInt(document.getElementById(`q${i}`).value);
                 total += val;
                 answers.push(val);
@@ -559,21 +665,21 @@
             const resultScreen = document.getElementById('resultScreen');
             const resultBox = document.getElementById('resultBox');
 
-            if (total >= 38) {
-                // APROVADO(A) - TELA DIVERTIDA & ROMÂNTICA
+            // Critério de aprovação (A partir de 65 de 100 pontos)
+            if (total >= 65) {
                 resultBox.className = "result-box success-theme";
                 
                 const whatsappMsg = encodeURIComponent(
-                    `Oii! 🌻 Fiz a avaliação e adivinha? APROVADA com sucesso! 🎉\n\n` +
-                    `📊 Minha pontuação foi ${total}/60 pontos.\n` +
-                    `Acho que já podemos marcar o nosso primeiro encontro, o que acha? 💛`
+                    `Oii! 🌻 Fiz o Questionário de Relacionamento e adivinha? Fomos APROVADOS com sucesso! 🎉\n\n` +
+                    `📊 Minha pontuação foi ${total}/100 pontos.\n` +
+                    `Acho que nossos valores combinam muito, o que acha de conversarmos mais sobre isso? 💛`
                 );
 
                 resultBox.innerHTML = `
                     <div class="badge-icon">🌻</div>
-                    <h2 class="result-title">Aprovação Confirmada!</h2>
-                    <p class="result-desc">Nossos algoritmos detectaram uma sintonia impressionante. Você passou no teste com louvor para a gente namorar! 💛✨</p>
-                    <div class="score-pill">🏆 Índice de Sintonia: ${total} / 60 pts</div>
+                    <h2 class="result-title">Sintonia Confirmada!</h2>
+                    <p class="result-desc">Nossos algoritmos detectaram uma compatibilidade incrível! Você tem valores perfeitos para construirmos algo incrível juntos. 💛✨</p>
+                    <div class="score-pill">🏆 Índice de Sintonia: ${total} / 100 pts</div>
                     
                     <a href="https://wa.me/${PHONE_NUMBER}?text=${whatsappMsg}" target="_blank" class="btn-whatsapp">
                         <span>Enviar Resultado no WhatsApp</span>
@@ -581,22 +687,20 @@
                     </a>
                 `;
 
-                // Efeito Especial de Confetes e Brilhos
                 fireConfetti();
 
             } else {
-                // REPROVADO(A) - TELA ENGRAÇADA COM OPÇÃO DE TENTAR DE NOVO
                 resultBox.className = "result-box fail-theme";
 
                 const whatsappMsgFail = encodeURIComponent(
-                    `Oi... Fiz o teste e deu ${total}/60 pontos. Reprovei por pouco 😅, mas quero uma segunda chance no WhatsApp!`
+                    `Oi... Fiz o teste e deu ${total}/100 pontos. Ficou um pouco abaixo 😅, mas quero conversar com você no WhatsApp!`
                 );
 
                 resultBox.innerHTML = `
                     <div class="badge-icon">🙈</div>
                     <h2 class="result-title">Ops! Quase lá...</h2>
-                    <p class="result-desc">Sua pontuação ficou um pouquinho abaixo da média exigida pelo coração... Mas quem se importa com regras, né? 😉</p>
-                    <div class="score-pill">📊 Pontuação: ${total} / 60 pts</div>
+                    <p class="result-desc">Sua pontuação ficou um pouquinho abaixo da média esperada... Mas quem se importa com algoritmos quando o papo é bom? 😉</p>
+                    <div class="score-pill">📊 Pontuação: ${total} / 100 pts</div>
                     
                     <a href="https://wa.me/${PHONE_NUMBER}?text=${whatsappMsgFail}" target="_blank" class="btn-whatsapp" style="background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%);">
                         <span>Recorrer da Decisão no WhatsApp</span>
@@ -607,16 +711,13 @@
                 `;
             }
 
-            // Exibir a Tela Dedicada
             resultScreen.classList.add('active');
         });
 
-        // Fechar Tela de Resultado
         function closeResult() {
             document.getElementById('resultScreen').classList.remove('active');
         }
 
-        // Animação de Confetes Dourados e Coloridos
         function fireConfetti() {
             const count = 200;
             const defaults = { origin: { y: 0.7 } };
