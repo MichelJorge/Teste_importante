@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Teste de Sinergia e Compatibilidade</title>
+    <title>Teste de Perfil</title>
     
     <!-- Fontes Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -118,24 +118,8 @@
         p.subtitle {
             color: var(--text-muted);
             font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.5;
-        }
-
-        /* Caixa de Dica */
-        .tip-box {
-            background: #FEF3C7;
-            border-left: 4px solid #F59E0B;
-            border-radius: 8px;
-            padding: 1rem;
             margin-bottom: 2rem;
-            font-size: 0.88rem;
-            color: #92400E;
-            line-height: 1.45;
-        }
-
-        .tip-box strong {
-            color: #78350F;
+            line-height: 1.5;
         }
 
         /* Cartões das Perguntas */
@@ -421,32 +405,29 @@
 
     <!-- TELA PRINCIPAL -->
     <main class="container">
-        <div class="header-badge">📋 Análise de Sinergia</div>
-        <h1 class="title">Sinergia e Compatibilidade</h1>
-        <p class="subtitle">Avalie o grau de compatibilidade e alinhamento em cada uma das dimensões de 1 a 10.</p>
-
-        <div class="tip-box">
-            💡 <strong>Dica de uso:</strong> Responda individualmente e, depois, compare não apenas as notas, mas a motivação por trás de cada uma.
-        </div>
+        <div class="header-badge">📋 Avaliação</div>
+        <h1 class="title">Teste de Compatibilidade</h1>
+        <p class="subtitle">Avalie de 1 a 10 o quanto os ritmos, preferências e valores de vocês se combinam no dia a dia.</p>
 
         <form id="testForm">
             <!-- P1 -->
             <div class="question-card">
                 <div class="question-title">
-                    <span class="q-num">01.</span> Ritmo de Vida e Organização
+                    <span class="q-num">01.</span> Ritmo de vida
                 </div>
                 <div class="question-desc">
-                    Como você avalia a compatibilidade entre os estilos de vida de vocês (ex: quem é mais caseiro vs. agitado, ou a organização com o tempo e os espaços)?
+                    Você prefere mil coisas acontecendo ao mesmo tempo (agitação) ou uma rotina mais pacata e previsível (sossego)?<br>
+                    <strong>Avalie de 1 a 10 o quanto os ritmos de vocês combinam.</strong>
                 </div>
                 <div class="slider-wrap">
                     <div class="slider-header">
-                        <span style="font-size:0.8rem; color:#64748B;">Nível de compatibilidade</span>
+                        <span style="font-size:0.8rem; color:#64748B;">Nível de combinação</span>
                         <span class="badge-value" id="v1">5</span>
                     </div>
                     <input type="range" id="q1" min="1" max="10" value="5">
                     <div class="slider-labels">
-                        <span>1 - Muito Baixa</span>
-                        <span>10 - Totalmente Alinhados</span>
+                        <span>1 - Pouco</span>
+                        <span>10 - Totalmente</span>
                     </div>
                 </div>
             </div>
@@ -454,20 +435,21 @@
             <!-- P2 -->
             <div class="question-card">
                 <div class="question-title">
-                    <span class="q-num">02.</span> Estilo de Comunicação
+                    <span class="q-num">02.</span> Espaço e Tempo Livre
                 </div>
                 <div class="question-desc">
-                    Quão confortáveis e diretos vocês são ao expressar o que pensam e sentem, sem medo de julgamentos ou mal-entendidos?
+                    Você faz questão de estar junto o tempo todo ou precisa de bastante espaço e momentos sozinho(a)?<br>
+                    <strong>Avalie de 1 a 10 a compatibilidade de vocês quanto à necessidade de grude vs. individualidade.</strong>
                 </div>
                 <div class="slider-wrap">
                     <div class="slider-header">
-                        <span style="font-size:0.8rem; color:#64748B;">Nível de conforto</span>
+                        <span style="font-size:0.8rem; color:#64748B;">Compatibilidade</span>
                         <span class="badge-value" id="v2">5</span>
                     </div>
                     <input type="range" id="q2" min="1" max="10" value="5">
                     <div class="slider-labels">
-                        <span>1 - Desconfortável</span>
-                        <span>10 - Totalmente Confortável</span>
+                        <span>1 - Pouco</span>
+                        <span>10 - Totalmente</span>
                     </div>
                 </div>
             </div>
@@ -475,20 +457,21 @@
             <!-- P3 -->
             <div class="question-card">
                 <div class="question-title">
-                    <span class="q-num">03.</span> Resolução de Conflitos e Desacordos
+                    <span class="q-num">03.</span> Resolução de brigas
                 </div>
                 <div class="question-desc">
-                    Quando surge um atrito ou divergência, qual é o nível de compatibilidade na forma como vocês lidam com a situação (ex: diálogo calmo vs. espaço)?
+                    Quando rola um atrito, você prefere resolver tudo conversando na mesma hora ou precisa de um tempo de silêncio para esfriar a cabeça?<br>
+                    <strong>Avalie de 1 a 10 o quanto a forma de vocês lidarem com conflitos se encaixa.</strong>
                 </div>
                 <div class="slider-wrap">
                     <div class="slider-header">
-                        <span style="font-size:0.8rem; color:#64748B;">Nível de compatibilidade</span>
+                        <span style="font-size:0.8rem; color:#64748B;">Grau de encaixe</span>
                         <span class="badge-value" id="v3">5</span>
                     </div>
                     <input type="range" id="q3" min="1" max="10" value="5">
                     <div class="slider-labels">
-                        <span>1 - Muito Baixa</span>
-                        <span>10 - Totalmente Alinhados</span>
+                        <span>1 - Pouco</span>
+                        <span>10 - Totalmente</span>
                     </div>
                 </div>
             </div>
@@ -496,20 +479,21 @@
             <!-- P4 -->
             <div class="question-card">
                 <div class="question-title">
-                    <span class="q-num">04.</span> Valores e Princípios Fundamentais
+                    <span class="q-num">04.</span> Comunicação
                 </div>
                 <div class="question-desc">
-                    Considerando ética, honestidade, empatia e o que é inegociável para cada um, qual é o grau de alinhamento entre os valores fundamentais de vocês?
+                    Você prefere falar as coisas de forma 100% direta e reta ou prefere dar voltas para não ferir sentimentos?<br>
+                    <strong>Avalie de 1 a 10 a sintonia no jeito de falar e ouvir um ao outro.</strong>
                 </div>
                 <div class="slider-wrap">
                     <div class="slider-header">
-                        <span style="font-size:0.8rem; color:#64748B;">Grau de alinhamento</span>
+                        <span style="font-size:0.8rem; color:#64748B;">Sintonia</span>
                         <span class="badge-value" id="v4">5</span>
                     </div>
                     <input type="range" id="q4" min="1" max="10" value="5">
                     <div class="slider-labels">
-                        <span>1 - Divergentes</span>
-                        <span>10 - Idênticos</span>
+                        <span>1 - Pouco</span>
+                        <span>10 - Totalmente</span>
                     </div>
                 </div>
             </div>
@@ -517,20 +501,21 @@
             <!-- P5 -->
             <div class="question-card">
                 <div class="question-title">
-                    <span class="q-num">05.</span> Senso de Humor e Lazer
+                    <span class="q-num">05.</span> Organização e Planejamento
                 </div>
                 <div class="question-desc">
-                    Quão compatíveis são as formas de vocês se divertirem, descansarem e o tipo de humor que faz sentido para ambos no dia a dia?
+                    Você é a pessoa que planeja cada detalhe da viagem/dia ou prefere deixar tudo rolar e improvisar na hora?<br>
+                    <strong>Avalie de 1 a 10 o grau de compatibilidade entre os estilos de organização de vocês.</strong>
                 </div>
                 <div class="slider-wrap">
                     <div class="slider-header">
-                        <span style="font-size:0.8rem; color:#64748B;">Nível de compatibilidade</span>
+                        <span style="font-size:0.8rem; color:#64748B;">Grau de compatibilidade</span>
                         <span class="badge-value" id="v5">5</span>
                     </div>
                     <input type="range" id="q5" min="1" max="10" value="5">
                     <div class="slider-labels">
-                        <span>1 - Muito Baixa</span>
-                        <span>10 - Totalmente Alinhados</span>
+                        <span>1 - Pouco</span>
+                        <span>10 - Totalmente</span>
                     </div>
                 </div>
             </div>
@@ -538,20 +523,21 @@
             <!-- P6 -->
             <div class="question-card">
                 <div class="question-title">
-                    <span class="q-num">06.</span> Apoio e Ambições (Crescimento mútuo)
+                    <span class="q-num">06.</span> Gastos e Dinheiro
                 </div>
                 <div class="question-desc">
-                    O quanto vocês sentem que torcem genuinamente um pelo outro e apoiam os objetivos, sonhos e projetos individuais de cada um?
+                    Para você, dinheiro foi feito para investir/guardar com cautela ou para aproveitar o presente e curtir a vida?<br>
+                    <strong>Avalie de 1 a 10 o quanto vocês pensam parecido sobre finanças e consumo.</strong>
                 </div>
                 <div class="slider-wrap">
                     <div class="slider-header">
-                        <span style="font-size:0.8rem; color:#64748B;">Nível de apoio</span>
+                        <span style="font-size:0.8rem; color:#64748B;">Alinhamento financeiro</span>
                         <span class="badge-value" id="v6">5</span>
                     </div>
                     <input type="range" id="q6" min="1" max="10" value="5">
                     <div class="slider-labels">
-                        <span>1 - Pouco Apoio</span>
-                        <span>10 - Apoio Total</span>
+                        <span>1 - Pouco</span>
+                        <span>10 - Totalmente</span>
                     </div>
                 </div>
             </div>
@@ -559,20 +545,21 @@
             <!-- P7 -->
             <div class="question-card">
                 <div class="question-title">
-                    <span class="q-num">07.</span> Gestão de Expectativas e Independência
+                    <span class="q-num">07.</span> Lazer e Descanso
                 </div>
                 <div class="question-desc">
-                    Como avaliam o equilíbrio entre o tempo juntos e o respeito pelo espaço individual e autonomia de cada um?
+                    No fim de semana ideal, o plano perfeito é sair para socializar, conhecer lugares novos ou ficar em casa descansando?<br>
+                    <strong>Avalie de 1 a 10 o quanto vocês combinam na hora de se divertir.</strong>
                 </div>
                 <div class="slider-wrap">
                     <div class="slider-header">
-                        <span style="font-size:0.8rem; color:#64748B;">Nível de equilíbrio</span>
+                        <span style="font-size:0.8rem; color:#64748B;">Combinação de lazer</span>
                         <span class="badge-value" id="v7">5</span>
                     </div>
                     <input type="range" id="q7" min="1" max="10" value="5">
                     <div class="slider-labels">
-                        <span>1 - Desequilibrado</span>
-                        <span>10 - Perfeitamente Equilibrado</span>
+                        <span>1 - Pouco</span>
+                        <span>10 - Totalmente</span>
                     </div>
                 </div>
             </div>
@@ -580,20 +567,21 @@
             <!-- P8 -->
             <div class="question-card">
                 <div class="question-title">
-                    <span class="q-num">08.</span> Resiliência diante da Pressão
+                    <span class="q-num">08.</span> Estresse e Pressão
                 </div>
                 <div class="question-desc">
-                    Em momentos de estresse ou problemas externos, quão compatível é a energia de vocês (um equilibra o outro ou os dois se esgotam)?
+                    Sob pressão, você costuma estourar e ficar impaciente ou mantém a calma e tenta apagar o incêndio?<br>
+                    <strong>Avalie de 1 a 10 como as energias de vocês se comportam em momentos difíceis.</strong>
                 </div>
                 <div class="slider-wrap">
                     <div class="slider-header">
-                        <span style="font-size:0.8rem; color:#64748B;">Nível de compatibilidade</span>
+                        <span style="font-size:0.8rem; color:#64748B;">Equilíbrio de energias</span>
                         <span class="badge-value" id="v8">5</span>
                     </div>
                     <input type="range" id="q8" min="1" max="10" value="5">
                     <div class="slider-labels">
-                        <span>1 - Desgastante</span>
-                        <span>10 - Muito Equilibrado</span>
+                        <span>1 - Pouco</span>
+                        <span>10 - Totalmente</span>
                     </div>
                 </div>
             </div>
@@ -601,20 +589,21 @@
             <!-- P9 -->
             <div class="question-card">
                 <div class="question-title">
-                    <span class="q-num">09.</span> Empatia e Escuta Ativa
+                    <span class="q-num">09.</span> Ambições e Metas
                 </div>
                 <div class="question-desc">
-                    Qual é o nível de sintonia quando um precisa apenas desabafar ou ser ouvido, sem necessariamente buscar soluções imediatas ou julgamentos?
+                    Você foca todas as forças em crescer profissionalmente/alcançar grandes metas ou prefere priorizar a paz, o equilíbrio e o presente?<br>
+                    <strong>Avalie de 1 a 10 o alinhamento dos objetivos de vida de vocês.</strong>
                 </div>
                 <div class="slider-wrap">
                     <div class="slider-header">
-                        <span style="font-size:0.8rem; color:#64748B;">Nível de sintonia</span>
+                        <span style="font-size:0.8rem; color:#64748B;">Alinhamento de metas</span>
                         <span class="badge-value" id="v9">5</span>
                     </div>
                     <input type="range" id="q9" min="1" max="10" value="5">
                     <div class="slider-labels">
-                        <span>1 - Muito Baixa</span>
-                        <span>10 - Sintonia Total</span>
+                        <span>1 - Pouco</span>
+                        <span>10 - Totalmente</span>
                     </div>
                 </div>
             </div>
@@ -622,26 +611,27 @@
             <!-- P10 -->
             <div class="question-card">
                 <div class="question-title">
-                    <span class="q-num">10.</span> Visão de Futuro e Direção
+                    <span class="q-num">10.</span> Críticas e Feedback
                 </div>
                 <div class="question-desc">
-                    Pensando nos próximos passos e para onde cada um está caminhando, quão alinhadas estão as expectativas de vocês para o futuro da relação?
+                    Quando alguém aponta um erro seu, você aceita de boa na intenção de melhorar ou costuma ficar na defensiva?<br>
+                    <strong>Avalie de 1 a 10 a maturidade e a compatibilidade de vocês ao lidar com apontamentos e melhorias.</strong>
                 </div>
                 <div class="slider-wrap">
                     <div class="slider-header">
-                        <span style="font-size:0.8rem; color:#64748B;">Nível de alinhamento</span>
+                        <span style="font-size:0.8rem; color:#64748B;">Compatibilidade e maturidade</span>
                         <span class="badge-value" id="v10">5</span>
                     </div>
                     <input type="range" id="q10" min="1" max="10" value="5">
                     <div class="slider-labels">
-                        <span>1 - Desalinhados</span>
-                        <span>10 - Totalmente Alinhados</span>
+                        <span>1 - Pouco</span>
+                        <span>10 - Totalmente</span>
                     </div>
                 </div>
             </div>
 
             <button type="submit" class="btn-submit">
-                <span>Processar Análise de Sinergia</span>
+                <span>Processar Análise de Compatibilidade</span>
                 <span style="font-size: 1.2rem;">⚡</span>
             </button>
         </form>
@@ -689,18 +679,18 @@
                 resultBox.className = "result-box success-theme";
                 
                 const whatsappMsg = encodeURIComponent(
-                    `Olá! 🌻 Fiz o Teste de Sinergia e Compatibilidade e a nossa pontuação foi de ${total}/100 pontos!\n\n` +
-                    `Temos uma excelente base de alinhamento. Que tal conversarmos e compararmos nossas respostas? 💛`
+                    `Oii! 🌻 Fiz a avaliação e nossa pontuação foi de ${total}/100 pontos!\n\n` +
+                    `Acho que temos uma excelente sintonia. Vamos conversar mais sobre isso no WhatsApp? 💛`
                 );
 
                 resultBox.innerHTML = `
-                    <div class="badge-icon">⚡</div>
-                    <h2 class="result-title">Sinergia Elevada!</h2>
-                    <p class="result-desc">Vocês apresentam um nível altíssimo de sintonia e alinhamento em pontos chave! É uma excelente base para construir projetos ou vivências juntos.</p>
-                    <div class="score-pill">🏆 Índice de Sinergia: ${total} / 100 pts</div>
+                    <div class="badge-icon">🌻</div>
+                    <h2 class="result-title">Sintonia Incrível!</h2>
+                    <p class="result-desc">Nossos algoritmos detectaram uma compatibilidade altíssima no estilo de vida e nas prioridades de vocês! ✨</p>
+                    <div class="score-pill">🏆 Índice de Compatibilidade: ${total} / 100 pts</div>
                     
                     <a href="https://wa.me/${PHONE_NUMBER}?text=${whatsappMsg}" target="_blank" class="btn-whatsapp">
-                        <span>Compartilhar Resultado no WhatsApp</span>
+                        <span>Enviar Resultado no WhatsApp</span>
                         <span style="font-size:1.3rem;">💬</span>
                     </a>
                 `;
@@ -711,18 +701,18 @@
                 resultBox.className = "result-box fail-theme";
 
                 const whatsappMsgFail = encodeURIComponent(
-                    `Olá! Fiz a Avaliação de Sinergia e nossa pontuação deu ${total}/100 pontos. ` +
-                    `Acho que vale a pena conversarmos sobre nossas motivações para alinhar nossos pontos de vista! 💬`
+                    `Oi... Fiz o teste e nossa pontuação deu ${total}/100 pontos. ` +
+                    `Temos algumas diferenças, mas vale super a pena conversar para ajustar o que pensamos! 💬`
                 );
 
                 resultBox.innerHTML = `
-                    <div class="badge-icon">🧩</div>
-                    <h2 class="result-title">Oportunidade de Ajuste!</h2>
-                    <p class="result-desc">Sua pontuação total foi de ${total}/100 pts. Isso indica que existem áreas com percepções diferentes que valem ser conversadas para alinhar expectativas.</p>
-                    <div class="score-pill">📊 Índice de Sinergia: ${total} / 100 pts</div>
+                    <div class="badge-icon">🙈</div>
+                    <h2 class="result-title">Alguns pontos de atenção!</h2>
+                    <p class="result-desc">Sua pontuação total foi de ${total}/100 pts. Isso indica algumas diferenças de estilo, mas nada que uma boa conversa não alinhe!</p>
+                    <div class="score-pill">📊 Pontuação: ${total} / 100 pts</div>
                     
                     <a href="https://wa.me/${PHONE_NUMBER}?text=${whatsappMsgFail}" target="_blank" class="btn-whatsapp" style="background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%);">
-                        <span>Enviar no WhatsApp para Conversar</span>
+                        <span>Recorrer da Decisão no WhatsApp</span>
                         <span>📩</span>
                     </a>
                     
